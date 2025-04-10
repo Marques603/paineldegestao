@@ -73,3 +73,16 @@ git branch -M main
 git push -u origin main
 
 #finalizar
+
+
+
+talvez tem que rodar isso 
+
+# Pare os containers
+docker compose down
+
+# Apague os dados do MySQL
+rm -rf ./.docker/mysql/dbdata/*
+
+# Suba novamente
+docker compose up -d

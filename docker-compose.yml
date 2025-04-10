@@ -11,19 +11,19 @@ services:
         depends_on:
             - redis
         networks:
-            - laravel
+            - rede
 
     # nginx
     nginx:
         image: nginx:alpine
         restart: unless-stopped
         ports:
-            - "8000:80"
+            - "8001:80"
         volumes:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
         networks:
-            - laravel
+            - rede
 
     # db mysql
     db:
@@ -38,16 +38,16 @@ services:
         volumes:
             - ./.docker/mysql/dbdata:/var/lib/mysql
         ports:
-            - "3300:3306"
+            - "3301:3306"
         networks:
-            - laravel
+            - rede
 
     # redis
     redis:
         image: redis:latest
         networks:
-            - laravel
+            - rede
 
 networks:
-    laravel:
+    rede:
         driver: bridge
