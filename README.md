@@ -1,7 +1,8 @@
 Clone Repositório
 ```sh
 git clone https://github.com/wesleyfernandocabrera/appz.git
-```
+
+
 ```sh
 cd appz
 ```
@@ -32,30 +33,22 @@ Gere a key do projeto Laravel
 ```sh
 php artisan key:generate
 ```
-
-OPCIONAL: Gere o banco SQLite (caso não use o banco MySQL)
-```sh
-touch database/database.sqlite
-```
-
 Rodar as migrations
 ```sh
 php artisan migrate
-```
+
+Pare os containers se acaso
+```sh
+docker compose down
+
+Apague os dados do MySQL se acaso der erro no php artisan migrate
+```sh
+rm -rf ./.docker/mysql/dbdata/*
 
 LINK APP
 [http://localhost:8000](http://localhost:8000)
 
-LINK METABASE
-[http://localhost:8000](http://localhost:3000)
-
-LINK PHPMYADMIN 
-[http://localhost:8000](http://localhost:8080)
-
-
 # appz
-
-
 
 criar novo
 echo "# appz" >> README.md
