@@ -1,7 +1,7 @@
 <x-app-layout>
       <!-- Page Title Starts -->
     
-    <x-page-title page="User" header="User List" />
+    <x-page-title page="User" header="Lista de usuários" />
 
     <!-- Page Title Ends -->
 
