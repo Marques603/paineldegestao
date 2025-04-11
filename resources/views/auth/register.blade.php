@@ -37,33 +37,42 @@
           <div class="card-body px-10 py-12">
             <div class="flex flex-col items-center justify-center">
                 <x-application-logo class=" fill-current text-gray-500" />
-                <h5 class="mt-4">Welcome Back</h5>
-              <p class="text-sm text-slate-500 dark:text-slate-400">Please enter your details</p>
+                <h5 class="mt-4">Create Account</h5>
             </div>
 
             <div class="mt-6 flex flex-col gap-5">
+              <!-- Fullname -->
+              <div>
+                <label class="label mb-1">Full Name</label>
+                <input type="text" class="input" placeholder="Enter Your Full Name" />
+              </div>
               <!-- Email -->
               <div>
-                <label class="label mb-1">Email Or Username</label>
+                <label class="label mb-1">Email</label>
                 <input type="text" class="input" placeholder="Enter Your Email" />
               </div>
-              <!-- Password-->
-              <div class="">
+              <!-- Password -->
+              <div>
                 <label class="label mb-1">Password</label>
                 <input type="password" class="input" placeholder="Password" />
               </div>
+              <!-- Confirm Password-->
+              <div>
+                <label class="label mb-1">Confirm Password</label>
+                <input type="password" class="input" placeholder="Confirm Password" />
+              </div>
             </div>
             <!-- Remember & Forgot-->
-            <div class="mt-2 flex items-center justify-between">
+            <div class="mt-2 flex">
               <div class="flex items-center gap-1.5">
                 <input
                   type="checkbox"
                   class="h-4 w-4 rounded border-slate-300 bg-transparent text-primary-500 shadow-sm transition-all duration-150 checked:hover:shadow-none focus:ring-0 focus:ring-offset-0 enabled:hover:shadow disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-600"
                   id="remember-me"
                 />
-                <label for="remember-me" class="label">Remember Me</label>
+                <label for="remember-me" class="label text-slate-400">I accept</label>
               </div>
-              <a href="#" class="text-sm text-primary-500 hover:underline">Forgot Password</a>
+              <a href="#" class="ml-2 text-sm text-primary-500 hover:underline">Terms & Condition</a>
             </div>
             <!-- Login Button -->
             <div class="mt-8">
@@ -97,8 +106,8 @@
             <!-- Don't Have An Account -->
             <div class="mt-4 flex justify-center">
               <p class="text-sm text-slate-600 dark:text-slate-300">
-                Don't Have an Account?
-                <a href="./register.html" class="text-sm text-primary-500 hover:underline">Sign up</a>
+                Already have an Account?
+                <a href="./login.html" class="text-sm text-primary-500 hover:underline">Login</a>
               </p>
             </div>
           </div>
