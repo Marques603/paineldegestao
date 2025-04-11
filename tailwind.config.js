@@ -6,7 +6,7 @@ import typography from '@tailwindcss/typography';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 export const themeColors = {
-    primary: colors.violet,
+    primary: colors.blue,
     secondary: colors.gray,
     success: colors.emerald,
     warning: colors.amber,
