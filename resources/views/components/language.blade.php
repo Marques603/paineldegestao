@@ -4,7 +4,7 @@
         type="button"
         class="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-slate-700 focus:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:text-slate-300"
       >
-        <span class="fi fi-gb"></span>
+        <span class="fi fi-br"></span>
         <span class="hidden font-medium md:inline-block">English</span>
         <span class="inline-block font-medium md:hidden">EN</span>
       </button>
@@ -14,7 +14,7 @@
       <ul class="dropdown-list">
         <li class="dropdown-list-item">
           <button class="dropdown-btn" type="button">
-            <span class="fi fi-gb"></span>
+            <span class="fi fi-pt"></span>
             <span class="">English</span>
           </button>
         </li>
