@@ -101,4 +101,5 @@ return [
     'uuid'                 => 'O campo :attribute deve ser um UUID válido.',
 
     'attributes' => [],
+
 ];

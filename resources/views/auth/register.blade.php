@@ -39,28 +39,37 @@
             <div class="mt-6 flex flex-col gap-5">
               <!-- Fullname -->
               <div>
-    <label class="label mb-1">Nome Completo</label>
+              <label class="label mb-1">Nome Completo</label>
 
-    <!-- Adicionando classes dinâmicas para quando houver erro -->
-    <input name="name" type="text" 
-        class="input @error('name') border-red-500 @enderror" 
-        placeholder="Digite seu nome completo" />
+              <!-- Adicionando classes dinâmicas para quando houver erro -->
+              <input name="name" type="text" 
+              class="input @error('name') border-red-500 @enderror" 
+              placeholder="Digite seu nome completo" value="{{ old('name')}}"/>
 
-    <!-- Exibe a mensagem de erro se houver erro de validação -->
-    @error('name')
-        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-    @enderror
-</div>
+              <!-- Exibe a mensagem de erro se houver erro de validação -->
+              @error('name')
+              <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+              @enderror
+              </div>
               <!-- Email -->
               <div>
                 <label class="label mb-1">Email</label>
-                <input name="email" type="text" class="input" placeholder="Digite seu e-mail" />
+                <input name="email" type="text" class="input" placeholder="Digite seu e-mail" value="{{ old('email')}}"/>
+              
+               <!-- Exibe a mensagem de erro se houver erro de validação -->
+               @error('email')
+              <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+              @enderror  
               </div>
               <!-- Password -->
               <div>
                 <label class="label mb-1">Senha</label>
                 <input name="password" type="password" class="input" placeholder="Senha " />
               </div>
+              <!-- Exibe a mensagem de erro se houver erro de validação -->
+              @error('password')
+             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+             @enderror  
                <!-- Password -->
                <div>
                 <label class="label mb-1">Confirmar Senha</label>
@@ -79,7 +88,7 @@
             <div class="mt-4 flex justify-center">
               <p class="text-sm text-slate-600 dark:text-slate-300">
                 Já tem uma conta?
-                <a href="./login.html" class="text-sm text-primary-500 hover:underline">Entrar</a>
+                <a href="{{ route('login') }}" class="text-sm text-primary-500 hover:underline">Entrar</a>
               </p>
             </div>
           </div>
