@@ -188,7 +188,7 @@
             <ul class="sidebar-submenu ">
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('users.index') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('user.list') ? 'active' : '' }}">
                         List</a>
                 </li>
