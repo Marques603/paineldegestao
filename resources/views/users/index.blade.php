@@ -1,7 +1,7 @@
 <x-app-layout>
     <!-- Page Title Starts -->
   
-  <x-page-title page="User" header="Lista de usuários" />
+  <x-page-title page="Usuários" header="Lista de Usuários" />
 
   <!-- Page Title Ends -->
 
@@ -106,7 +106,7 @@
                     <h6 class="whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-100">
                       {{ $user->name }}
                     </h6>
-                    <p class="truncate text-xs text-slate-500 dark:text-slate-400">alterar depois setor</p>
+                    <p class="truncate text-xs text-slate-500 dark:text-slate-400">alterar depois</p>
                   </div>
                 </div>
               </td>
