@@ -369,22 +369,22 @@
             </a>
             <ul class="sidebar-submenu">
                 <li>
-                    <a href="{{ route('authentication.login') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('authentication.login') ? 'active' : '' }}">Login</a>
+                    <a href="{{ route('login') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('login') ? 'active' : '' }}">Login</a>
                 </li>
                 <li>
-                    <a href="{{ route('authentication.register') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('authentication.register') ? 'active' : '' }}">
+                    <a href="{{ route('register') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('register') ? 'active' : '' }}">
                         Register </a>
                 </li>
                 <li>
-                    <a href="{{ route('authentication.recover.password') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('authentication.recover.password') ? 'active' : '' }}">
+                    <a href="{{ route('password.request') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('password.request') ? 'active' : '' }}">
                         Forgot Password </a>
                 </li>
                 <li>
-                    <a href="{{ route('authentication.reset.password') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('authentication.reset.password') ? 'active' : '' }}">
+                    <a href="{{ route('password.request') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('reset.password') ? 'active' : '' }}">
                         Reset Password </a>
                 </li>
             </ul>
