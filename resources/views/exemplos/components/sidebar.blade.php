@@ -24,7 +24,7 @@
 
         <li>
             <a href="javascript:void(0);"
-                class="sidebar-menu  {{ request()->routeIs('dashboard', '#') ? 'active' : '' }}">
+                class="sidebar-menu  {{ request()->routeIs('dashboard', 'ecommerce.report') ? 'active' : '' }}">
                 <span class="sidebar-menu-icon">
                     <i data-feather="home"></i>
                 </span>
@@ -35,12 +35,12 @@
             </a>
             <ul class="sidebar-submenu">
                 <li>
-                    <a href="#"
+                    <a href="{{ route('dashboard') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">Analytics</a>
                 </li>
                 <li>
-                    <a href="#  "
-                        class="sidebar-submenu-item {{ request()->routeIs('#') ? 'active' : '' }}">Ecommerce</a>
+                    <a href="{{ route('ecommerce.report') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('ecommerce.report') ? 'active' : '' }}">Ecommerce</a>
                 </li>
             </ul>
         </li>
@@ -51,7 +51,7 @@
         <!-- Email -->
 
         <li>
-            <a href="#" class="sidebar-menu {{ request()->routeIs('email') ? 'active' : '' }}">
+            <a href="{{ route('email') }}" class="sidebar-menu {{ request()->routeIs('email') ? 'active' : '' }}">
                 <span class="sidebar-menu-icon">
                     <i data-feather="mail"></i>
                 </span>
@@ -63,7 +63,7 @@
         <!-- Chat -->
 
         <li>
-            <a href="#" class="sidebar-menu {{ request()->routeIs('chat') ? 'active' : '' }}">
+            <a href="{{ route('chat') }}" class="sidebar-menu {{ request()->routeIs('chat') ? 'active' : '' }}">
                 <span class="sidebar-menu-icon">
                     <i data-feather="message-square"></i>
                 </span>
@@ -75,7 +75,7 @@
         <!-- Calendar -->
 
         <li>
-            <a href="#"
+            <a href="{{ route('calendar') }}"
                 class="sidebar-menu {{ request()->routeIs('calendar') ? 'active' : '' }}">
                 <span class="sidebar-menu-icon">
                     <i data-feather="calendar"></i>
@@ -102,14 +102,14 @@
 
             <ul class="sidebar-submenu">
                 <li>
-                    <a href="#"
+                    <a href="{{ route('invoice.create') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('invoice.create') ? 'active' : '' }}">
                         Create
                     </a>
                 </li>
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('invoice.details') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('invoice.details') ? 'active' : '' }}">
                         Details
                     </a>
@@ -136,35 +136,35 @@
             <ul class="sidebar-submenu">
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('product.index') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('product.index') ? 'active' : '' }}">
                         Product List </a>
                 </li>
 
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('product.edit') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('product.edit') ? 'active' : '' }}">
                         Product Edit </a>
                 </li>
 
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('order.index') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('order.index') ? 'active' : '' }}">
                         Order List </a>
                 </li>
 
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('order.show') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('order.show') ? 'active' : '' }}">
                         Order Details </a>
                 </li>
 
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('customer.index') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('customer.index') ? 'active' : '' }}">
                         Customer List </a>
                 </li>
@@ -188,12 +188,12 @@
             <ul class="sidebar-submenu ">
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('user.list') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('user.list') ? 'active' : '' }}">
                         List</a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('user.profile') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('user.profile') ? 'active' : '' }}">
                         Profile</a>
                 </li>
@@ -241,7 +241,7 @@
             <ul class="sidebar-submenu">
                 @foreach ($commonRoutes as $route => $name)
                     <li>
-                        <a href="#"
+                        <a href="{{ route($route) }}"
                             class="sidebar-submenu-item {{ request()->routeIs($route) ? 'active' : '' }}">
                             {{ $name }}
                         </a>
@@ -281,7 +281,7 @@
             <ul class="sidebar-submenu">
                 @foreach ($formRoutes as $route => $name)
                     <li>
-                        <a href="#"
+                        <a href="{{ route($route) }}"
                             class="sidebar-submenu-item {{ request()->routeIs($route) ? 'active' : '' }}">
                             {{ $name }}
                         </a>
@@ -304,12 +304,12 @@
             </a>
             <ul class="sidebar-submenu">
                 <li>
-                    <a href="#"
+                    <a href="{{ route('table.basic') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('table.basic') ? 'active' : '' }}">
                         Basic Table </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('table.data') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('table.data') ? 'active' : '' }}">
                         Data Table </a>
                 </li>
@@ -317,7 +317,7 @@
         </li>
         <!-- Charts  -->
         <li>
-            <a href="#"
+            <a href="{{ route('chart.index') }}"
                 class="sidebar-menu {{ request()->routeIs('chart.index') ? 'active' : '' }}">
                 <span class="sidebar-menu-icon">
                     <i data-feather="pie-chart"></i>
@@ -327,7 +327,7 @@
         </li>
         <!-- Icons-->
         <li>
-            <a href="#"
+            <a href="{{ route('icons.index') }}"
                 class="sidebar-menu {{ request()->routeIs('icons.index') ? 'active' : '' }}">
                 <span class="sidebar-menu-icon">
                     <i data-feather="italic"></i>
@@ -337,7 +337,7 @@
         </li>
         <!-- Typography-->
         <li>
-            <a href="#"
+            <a href="{{ route('typography.index') }}"
                 class="sidebar-menu {{ request()->routeIs('typography.index') ? 'active' : '' }}">
                 <span class="sidebar-menu-icon">
                     <i data-feather="type"></i>
@@ -369,21 +369,21 @@
             </a>
             <ul class="sidebar-submenu">
                 <li>
-                    <a href="#"
+                    <a href="{{ route('login') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('login') ? 'active' : '' }}">Login</a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('register') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('register') ? 'active' : '' }}">
                         Register </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('password.request') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('password.request') ? 'active' : '' }}">
                         Forgot Password </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('password.request') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('reset.password') ? 'active' : '' }}">
                         Reset Password </a>
                 </li>
@@ -403,32 +403,32 @@
             </a>
             <ul class="sidebar-submenu">
                 <li>
-                    <a href="#"
+                    <a href="{{ route('miscellaneous.starter') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('miscellaneous.starter') ? 'active' : '' }}">
                         Starter Page </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('miscellaneous.comming.soon') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('miscellaneous.comming.soon') ? 'active' : '' }}">
                         Coming Soon </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('miscellaneous.maintenance') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('miscellaneous.maintenance') ? 'active' : '' }}">
                         Maintenance </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('miscellaneous.404') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('miscellaneous.404') ? 'active' : '' }}">
                         Error 404 </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('miscellaneous.500') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('miscellaneous.500') ? 'active' : '' }}">
                         Error 500 </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('miscellaneous.403') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('miscellaneous.403') ? 'active' : '' }}">
                         Not Authorized </a>
                 </li>
