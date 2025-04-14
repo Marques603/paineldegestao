@@ -13,27 +13,32 @@ use App\Http\Controllers\UserController;
 |
 */
 
-/** 
- * Rotas protegidas: somente usuários autenticados podem acessar.
- */
+// Rotas protegidas: somente usuários autenticados podem acessar.
+
 Route::middleware(['auth'])->group(function () {
 
-    // Dashboard principal e demais views internas
-    Route::view('/', 'dashboard.index')->name('dashboard');
+   // Dashboard principal e demais views internas
+   Route::view('/', 'dashboard.index')->name('dashboard'); 
+   // Exibe o painel principal após o login (visão geral do sistema)
 
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');  
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');   
-    Route::post('/users/create', [UserController::class, 'store'])->name('users.store');   
-    
-    Route::get('/users/{user}', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+   // Rotas de usuários (CRUD)
 
-    Route::put('/users/{user}/profile', [UserController::class, 'updateProfile'])->name('users.updateProfile');
-    Route::put('/users/{user}/interests', [UserController::class, 'updateInterests'])->name('users.updateInterests');
-    
-    Route::put('/users/{user}/roles', [UserController::class, 'updateRoles'])->name('users.updateRoles');
-    
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+   Route::get('/users', [UserController::class, 'index'])->name('users.index'); 
+   // Lista todos os usuários cadastrados no sistema
 
-    
+   Route::get('/users/create', [UserController::class, 'create'])->name('users.create');   
+   // Exibe o formulário para cadastrar um novo usuário
+
+   Route::post('/users/create', [UserController::class, 'store'])->name('users.store');   
+   // Processa os dados enviados pelo formulário e salva o novo usuário
+
+   Route::get('/users/{user}', [UserController::class, 'edit'])->name('users.edit');
+   // Exibe o formulário de edição para um usuário específico
+
+   Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+   // Atualiza os dados de um usuário após edição
+
+   Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+   // Remove o usuário selecionado do banco de dados
+
 });

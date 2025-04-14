@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -33,7 +32,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
      * @return array<string, string>
      */
@@ -44,16 +43,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function profile()
-    {
-        return $this->hasOne(UserProfile::class);
-    }
-    public function interests()
-    {
-        return $this->hasMany(UserInterest::class);
-    }
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
+    public function getAvatarUrlAttribute()
+{
+    return $this->avatar ? asset('storage/' . $this->avatar) : asset('images/default-avatar.png');
+}
 }
