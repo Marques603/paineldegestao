@@ -85,21 +85,9 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-/**
- * Rotas de Autenticação: 
- * Acesso a telas de login, registro, recuperação e redefinição de senha não requer autenticação.
- */
-Route::prefix('authentication')->name('authentication.')->group(function () {
-    Route::view('login', 'dashboard.authentication.login')->name('login');
-    Route::view('register', 'dashboard.authentication.register')->name('register');
-    Route::view('recover-password', 'dashboard.authentication.recover-password')->name('recover.password');
-    Route::view('reset-password', 'dashboard.authentication.reset-password')->name('reset.password');
-});
 
-/**
- * Rotas públicas diversas (Miscellaneous)
- */
-Route::prefix('miscellaneous')->name('miscellaneous.')->group(function () {
+// Rotas públicas diversas (Miscellaneous)
+    Route::prefix('miscellaneous')->name('miscellaneous.')->group(function () {
     Route::view('starter', 'dashboard.miscellaneous.starter')->name('starter');
     Route::view('comming-soon', 'dashboard.miscellaneous.comming-soon')->name('comming.soon');
     Route::view('maintenance', 'dashboard.miscellaneous.maintenance')->name('maintenance');

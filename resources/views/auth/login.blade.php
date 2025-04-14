@@ -72,7 +72,7 @@
                 />
                 <label for="remember-me" class="label">Lembrar-me</label>
               </div>
-              <a href="#" class="text-sm text-primary-500 hover:underline">Esqueceu sua senha</a>
+              <a href="{{route('password.request')}}" class="text-sm text-primary-500 hover:underline">Esqueceu sua senha</a>
             </div>
             <!-- Login Button -->
             <div class="mt-8">
