@@ -10,34 +10,29 @@
 
     <div class="dropdown-content mt-1 w-56 divide-y dark:divide-slate-600">
         <div class="px-4 py-3">
-            <p class="text-sm">Signed in as</p>
-            <p class="truncate text-sm font-medium">admin@example.com</p>
+            <p class="text-sm">Conectado como</p>
+            <p class="truncate text-sm font-medium">{{auth ()->user()->email }}</p>
         </div>
         <div class="py-1">
             <a href="javascript:void(0)" class="dropdown-link">
                 <i width="18" height="18" data-feather="user"
                     class="text-slate-500"></i>
-                <span>Profile</span>
+                <span>Perfil</span>
             </a>
             <a href="javascript:void(0)" class="dropdown-link">
                 <i width="18" height="18" data-feather="settings"
                     class="text-slate-500"></i>
-                <span>Settings</span>
-            </a>
-            <a href="javascript:void(0)" class="dropdown-link">
-                <i width="18" height="18" data-feather="help-circle"
-                    class="text-slate-500"></i>
-                <span>Support</span>
+                <span>Configurações</span>
             </a>
         </div>
         <div class="py-1">
-            <form method="POST" action="#">
+             <form method="POST" action="{{ route('logout') }}">
+                   @csrf
                 <button type="submit" class="dropdown-btn">
-                    <i width="18" height="18" data-feather="log-out"
-                        class="text-slate-500"></i>
-                    <span>Sign out</span>
-                </button>
-            </form>
-        </div>
+                    <i width="18" height="18" data-feather="log-out" class="text-slate-500"></i>
+                <span>Sair</span>
+        </button>
+    </form>
+</div>
     </div>
 </div>

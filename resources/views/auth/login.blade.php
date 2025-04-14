@@ -10,12 +10,7 @@
       name="description"
       content="Admin Toolkit is a modern admin dashboard template based on Tailwindcss. It comes with a variety of useful ui components and pre-built pages"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
     <script>
       if (
@@ -37,7 +32,7 @@
           <div class="card-body px-10 py-12">
             <div class="flex flex-col items-center justify-center">
                 <x-application-logo class=" fill-current text-gray-500" />
-                <h5 class="mt-4">Bem vindo</h5>
+                <h5 class="mt-4">Login</h5>
               <p class="text-sm text-slate-500 dark:text-slate-400">Olá Bem vindo</p>
             </div>
 
@@ -47,7 +42,7 @@
               @csrf
               <div>
                 <label name="name"  class="label mb-1">E-mail</label>
-                <input name="email" type="text" class="input" placeholder="Digite seu e-mail" value="{{ old('email')}}"/>
+                <input name="email" type="email" class="input" placeholder="Digite seu e-mail" value="{{ old('email')}}"/>
               
                <!-- Exibe a mensagem de erro se houver erro de validação -->
                @error('email')

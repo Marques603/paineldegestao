@@ -7,73 +7,88 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Aqui registramos as rotas da aplicação que serão carregadas pelo
+| RouteServiceProvider e ficam no grupo "web".
 |
 */
 
-Route::view('/', 'dashboard.index')->name('dashboard');
-Route::view('email', 'dashboard.email.index')->name('email');
-Route::view('chat', 'dashboard.chat.index')->name('chat');
-Route::view('calendar', 'dashboard.calendar.index')->name('calendar');
-Route::view('invoice-create', 'dashboard.invoice.create')->name('invoice.create');
-Route::view('invoice-details', 'dashboard.invoice.details')->name('invoice.details');
-Route::view('ecommerce-report', 'dashboard.ecommerce.index')->name('ecommerce.report');
-Route::view('product', 'dashboard.product.index')->name('product.index');
-Route::view('product/edit', 'dashboard.product.edit')->name('product.edit');
-Route::view('order', 'dashboard.order.index')->name('order.index');
-Route::view('order/show', 'dashboard.order.show')->name('order.show');
-Route::view('customer', 'dashboard.customer.index')->name('customer.index');
-Route::view('chart', 'dashboard.chart.index')->name('chart.index');
-Route::view('icons', 'dashboard.icons.index')->name('icons.index');
-Route::view('typography', 'dashboard.typography.index')->name('typography.index');
+/** 
+ * Rotas protegidas: somente usuários autenticados podem acessar.
+ */
+Route::middleware(['auth'])->group(function () {
 
-Route::prefix('common')->name('common.')->group(function () {
-    Route::view('accordion', 'dashboard.common.accordion')->name('accordion');
-    Route::view('alert', 'dashboard.common.alert')->name('alert');
-    Route::view('avatar', 'dashboard.common.avatar')->name('avatar');
-    Route::view('badge', 'dashboard.common.badge')->name('badge');
-    Route::view('button', 'dashboard.common.button')->name('button');
-    Route::view('card', 'dashboard.common.card')->name('card');
-    Route::view('carousel', 'dashboard.common.carousel')->name('carousel');
-    Route::view('drawer', 'dashboard.common.drawer')->name('drawer');
-    Route::view('dropdown', 'dashboard.common.dropdown')->name('dropdown');
-    Route::view('list-group', 'dashboard.common.list-group')->name('list.group');
-    Route::view('modal', 'dashboard.common.modal')->name('modal');
-    Route::view('pagination', 'dashboard.common.pagination')->name('pagination');
-    Route::view('progress-bar', 'dashboard.common.progress-bar')->name('progress.bar');
-    Route::view('spinner', 'dashboard.common.spinner')->name('spinner');
-    Route::view('tabs', 'dashboard.common.tabs')->name('tabs');
-    Route::view('toast', 'dashboard.common.toast')->name('toast');
-    Route::view('tooltip', 'dashboard.common.tooltip')->name('tooltip');
-    Route::view('skeleton', 'dashboard.common.skeleton')->name('skeleton');
+    // Dashboard principal e demais views internas
+    Route::view('/', 'dashboard.index')->name('dashboard');
+    Route::view('email', 'dashboard.email.index')->name('email');
+    Route::view('chat', 'dashboard.chat.index')->name('chat');
+    Route::view('calendar', 'dashboard.calendar.index')->name('calendar');
+    Route::view('invoice-create', 'dashboard.invoice.create')->name('invoice.create');
+    Route::view('invoice-details', 'dashboard.invoice.details')->name('invoice.details');
+    Route::view('ecommerce-report', 'dashboard.ecommerce.index')->name('ecommerce.report');
+    Route::view('product', 'dashboard.product.index')->name('product.index');
+    Route::view('product/edit', 'dashboard.product.edit')->name('product.edit');
+    Route::view('order', 'dashboard.order.index')->name('order.index');
+    Route::view('order/show', 'dashboard.order.show')->name('order.show');
+    Route::view('customer', 'dashboard.customer.index')->name('customer.index');
+    Route::view('chart', 'dashboard.chart.index')->name('chart.index');
+    Route::view('icons', 'dashboard.icons.index')->name('icons.index');
+    Route::view('typography', 'dashboard.typography.index')->name('typography.index');
+
+    // Componentes Comuns
+    Route::prefix('common')->name('common.')->group(function () {
+        Route::view('accordion', 'dashboard.common.accordion')->name('accordion');
+        Route::view('alert', 'dashboard.common.alert')->name('alert');
+        Route::view('avatar', 'dashboard.common.avatar')->name('avatar');
+        Route::view('badge', 'dashboard.common.badge')->name('badge');
+        Route::view('button', 'dashboard.common.button')->name('button');
+        Route::view('card', 'dashboard.common.card')->name('card');
+        Route::view('carousel', 'dashboard.common.carousel')->name('carousel');
+        Route::view('drawer', 'dashboard.common.drawer')->name('drawer');
+        Route::view('dropdown', 'dashboard.common.dropdown')->name('dropdown');
+        Route::view('list-group', 'dashboard.common.list-group')->name('list.group');
+        Route::view('modal', 'dashboard.common.modal')->name('modal');
+        Route::view('pagination', 'dashboard.common.pagination')->name('pagination');
+        Route::view('progress-bar', 'dashboard.common.progress-bar')->name('progress.bar');
+        Route::view('spinner', 'dashboard.common.spinner')->name('spinner');
+        Route::view('tabs', 'dashboard.common.tabs')->name('tabs');
+        Route::view('toast', 'dashboard.common.toast')->name('toast');
+        Route::view('tooltip', 'dashboard.common.tooltip')->name('tooltip');
+        Route::view('skeleton', 'dashboard.common.skeleton')->name('skeleton');
+    });
+
+    // Rotas de Formulários
+    Route::prefix('form')->name('form.')->group(function () {
+        Route::view('input', 'dashboard.form.input')->name('input');
+        Route::view('input-group', 'dashboard.form.input-group')->name('input.group');
+        Route::view('textarea', 'dashboard.form.textarea')->name('textarea');
+        Route::view('checkbox', 'dashboard.form.checkbox')->name('checkbox');
+        Route::view('radio', 'dashboard.form.radio')->name('radio');
+        Route::view('toggle', 'dashboard.form.toggle')->name('toggle');
+        Route::view('select', 'dashboard.form.select')->name('select');
+        Route::view('datepicker', 'dashboard.form.datepicker')->name('datepicker');
+        Route::view('editor', 'dashboard.form.editor')->name('editor');
+        Route::view('uploader', 'dashboard.form.uploader')->name('uploader');
+        Route::view('layout', 'dashboard.form.form-layout')->name('layout');
+        Route::view('validation', 'dashboard.form.form-validation')->name('validation');
+    });
+
+    // Rotas de Usuário
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::view('list', 'dashboard.user.list')->name('list');
+        Route::view('profile', 'dashboard.user.profile')->name('profile');
+    });
+
+    // Rotas de Tabelas
+    Route::prefix('table')->name('table.')->group(function () {
+        Route::view('basic', 'dashboard.table.basic')->name('basic');
+        Route::view('data', 'dashboard.table.data')->name('data');
+    });
 });
 
-Route::prefix('form')->name('form.')->group(function () {
-    Route::view('input', 'dashboard.form.input')->name('input');
-    Route::view('input-group', 'dashboard.form.input-group')->name('input.group');
-    Route::view('textarea', 'dashboard.form.textarea')->name('textarea');
-    Route::view('checkbox', 'dashboard.form.checkbox')->name('checkbox');
-    Route::view('radio', 'dashboard.form.radio')->name('radio');
-    Route::view('toggle', 'dashboard.form.toggle')->name('toggle');
-    Route::view('select', 'dashboard.form.select')->name('select');
-    Route::view('datepicker', 'dashboard.form.datepicker')->name('datepicker');
-    Route::view('editor', 'dashboard.form.editor')->name('editor');
-    Route::view('uploader', 'dashboard.form.uploader')->name('uploader');
-    Route::view('layout', 'dashboard.form.form-layout')->name('layout');
-    Route::view('validation', 'dashboard.form.form-validation')->name('validation');
-});
-
-Route::prefix('user')->name('user.')->group(function () {
-    Route::view('list', 'dashboard.user.list')->name('list');
-    Route::view('profile', 'dashboard.user.profile')->name('profile');
-});
-Route::prefix('table')->name('table.')->group(function () {
-    Route::view('basic', 'dashboard.table.basic')->name('basic');
-    Route::view('data', 'dashboard.table.data')->name('data');
-});
-
+/**
+ * Rotas de Autenticação: 
+ * Acesso a telas de login, registro, recuperação e redefinição de senha não requer autenticação.
+ */
 Route::prefix('authentication')->name('authentication.')->group(function () {
     Route::view('login', 'dashboard.authentication.login')->name('login');
     Route::view('register', 'dashboard.authentication.register')->name('register');
@@ -81,6 +96,9 @@ Route::prefix('authentication')->name('authentication.')->group(function () {
     Route::view('reset-password', 'dashboard.authentication.reset-password')->name('reset.password');
 });
 
+/**
+ * Rotas públicas diversas (Miscellaneous)
+ */
 Route::prefix('miscellaneous')->name('miscellaneous.')->group(function () {
     Route::view('starter', 'dashboard.miscellaneous.starter')->name('starter');
     Route::view('comming-soon', 'dashboard.miscellaneous.comming-soon')->name('comming.soon');
