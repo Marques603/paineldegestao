@@ -6,6 +6,25 @@
 
   <!-- Page Title Ends -->
 
+  @if(session('status'))
+  <div class="toastify on toastify-success toastify-right toastify-top fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded-lg shadow-lg z-50 flex items-center gap-2" aria-live="polite" style="transform: translate(0px);">
+    <!-- Ícone de Sucesso -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check w-6 h-6 text-white">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+
+    <!-- Texto da Notificação -->
+    <p class="text-sm font-semibold">{{ session('status') }}</p>
+
+    <!-- Botão de Fechar -->
+    <button class="ml-4 text-white" onclick="document.getElementById('toast').remove()">
+      <i class="feather-icon h-4 w-4">×</i>
+    </button>
+  </div>
+@endif
+
+
+  
     <!-- User List Starts -->
     <div class="space-y-4">
       <!-- User Header Starts -->

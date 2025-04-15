@@ -79,3 +79,22 @@ feather.replace();
 
 // Polyfill para ResizeObserver
 window.ResizeObserver = ResizeObserver;
+
+// Inicialização do toats
+// Verifica se o elemento existe antes de adicionar o evento
+// Adiciona evento de clique para fechar o toast
+document.addEventListener('click', function(event) {
+    const toast = event.target.closest('.toast');
+    if (toast) {
+        toast.remove();
+    }
+});document.addEventListener('DOMContentLoaded', function() {
+    // Verificar se há uma notificação
+    const toast = document.getElementById('toast');
+    if (toast) {
+      // Remover a notificação após 3 segundos
+      setTimeout(function() {
+        toast.remove();
+      }, 3000); // 3000ms = 3 segundos
+    }
+  });
