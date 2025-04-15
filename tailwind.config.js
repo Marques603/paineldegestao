@@ -4,6 +4,8 @@ import forms from '@tailwindcss/forms';
 import variables from '@mertasan/tailwindcss-variables';
 import typography from '@tailwindcss/typography';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import flowbitePlugin from 'flowbite/plugin';
+
 
 export const themeColors = {
     primary: colors.blue,
@@ -21,6 +23,7 @@ export default {
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
     "./resources/**/*.vue",
+    "./node_modules/flowbite/**/*.js", 
   ],
   theme: {
     fontFamily: {
@@ -144,6 +147,7 @@ export default {
       }),
     },
   },
-  plugins: [forms, variables, typography],
+  plugins: [forms, variables, typography,flowbitePlugin],
+  
 }
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -19,7 +18,7 @@ class UserController extends Controller
             });
         });
 
-        $users = $users->paginate(8);
+        $users = $users->paginate(10);
 
         return view('users.index', compact('users'));
     }
@@ -55,14 +54,13 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        Gate::authorize('edit', $user::class);
-
+        
         return view('users.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
     {
-        Gate::authorize('edit', $user::class);
+        
 
         $input = $request->validate([
             'name' => 'required',
@@ -77,7 +75,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        Gate::authorize('destroy', $user::class);
+        
 
         $user->delete();
         return redirect()->route('users.index')->with('status', 'Usuario removido com sucesso.');

@@ -1,6 +1,6 @@
 <x-app-layout>
     <!-- Page Title Starts -->
-    <x-page-title page="Usuários" pageUrl="{{ route('users.index') }}" header="Criar Usuário" />
+    <x-page-title page="Lista de Usuários" pageUrl="{{ route('users.index') }}" header="Criar Usuário" />
     <!-- Page Title Ends -->
 
     <!-- User Profile Start  -->
