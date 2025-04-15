@@ -3,7 +3,6 @@ import '@fortawesome/fontawesome-free/js/all';
 import feather from 'feather-icons';
 import ResizeObserver from 'resize-observer-polyfill';
 import 'simplebar';
-import 'flowbite';
 import './bootstrap';
 
 // Utilitário para carregar scripts dinamicamente baseado na rota
