@@ -130,10 +130,10 @@
       </a>
     </li>
     <li class="dropdown-list-item">
-      <a href="javascript:void(0)" 
-         data-modal-target="deleteModal-{{ $user->id }}" 
-         data-modal-toggle="deleteModal-{{ $user->id }}" 
-         class="dropdown-link">
+      <a href="javascript:void(0)"
+         class="dropdown-link"
+         data-toggle="modal"
+         data-target="#deleteModal-{{ $user->id }}">
         <i class="h-5 text-slate-400" data-feather="trash"></i>
         <span>Excluir</span>
       </a>
@@ -141,39 +141,41 @@
   </ul>
 </div>
 
+
 <!-- Modal de Confirmação de Exclusão -->
-<div id="deleteModal-{{ $user->id }}" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-    <div class="relative w-full max-w-md h-full md:h-auto">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-800 p-5 text-center">
-            <!-- Botão de Fechar -->
-            <button type="button" class="absolute top-2.5 right-2.5 text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg text-sm p-1.5" data-modal-toggle="deleteModal-{{ $user->id }}">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                <span class="sr-only">Close modal</span>
-            </button>
-            
-            <!-- Ícone do Modal -->
-            <svg class="mx-auto mb-4 w-12 h-12 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zm-2 6a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
-            
-            <p class="mb-4 text-gray-500 dark:text-gray-300">Tem certeza de que deseja excluir <strong>{{ $user->name }}</strong>?</p>
-            
-            <div class="flex justify-center gap-4">
-                <!-- Botão de Cancelar -->
-                <button data-modal-toggle="deleteModal-{{ $user->id }}" type="button" class="py-2 px-4 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-2 focus:ring-primary-300 dark:bg-gray-700 dark:text-white dark:border-gray-500 dark:hover:bg-gray-600">
-                    Cancelar
-                </button>
-                
-                <!-- Formulário de Exclusão -->
-                <form method="POST" action="{{ route('users.destroy', $user) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="py-2 px-4 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
-                        Sim, excluir
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
+<div class="modal modal-centered" id="deleteModal-{{ $user->id }}">
+  <div class="modal-dialog modal-dialog-centered"> <!-- Centralizando o modal -->
+      <div class="modal-content">
+          <div class="modal-header">
+              <div class="flex items-center justify-between">
+                  <h6>Confirmação</h6>
+                  <button type="button" class="btn btn-plain-secondary" data-dismiss="modal">
+                      <i data-feather="x" width="1.5rem" height="1.5rem"></i>
+                  </button>
+              </div>
+          </div>
+          <div class="modal-body">
+              <p class="text-sm text-slate-500 dark:text-slate-300">
+                  Tem certeza que deseja excluir <strong>{{ $user->name }}</strong>?
+              </p>
+          </div>
+          <div class="modal-footer flex justify-center">
+              <!-- Centralizando os botões -->
+              <div class="flex items-center justify-center gap-4">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <form method="POST" action="{{ route('users.destroy', $user) }}">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger">Sim, excluir</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
+
+
+
 
                   </div>
                 </div>

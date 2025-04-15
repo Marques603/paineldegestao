@@ -1,65 +1,43 @@
- 
-//Third party packages
+// Third party packages
 import '@fortawesome/fontawesome-free/js/all';
 import feather from 'feather-icons';
 import ResizeObserver from 'resize-observer-polyfill';
 import 'simplebar';
 import 'flowbite';
-
-
 import './bootstrap';
 
-if (window.currentRoute === 'ecommerce.report') {
-    import('./custom/ecommerce.js').then(module => {
-    }).catch(error => console.error("Error loading ecommerce.js:", error));
-} else if (window.currentRoute === 'dashboard') {
-    import('./custom/analytics.js').then(module => {
-    }).catch(error => console.error("Error loading analytics.js:", error));
-} else if (window.currentRoute === 'calendar') {
-    import('./custom/calendar.js').then(module => {
-    }).catch(error => console.error("Error loading calendar.js:", error));
-} else if (window.currentRoute === 'chat') {
-    import('./custom/chat.js').then(module => {
-    }).catch(error => console.error("Error loading chat.js:", error));
-} else if (window.currentRoute === 'email') {
-    import('./custom/email.js').then(module => {
-    }).catch(error => console.error("Error loading email.js:", error));
-}else if (window.currentRoute === 'invoice.create') {
-    import('./custom/invoice-create.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-} else if (window.currentRoute === 'table.data') {
-    import('./custom/data-table.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-} else if (window.currentRoute === 'chart.index') {
-    import('./custom/apex-charts.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-} else if (window.currentRoute === 'form.datepicker') {
-    import('./custom/datepicker.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-}  else if (window.currentRoute === 'form.editor') {
-    import('./custom/editor.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-} else if (window.currentRoute === 'form.uploader') {
-    import('./custom/uploader.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-} else if (window.currentRoute === 'form.validation') {
-    import('./custom/form-validation.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-} else if (window.currentRoute === 'common.toast') {
-    import('./custom/toast.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-} else if (window.currentRoute === 'common.modal') {
-    import('./custom/modal.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-} else if (window.currentRoute === 'common.drawer') {
-    import('./custom/drawer.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-}  else if (window.currentRoute === 'common.carousel') {
-    import('./custom/carousel.js').then(module => {
-    }).catch(error => console.error("Error loading invoice-create.js:", error));
-} 
+// Utilitário para carregar scripts dinamicamente baseado na rota
+function loadScriptForRoute(route, path) {
+    if (window.currentRoute === route) {
+        import(path).catch(error => console.error(`Error loading ${path}:`, error));
+    }
+}
 
-//Core components
+// Scripts dinâmicos por rota
+const routeScripts = {
+    'ecommerce.report': './custom/ecommerce.js',
+    'dashboard': './custom/analytics.js',
+    'calendar': './custom/calendar.js',
+    'chat': './custom/chat.js',
+    'email': './custom/email.js',
+    'invoice.create': './custom/invoice-create.js',
+    'table.data': './custom/data-table.js',
+    'chart.index': './custom/apex-charts.js',
+    'form.datepicker': './custom/datepicker.js',
+    'form.editor': './custom/editor.js',
+    'form.uploader': './custom/uploader.js',
+    'form.validation': './custom/form-validation.js',
+    'common.toast': './custom/toast.js',
+    'common.modal': './custom/modal.js',
+    'common.drawer': './custom/drawer.js',
+    'common.carousel': './custom/carousel.js',
+};
+
+if (window.currentRoute && routeScripts[window.currentRoute]) {
+    loadScriptForRoute(window.currentRoute, routeScripts[window.currentRoute]);
+}
+
+// Core components (importados e inicializados diretamente)
 import accordion from './components/accordion';
 import alert from './components/alert';
 import carousel from './components/carousel';
@@ -78,59 +56,27 @@ import themeSwitcher from './components/theme-switcher';
 import tooltip from './components/tooltip';
 import uploader from './components/uploader';
 
-// Initialize searchModal
+// Inicialização global dos componentes
 searchModal.init();
-
-// Initialize themeSwitcher
 themeSwitcher.init();
-
-// Initialize codeViewer
 codeViewer.init();
-
-// Initialize alert
 alert.init();
-
-// Initialize accordion
 accordion.init();
-
-// Initialize dropdown
 dropdown.init();
-
-// Initialize modal
 modal.init();
-
-// Initialize sidebar
 sidebar.init();
-
-// Initialize tabs
 tabs.init();
-
-// Initialize Tooltip
 tooltip.init();
-
-// Initialize carousel
 carousel.init();
-
-// Initialize editor
 editor.init();
-
-// Initialize select
 select.init();
-
-// Initialize uploader
 uploader.init();
-
-// Initialize datepicker
 datepicker.init();
-
-// Initialize drawer
 drawer.init();
-
-// Initialize checkAll
 checkAll.init();
 
-// Initialize feather-icons. Must be Initialize at the end.
+// Inicialização de feather icons (deve vir por último)
 feather.replace();
 
-// Polyfill for ResizeObserver
+// Polyfill para ResizeObserver
 window.ResizeObserver = ResizeObserver;
