@@ -175,12 +175,12 @@
         <!-- Users -->
         <li>
             <a href="javascript:void(0);"
-                class="sidebar-menu {{ request()->routeIs(['user.list', 'user.profile']) ? 'active' : '' }}">
+                class="sidebar-menu {{ request()->routeIs(['users.index', 'users.create']) ? 'active' : '' }}">
 
                 <span class="sidebar-menu-icon">
                     <i data-feather="users"></i>
                 </span>
-                <span class="sidebar-menu-text">Users</span>
+                <span class="sidebar-menu-text">Gestão Usuários</span>
                 <span class="sidebar-menu-arrow">
                     <i data-feather="chevron-right"></i>
                 </span>
@@ -189,13 +189,13 @@
 
                 <li>
                     <a href="{{ route('users.index') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('user.list') ? 'active' : '' }}">
-                        List</a>
+                        class="sidebar-submenu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                        Usuários</a>
                 </li>
                 <li>
-                    <a href="#"
-                        class="sidebar-submenu-item {{ request()->routeIs('user.profile') ? 'active' : '' }}">
-                        Profile</a>
+                    <a href="{{ route('users.create') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('users.create') ? 'active' : '' }}">
+                        Adicionar Usuários</a>
                 </li>
 
             </ul>
