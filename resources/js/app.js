@@ -95,6 +95,6 @@ document.addEventListener('click', function(event) {
       // Remover a notificação após 3 segundos
       setTimeout(function() {
         toast.remove();
-      }, 3000); // 3000ms = 3 segundos
+      }, 2000); // 3000ms = 3 segundos
     }
   });

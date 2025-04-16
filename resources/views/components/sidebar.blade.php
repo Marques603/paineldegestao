@@ -8,11 +8,11 @@
 
             <div class="sidebar-logo-text">
                 <h1 class="flex text-xl">
-                    <span class="font-bold text-slate-800 dark:text-slate-200"> Admin </span>
-                    <span class="font-semibold text-primary-500">Toolkit</span>
+                    <span class="font-bold text-slate-800 dark:text-slate-200"> Ap </span>
+                    <span class="font-semibold text-primary-500">pz</span>
                 </h1>
 
-                <p class="whitespace-nowrap text-xs text-slate-400">Simple &amp; Customizable</p>
+                <p class="whitespace-nowrap text-xs text-slate-400"> ... &amp; ...</p>
             </div>
         </div>
     </a>
@@ -180,7 +180,7 @@
                 <span class="sidebar-menu-icon">
                     <i data-feather="users"></i>
                 </span>
-                <span class="sidebar-menu-text">Gestão Usuários</span>
+                <span class="sidebar-menu-text">Gestão Tecnologia</span>
                 <span class="sidebar-menu-arrow">
                     <i data-feather="chevron-right"></i>
                 </span>
@@ -195,13 +195,18 @@
                 <li>
                     <a href="{{ route('users.create') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('users.create') ? 'active' : '' }}">
-                        Adicionar Usuários</a>
+                        Setores</a>
+                </li>
+                <li>
+                    <a href="{{ route('users.create') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('users.create') ? 'active' : '' }}">
+                        Setores</a>
                 </li>
 
             </ul>
         </li>
         <!--  Commponents  -->
-        <div class="sidebar-menu-header">Components</div>
+        <div class="sidebar-menu-header">Gestão Qualidade</div>
         <!-- Common  -->
         @php
             $commonRoutes = [
