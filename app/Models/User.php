@@ -44,7 +44,17 @@ class User extends Authenticatable
         ];
     }
     public function getAvatarUrlAttribute()
-{
-    return $this->avatar ? asset('storage/' . $this->avatar) : asset('images/default-avatar.png');
-}
+    {
+        return $this->avatar ? asset('storage/' . $this->avatar) : asset('images/default-avatar.png');
+    }
+    public function menus()
+    {
+        return $this->belongsToMany(Menu::class, 'menu_user');
+    }
+
+    public function submenus()
+    {
+        return $this->belongsToMany(Submenu::class, 'submenu_user');
+    }
+
 }

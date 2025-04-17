@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\SubmenuController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -40,5 +42,10 @@ Route::middleware(['auth'])->group(function () {
 
    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
    // Remove o usuário selecionado do banco de dados
+
+   Route::resource('menus', MenuController::class);
+   // Rotas de menus (CRUD)
+   Route::resource('submenus', SubmenuController::class);
+   // Rotas de submenus (CRUD)
 
 });

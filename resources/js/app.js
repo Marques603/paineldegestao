@@ -83,18 +83,44 @@ window.ResizeObserver = ResizeObserver;
 // Inicialização do toats
 // Verifica se o elemento existe antes de adicionar o evento
 // Adiciona evento de clique para fechar o toast
+// Remover toast manualmente ao clicar nele
 document.addEventListener('click', function(event) {
     const toast = event.target.closest('.toast');
     if (toast) {
         toast.remove();
     }
-});document.addEventListener('DOMContentLoaded', function() {
-    // Verificar se há uma notificação
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Remover toast automaticamente após 2 segundos
     const toast = document.getElementById('toast');
     if (toast) {
-      // Remover a notificação após 3 segundos
-      setTimeout(function() {
-        toast.remove();
-      }, 2000); // 3000ms = 3 segundos
+        setTimeout(function () {
+            toast.remove();
+        }, 2000);
     }
-  });
+
+    // Abrir/fechar modal de ícones
+    const openBtn = document.getElementById('openIconPicker');
+    const closeBtn = document.getElementById('closeIconPicker');
+    const modal = document.getElementById('iconModal');
+    const iconButtons = document.querySelectorAll('.icon-button');
+    const iconInput = document.getElementById('iconeInput');
+
+    if (openBtn && modal) {
+        openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+    }
+
+    if (closeBtn && modal) {
+        closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    }
+
+    iconButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const selectedIcon = this.getAttribute('data-icon');
+            iconInput.value = selectedIcon;
+            modal.classList.add('hidden');
+            feather.replace(); // Atualiza os ícones
+        });
+    });
+});
