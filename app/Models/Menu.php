@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    protected $fillable = ['nome', 'icone', 'ativo'];
+
+protected $fillable = ['nome', 'descricao', 'icone', 'rota', 'status'];
+
 
     public function submenus()
     {

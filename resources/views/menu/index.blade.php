@@ -3,9 +3,9 @@
     <x-page-title page="Lista de Menus" header="Lista de Menus" />
     <!-- Page Title Ends -->
 
-    @if(session('status'))
+    @if(session('success'))
         <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded shadow-lg z-50" role="alert">
-            <p>{{ session('status') }}</p>
+            <p>{{ session('success') }}</p>
         </div>
     @endif
 
@@ -115,7 +115,11 @@
                             <td>{{ $menu->rota }}</td>
                             <td>{{ $menu->created_at }}</td>
                             <td>
-                                <div class="badge badge-soft-success">Ativo</div>
+                                @if($menu->ativo)
+                                    <div class="badge badge-soft-success">Ativo</div>
+                                @else
+                                    <div class="badge badge-soft-danger">Inativo</div>
+                                @endif
                             </td>
                             <td>
                                 <div class="flex justify-end">

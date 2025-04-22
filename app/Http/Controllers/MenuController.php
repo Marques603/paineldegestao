@@ -16,7 +16,7 @@ class MenuController extends Controller
 
         $menus = Menu::when($search, function ($query, $search) {
             return $query->where('nome', 'like', '%' . $search . '%');
-        })->paginate(10);
+        })->paginate(8);
 
         return view('menu.index', compact('menus'));
     }
@@ -27,6 +27,7 @@ class MenuController extends Controller
     public function create()
     {
         $featherIcons = $this->getFeatherIcons();
+        
         return view('menu.create', compact('featherIcons'));
     }
 
@@ -37,13 +38,19 @@ class MenuController extends Controller
     {
         $data = $request->validate([
             'nome' => 'required|string|max:255',
+            'descricao' => 'nullable|string|max:255',
             'icone' => 'nullable|string',
-            'ativo' => 'boolean',
+            'rota' => 'nullable|string|max:255', 
+            'ativo' => 'nullable|boolean',
         ]);
+
+        // Atribuindo status como 0 (inativo) se não estiver marcado
+    $data['ativo'] = $request->has('status') ? 1 : 0;
 
         Menu::create($data);
 
-        return redirect()->route('menus.index');
+        return redirect()->route('menus.index')->with('success', 'Menu criado com sucesso!');
+
     }
 
     /**
@@ -62,13 +69,18 @@ class MenuController extends Controller
     {
         $data = $request->validate([
             'nome' => 'required|string|max:255',
+            'descricao' => 'nullable|string|max:255',
             'icone' => 'nullable|string',
-            'ativo' => 'boolean',
+            'rota' => 'nullable|string|max:255',
+            'ativo' => 'nullable|boolean',
         ]);
+
+        
 
         $menu->update($data);
 
-        return redirect()->route('menus.index');
+        return redirect()->route('menus.index')->with('success', 'Menu Alterado com sucesso!');
+
     }
 
     /**
@@ -76,9 +88,13 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
+        if ($menu->submenus()->exists()) {
+            return back()->with('error', 'Não é possível excluir um menu que possui submenus associados.');
+        }
+    
         $menu->delete();
-
-        return back();
+    
+        return back()->with('success', 'Menu excluído com sucesso!');
     }
 
     /**

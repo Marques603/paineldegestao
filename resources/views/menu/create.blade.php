@@ -16,6 +16,26 @@
                   <h2 class="mt-4 text-[16px] font-medium text-center text-slate-700 dark:text-slate-200">Ícone do Menu</h2>
               </div>
           </div>
+
+
+                          <!-- Modal de seleção de ícones -->
+      <!-- Modal de seleção de ícones -->
+<div id="iconModal" class="mt-2 p-4 border rounded shadow-lg bg-white dark:bg-slate-800 hidden max-h-[300px] overflow-y-auto z-10">
+    <div class="flex justify-between items-center mb-3">
+        <h2 class="text-base font-semibold text-slate-700 dark:text-slate-100">Escolha um ícone</h2>
+        <button type="button" id="closeIconPicker" class="text-sm text-blue-500 hover:underline">Fechar</button>
+    </div>
+    <div class="grid grid-cols-6 gap-4">
+        @foreach ($featherIcons as $icon)
+            <button type="button" data-icon="{{ $icon }}"
+                    class="icon-button flex items-center justify-center p-2 border rounded hover:bg-slate-100 dark:hover:bg-slate-700">
+                <i data-feather="{{ $icon }}"></i>
+            </button>
+        @endforeach
+    </div>
+</div>
+
+  
       </section>
       
 
@@ -30,80 +50,58 @@
                       @csrf
                       @if(isset($menu)) @method('PUT') @endif
 
-                      <!-- Nome -->
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                          <label class="label">
-                              <span class="block mb-1">Nome do Menu</span>
-                              <input type="text" name="nome" class="input @error('nome') border-red-500 @enderror" 
-                                     value="{{ old('nome', $menu->nome ?? '') }}" />
-                              @error('nome')
-                                  <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                              @enderror
-                          </label>
-                      </div>
+                      <!-- Primeira linha: Nome | Ícone -->
+<!-- Primeira linha: Nome | Descrição -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <!-- Nome -->
+    <label class="label">
+        <span class="block mb-1">Nome do Menu</span>
+        <input type="text" name="nome" class="input @error('nome') border-red-500 @enderror" 
+               value="{{ old('nome', $menu->nome ?? '') }}" />
+        @error('nome')
+            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+        @enderror
+    </label>
 
-                      
+    <!-- Descrição -->
+    <label class="label">
+        <span class="block mb-1">Descrição</span>
+        <input type="text" name="descricao" class="input @error('descricao') border-red-500 @enderror" 
+               value="{{ old('descricao', $menu->descricao ?? '') }}" />
+        @error('descricao')
+            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+        @enderror
+    </label>
+</div>
 
-                      <!-- Ícone -->
-                      <div class="grid grid-cols-1 gap-3">
-                          <label class="label">
-                              <span class="block mb-1 text-slate-700 dark:text-slate-300 font-medium">
-                                  Ícone do Menu 
-                                  <span id="openIconPicker" class="ml-1 cursor-pointer text-blue-600 hover:underline">
-                                      (Feather Icon)
-                                  </span>
-                              </span>
-                              <input type="text" name="icone" id="iconeInput" readonly
-                                     class="input @error('icone') border-red-500 @enderror"
-                                     value="{{ old('icone', $menu->icone ?? '') }}"
-                                     placeholder="Clique no texto acima para escolher..." />
-                              @error('icone')
-                                  <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                              @enderror
-                          </label>
+<!-- Segunda linha: Ícone | Rota -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+    <!-- Ícone -->
+    <label class="label">
+        <span class="block mb-1 text-slate-700 dark:text-slate-300 font-medium">
+            Ícone do Menu 
+            <span id="openIconPicker" class="ml-1 cursor-pointer text-blue-600 hover:underline">
+                (Feather Icon)
+            </span>
+        </span>
+        <input type="text" name="icone" id="iconeInput" readonly
+               class="input @error('icone') border-red-500 @enderror"
+               value="{{ old('icone', $menu->icone ?? '') }}"
+               placeholder="Clique no texto acima para escolher..." />
+        @error('icone')
+            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+        @enderror
+    </label>
 
-                          
-                          <!-- Modal de seleção de ícones -->
-                          <div id="iconModal" class="mt-2 p-4 border rounded shadow-lg bg-white dark:bg-slate-800 hidden max-h-[100px] overflow-y-auto z-10">
-                              <div class="flex justify-between items-center mb-3">
-                                  <h2 class="text-base font-semibold text-slate-700 dark:text-slate-100">Escolha um ícone</h2>
-                                  <button type="button" id="closeIconPicker" class="text-sm text-blue-500 hover:underline">Fechar</button>
-                              </div>
-                              <div class="grid grid-cols-6 gap-4">
-                                  @foreach ($featherIcons as $icon)
-                                      <button type="button" data-icon="{{ $icon }}"
-                                              class="icon-button flex items-center justify-center p-2 border rounded hover:bg-slate-100 dark:hover:bg-slate-700">
-                                          <i data-feather="{{ $icon }}"></i>
-                                      </button>
-                                  @endforeach
-                              </div>
-                          </div>
-                      </div>
-
-                      <!-- Rota -->
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                          <label class="label">
-                              <span class="block mb-1">Rota do Menu</span>
-                              <input type="text" name="rota" class="input @error('rota') border-red-500 @enderror"
-                                     value="{{ old('rota', $menu->rota ?? '') }}" placeholder="ex: users.index" />
-                              @error('rota')
-                                  <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                              @enderror
-                          </label>
-                      </div>
-
-                      <!-- Descrição -->
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                          <label class="label">
-                              <span class="block mb-1">Descrição do Menu</span>
-                              <textarea name="descricao" class="input @error('descricao') border-red-500 @enderror"
-                                        placeholder="Descrição do menu...">{{ old('descricao', $menu->descricao ?? '') }}</textarea>
-                              @error('descricao')
-                                  <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                              @enderror
-                          </label>
-                      </div>
-
+    <!-- Rota -->
+    <label class="label">
+        <span class="block mb-1">Rota</span>
+        <input type="text" name="rota" class="input @error('rota') border-red-500 @enderror" 
+               value="{{ old('rota', $menu->rota ?? '') }}" />
+        @error('rota')
+            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+        @enderror
+                     </label>
                       <!-- Status -->
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <label class="label">
@@ -121,7 +119,7 @@
                                         {{ (old('status', $menu->status ?? 1) == 1) ? 'checked' : '' }}
                                     >
                                     <div class="toggle-body"></div>
-                                    <span class="label">{{ (old('status', $menu->status ?? 1) == 1) ? 'Ativo' : 'Inativo' }}</span>
+                                    <span class="label">{{ (old('status', $menu->ativo ?? 1) == 1) ? 'Ativo' : 'Inativo' }}</span>
                                 </label>
                             </div>
                     
