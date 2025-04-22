@@ -132,6 +132,40 @@
                   </form>
               </div>
           </div>
+<!-- Notification -->
+<div class="card">
+  <div class="card-body">
+      <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Menu</h2>
+      <p class="mb-4 text-sm font-normal text-slate-400">Atualize as informações do menu</p>
+
+      <label for="status" class="toggle my-2 flex items-center justify-between">
+          <div class="label">
+                 <p class="text-sm font-normal text-slate-400">
+                  Defina se este menu estará ativo ou inativo no sistema.
+              </p>
+          </div>
+          <div class="relative">
+              <input
+                  class="toggle-input peer sr-only"
+                  id="status"
+                  type="checkbox"
+                  name="status"
+                  value="1"
+                  {{ old('status', $menu->status ?? 1) == 1 ? 'checked' : '' }}
+              >
+              <div class="toggle-body"></div>
+          </div>
+      </label>
+
+      @error('status')
+          <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+      @enderror
+  </div>
+</div>
+
       </section>
+
+      
+
   </div>
 </x-app-layout>
