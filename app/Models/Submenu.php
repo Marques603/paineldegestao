@@ -6,16 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Submenu extends Model
 {
-    protected $fillable = ['nome', 'rota', 'ativo'];
+    // Definir os campos que podem ser preenchidos em massa
+    protected $fillable = ['nome', 'rota', 'ativo', 'descricao'];
 
+    /**
+     * Relacionamento muitos-para-muitos com Menu
+     */
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'menu_submenu');
     }
 
+    /**
+     * Relacionamento muitos-para-muitos com User
+     */
     public function users()
     {
         return $this->belongsToMany(User::class, 'submenu_user');
     }
-}
 
+    /**
+     * Acessor para verificar se o submenu está ativo
+     */
+    public function getAtivoAttribute($value)
+    {
+        return $value ? true : false;
+    }
+}
