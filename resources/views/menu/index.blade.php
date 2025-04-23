@@ -85,7 +85,7 @@
                             <input class="checkbox" type="checkbox" data-check-all data-check-all-target=".menu-checkbox" />
                         </th>
                         <th class="w-[30%] uppercase">Nome</th>
-                        <th class="w-[20%] uppercase">ID</th>
+                        <th class="w-[20%] uppercase">Submenus Associados</th>
                         <th class="w-[15%] uppercase">Rota</th>
                         <th class="w-[15%] uppercase">Data de Criação</th>
                         <th class="w-[15%] uppercase">Status</th>
@@ -115,7 +115,21 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>{{ $menu->id }}</td>
+
+                            @php
+                            $submenuCount = $menu->submenus->count();
+                            $submenuNames = $menu->submenus->pluck('nome')->join(', ');
+                            @endphp
+                            <td>
+                                <a
+                                    href="{{ route('menus.edit', $menu->id) }}"
+                                    class="btn btn-sm btn-ghost text-slate-600 dark:text-slate-300"
+                                    data-tooltip="tippy"
+                                    data-tippy-content="{{ $submenuNames }}"
+                                >
+                                    {{ $submenuCount }} {{ Str::plural('submenu', $submenuCount) }}
+                                </a>
+                            </td>
                             <td>{{ $menu->rota }}</td>
                             <td>{{ $menu->created_at }}</td>
                             <td>

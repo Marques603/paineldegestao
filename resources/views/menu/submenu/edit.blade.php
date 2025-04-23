@@ -1,12 +1,9 @@
 <x-app-layout>
-    <!-- Page Title Starts -->
     <x-page-title page="Lista de Menus" pageUrl="{{ route('menus.index') }}" header="Editar Submenu" />
-    <!-- Page Title Ends -->
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
         <!-- Coluna Esquerda -->
         <section class="col-span-1 flex h-min w-full flex-col gap-6 lg:sticky lg:top-20">
-            <!-- Preview do Ícone -->
             <div class="card">
                 <div class="card-body flex flex-col items-center">
                     <div class="relative flex items-center justify-center h-24 w-24 rounded-full bg-slate-100 dark:bg-slate-700 p-4">
@@ -17,19 +14,19 @@
             </div>
         </section>
 
-        <!-- Formulário -->
+        <!-- Coluna Direita -->
         <section class="col-span-1 flex w-full flex-1 flex-col gap-6 lg:col-span-3 lg:w-auto">
+
+            <!-- Formulário: Editar Submenu -->
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Editar Submenu</h2>
                     <p class="mb-4 text-sm font-normal text-slate-400">Atualize as informações do submenu</p>
 
-                    <!-- Formulário de Editar Submenu -->
                     <form method="POST" action="{{ route('submenus.update', $submenu) }}" class="flex flex-col gap-6">
                         @csrf
                         @method('PUT')
 
-                        <!-- Linha 1: Nome e Descrição -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <label class="label">
                                 <span class="block mb-1">Nome do Submenu</span>
@@ -50,10 +47,7 @@
                             </label>
                         </div>
 
-                        <!-- Linha 2: Ícone e Rota -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
-
-
                             <label class="label">
                                 <span class="block mb-1">Rota</span>
                                 <input type="text" name="rota" class="input @error('rota') border-red-500 @enderror"
@@ -64,21 +58,21 @@
                             </label>
                         </div>
 
-                        <!-- Botões para Editar Submenu -->
+                        <!-- Enviar os menus e ativo como hidden -->
+                        @foreach($submenu->menus as $menu)
+                            <input type="hidden" name="menus[]" value="{{ $menu->id }}">
+                        @endforeach
+                        <input type="hidden" name="ativo" value="{{ $submenu->ativo }}">
+
                         <div class="flex items-center justify-end gap-4">
-                            <a href="{{ route('submenus.index') }}"
-                                class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
-                                Cancelar
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                Atualizar Submenu
-                            </button>
+                            <a href="{{ route('submenus.index') }}" class="btn border text-slate-500 dark:border-slate-700 dark:text-slate-300">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Atualizar Submenu</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Formulário de Ativar Submenu -->
+            <!-- Formulário: Ativar Submenu -->
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Submenu</h2>
@@ -88,11 +82,12 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Campo Nome -->
                         <input type="hidden" name="nome" value="{{ old('nome', $submenu->nome) }}">
-
-                        <!-- Campo Descrição -->
                         <input type="hidden" name="descricao" value="{{ old('descricao', $submenu->descricao) }}">
+                        <input type="hidden" name="rota" value="{{ old('rota', $submenu->rota) }}">
+                        @foreach($submenu->menus as $menu)
+                            <input type="hidden" name="menus[]" value="{{ $menu->id }}">
+                        @endforeach
 
                         <label for="ativo" class="toggle my-2 flex items-center justify-between">
                             <div class="label">
@@ -111,66 +106,57 @@
                             </div>
                         </label>
 
-                        <!-- Botões para Ativar Submenu -->
                         <div class="flex items-center justify-end gap-4">
-                            <a href="{{ route('submenus.index') }}"
-                                class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
-                                Cancelar
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                Atualizar Submenu
-                            </button>
+                            <a href="{{ route('submenus.index') }}" class="btn border text-slate-500 dark:border-slate-700 dark:text-slate-300">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Atualizar Submenu</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Formulário de ativar menus -->
-<div class="card">
-    <div class="card-body">
-        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Menus</h2>
-        <p class="mb-4 text-sm font-normal text-slate-400">Defina quais menus estarão ativos nesse submenu.</p>
+            <!-- Formulário: Ativar Menus -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Menus</h2>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Defina quais menus estarão ativos nesse submenu.</p>
 
-        <form method="POST" action="{{ route('submenus.update', $submenu) }}" class="flex flex-col gap-6">
-            @csrf
-            @method('PUT')
+                    <form method="POST" action="{{ route('submenus.update', $submenu) }}" class="flex flex-col gap-6">
+                        @csrf
+                        @method('PUT')
 
-            <!-- Campo Nome -->
-            <input type="hidden" name="nome" value="{{ old('nome', $submenu->nome) }}">
+                        <input type="hidden" name="nome" value="{{ old('nome', $submenu->nome) }}">
+                        <input type="hidden" name="descricao" value="{{ old('descricao', $submenu->descricao) }}">
+                        <input type="hidden" name="rota" value="{{ old('rota', $submenu->rota) }}">
+                        <input type="hidden" name="ativo" value="{{ $submenu->ativo }}">
 
-            <!-- Campo Descrição -->
-            <input type="hidden" name="descricao" value="{{ old('descricao', $submenu->descricao) }}">
+                        <div class="flex flex-wrap gap-4">
+                            @foreach($menus as $menu)
+                                @php
+                                    $id = 'menu_' . $menu->id;
+                                    $isChecked = $submenu->menus->contains($menu->id);
+                                @endphp
 
-            <!-- Lista de Menus -->
-            <div class="grid grid-cols-1 gap-4">
-                @foreach($menus as $menu)
-                    <label class="flex items-center">
-                        <input
-                            type="checkbox"
-                            name="menus[]"
-                            value="{{ $menu->id }}"
-                            {{ $submenu->menus->contains($menu->id) ? 'checked' : '' }}
-                            class="mr-2"
-                        >
-                        {{ $menu->nome }}
-                    </label>
-                @endforeach
+                                <div class="flex items-center gap-1.5">
+                                    <input
+                                        id="{{ $id }}"
+                                        class="checkbox"
+                                        type="checkbox"
+                                        name="menus[]"
+                                        value="{{ $menu->id }}"
+                                        {{ $isChecked ? 'checked' : '' }}
+                                    >
+                                    <label for="{{ $id }}" class="label">{{ $menu->nome }}</label>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div class="flex items-center justify-end gap-4">
+                            <a href="{{ route('submenus.index') }}" class="btn border text-slate-500 dark:border-slate-700 dark:text-slate-300">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Atualizar Submenu</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <!-- Botões para Ativar Menus -->
-            <div class="flex items-center justify-end gap-4">
-                <a href="{{ route('submenus.index') }}" class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
-                    Cancelar
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    Atualizar Submenu
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-
 
         </section>
     </div>

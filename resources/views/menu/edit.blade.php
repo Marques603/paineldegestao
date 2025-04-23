@@ -94,6 +94,24 @@
                             </label>
                         </div>
 
+                        <!-- Linha 3: Seleção de Submenus -->
+                        <div class="mt-6">
+                            <label for="submenus" class="block text-sm font-medium">Submenus Associados</label>
+                            <div class="space-y-2">
+                                @foreach($allSubmenus as $submenu)
+                                    <div class="flex items-center">
+                                        <input 
+                                            type="checkbox" 
+                                            name="submenus[]" 
+                                            value="{{ $submenu->id }}" 
+                                            {{ in_array($submenu->id, $menu->submenus->pluck('id')->toArray()) ? 'checked' : '' }}
+                                            class="form-checkbox">
+                                        <label class="ml-2 text-sm">{{ $submenu->nome }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <!-- Botões para Editar Menu -->
                         <div class="flex items-center justify-end gap-4">
                             <a href="{{ route('menus.index') }}"
@@ -109,51 +127,50 @@
             </div>
 
             <!-- Formulário de Ativar Menu -->
-       <!-- Formulário de Ativar Menu -->
-<div class="card">
-    <div class="card-body">
-        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Menu</h2>
-        <p class="mb-4 text-sm font-normal text-slate-400">Defina se este menu estará ativo no sistema.</p>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Menu</h2>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Defina se este menu estará ativo no sistema.</p>
 
-        <form method="POST" action="{{ route('menus.update', $menu) }}" class="flex flex-col gap-6">
-            @csrf
-            @method('PUT')
+                    <form method="POST" action="{{ route('menus.update', $menu) }}" class="flex flex-col gap-6">
+                        @csrf
+                        @method('PUT')
 
-            <!-- Campo Nome -->
-            <input type="hidden" name="nome" value="{{ old('nome', $menu->nome) }}">
+                        <!-- Campo Nome -->
+                        <input type="hidden" name="nome" value="{{ old('nome', $menu->nome) }}">
 
-            <!-- Campo Descrição -->
-            <input type="hidden" name="descricao" value="{{ old('descricao', $menu->descricao) }}">
+                        <!-- Campo Descrição -->
+                        <input type="hidden" name="descricao" value="{{ old('descricao', $menu->descricao) }}">
 
-            <label for="ativo" class="toggle my-2 flex items-center justify-between">
-                <div class="label">
-                    <p class="text-sm font-normal text-slate-400">Ativar este menu</p>
+                        <label for="ativo" class="toggle my-2 flex items-center justify-between">
+                            <div class="label">
+                                <p class="text-sm font-normal text-slate-400">Ativar este menu</p>
+                            </div>
+                            <div class="relative">
+                                <input
+                                    class="toggle-input peer sr-only"
+                                    id="ativo"
+                                    type="checkbox"
+                                    name="ativo"
+                                    value="1"
+                                    {{ old('ativo', $menu->ativo ?? 1) == 1 ? 'checked' : '' }}
+                                >
+                                <div class="toggle-body"></div>
+                            </div>
+                        </label>
+                        <!-- Botões para Ativar Menu -->
+                        <div class="flex items-center justify-end gap-4">
+                            <a href="{{ route('menus.index') }}"
+                                class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                Atualizar Menu
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="relative">
-                    <input
-                        class="toggle-input peer sr-only"
-                        id="ativo"
-                        type="checkbox"
-                        name="ativo"
-                        value="1"
-                        {{ old('ativo', $menu->ativo ?? 1) == 1 ? 'checked' : '' }}
-                    >
-                    <div class="toggle-body"></div>
-                </div>
-            </label>
-            <!-- Botões para Ativar Menu -->
-            <div class="flex items-center justify-end gap-4">
-                <a href="{{ route('menus.index') }}"
-                    class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
-                    Cancelar
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    Atualizar Menu
-                </button>
             </div>
-        </form>
-    </div>
-</div>
 
         </section>
     </div>
