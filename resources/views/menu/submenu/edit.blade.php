@@ -26,7 +26,7 @@
                     <form method="POST" action="{{ route('submenus.update', $submenu) }}" class="flex flex-col gap-6">
                         @csrf
                         @method('PUT')
-
+                        <input type="hidden" name="formulario" value="editar_informacoes">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <label class="label">
                                 <span class="block mb-1">Nome do Submenu</span>
@@ -81,6 +81,7 @@
                     <form method="POST" action="{{ route('submenus.update', $submenu) }}" class="flex flex-col gap-6">
                         @csrf
                         @method('PUT')
+                        <input type="hidden" name="formulario" value="ativar_submenu">
 
                         <input type="hidden" name="nome" value="{{ old('nome', $submenu->nome) }}">
                         <input type="hidden" name="descricao" value="{{ old('descricao', $submenu->descricao) }}">
@@ -123,6 +124,7 @@
                     <form method="POST" action="{{ route('submenus.update', $submenu) }}" class="flex flex-col gap-6">
                         @csrf
                         @method('PUT')
+                        <input type="hidden" name="formulario" value="ativar_menus">
 
                         <input type="hidden" name="nome" value="{{ old('nome', $submenu->nome) }}">
                         <input type="hidden" name="descricao" value="{{ old('descricao', $submenu->descricao) }}">

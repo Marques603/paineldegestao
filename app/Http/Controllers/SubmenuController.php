@@ -48,27 +48,37 @@ class SubmenuController extends Controller
 
     public function update(Request $request, Submenu $submenu)
     {
-        // Validação dos dados recebidos sem a validação de 'rota'
-        $data = $request->validate([
-            'nome' => 'required|string|max:255',
-            'descricao' => 'nullable|string|max:255',
-            // Removemos a validação de 'rota'
-        ]);
-
-        // Atualizando os dados do submenu
-        $submenu->update([
-            'nome' => $data['nome'],
-            'descricao' => $data['descricao'],
-            'rota' => $request->input('rota', $submenu->rota), // Se 'rota' não for enviado, mantemos o valor atual
-            'ativo' => $request->has('ativo') ? 1 : 0, // Atualiza o campo 'ativo' corretamente
-        ]);
-
-        // Atualizar os menus relacionados
-        $menus = $request->input('menus', []); // Menus selecionados
-        $submenu->menus()->sync($menus); // Vincula ou desassocia os menus do submenu
-
+        $formulario = $request->input('formulario');
+    
+        switch ($formulario) {
+            case 'editar_informacoes':
+                $data = $request->validate([
+                    'nome' => 'required|string|max:255',
+                    'descricao' => 'nullable|string|max:255',
+                ]);
+    
+                $submenu->update([
+                    'nome' => $data['nome'],
+                    'descricao' => $data['descricao'],
+                    'rota' => $request->input('rota', $submenu->rota),
+                ]);
+                break;
+    
+            case 'ativar_submenu':
+                $submenu->update([
+                    'ativo' => $request->has('ativo') ? 1 : 0,
+                ]);
+                break;
+    
+            case 'ativar_menus':
+                $menus = $request->input('menus', []);
+                $submenu->menus()->sync($menus);
+                break;
+        }
+    
         return redirect()->route('submenus.index')->with('success', 'Submenu atualizado com sucesso!');
     }
+    
 
     public function destroy(Submenu $submenu)
     {
