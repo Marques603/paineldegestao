@@ -99,10 +99,14 @@
                                 <input class="checkbox menu-checkbox" type="checkbox" />
                             </td>
                             <td>
-                                <div class="flex items-center gap-3">
-                                    <div class="avatar avatar-circle">
-                                        <img class="avatar-img" src="{{ asset('images/avatar1.png') }}" alt="Avatar 1" />
-                                    </div>
+                            <div class="flex items-center gap-3">
+    <div class="h-12 w-12 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
+        <i data-feather="{{ $menu->icone ?? 'menu' }}" class="w-6 h-6 text-slate-600 dark:text-slate-200"></i>
+    </div>
+
+
+
+
                                     <div>
                                         <h6 class="whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-100">
                                             {{ $menu->nome }}

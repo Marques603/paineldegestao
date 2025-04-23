@@ -35,23 +35,23 @@ class MenuController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'nome' => 'required|string|max:255',
-            'descricao' => 'nullable|string|max:255',
-            'icone' => 'nullable|string',
-            'rota' => 'nullable|string|max:255', 
-            'ativo' => 'nullable|boolean',
-        ]);
+{
+    $data = $request->validate([
+        'nome' => 'required|string|max:255',
+        'descricao' => 'nullable|string|max:255',
+        'icone' => 'nullable|string',
+        'rota' => 'nullable|string|max:255', 
+        // Remova 'ativo' da validação, já que vamos forçar manualmente
+    ]);
 
-        // Atribuindo status como 0 (inativo) se não estiver marcado
-    $data['ativo'] = $request->has('status') ? 1 : 0;
+    // Força o status como inativo (0)
+    $data['ativo'] = 0;
 
-        Menu::create($data);
+    Menu::create($data);
 
-        return redirect()->route('menus.index')->with('success', 'Menu criado com sucesso!');
+    return redirect()->route('menus.index')->with('success', 'Menu criado com sucesso!');
+}
 
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -66,22 +66,25 @@ class MenuController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Menu $menu)
-    {
-        $data = $request->validate([
-            'nome' => 'required|string|max:255',
-            'descricao' => 'nullable|string|max:255',
-            'icone' => 'nullable|string',
-            'rota' => 'nullable|string|max:255',
-            'ativo' => 'nullable|boolean',
-        ]);
+{
+    // Validar os dados recebidos, incluindo o campo 'ativo'
+    $data = $request->validate([
+        'nome' => 'required|string|max:255',
+        'descricao' => 'nullable|string|max:255',
+        'icone' => 'nullable|string',
+        'rota' => 'nullable|string|max:255',
+        'ativo' => 'nullable|boolean',  // O campo ativo ainda pode ser booleano
+    ]);
 
-        
+    // Verificar se o campo 'ativo' foi enviado, se não, definir como 0 (desmarcado)
+    $data['ativo'] = $request->has('ativo') ? 1 : 0;
 
-        $menu->update($data);
+    // Atualizar o menu com os dados validados
+    $menu->update($data);
 
-        return redirect()->route('menus.index')->with('success', 'Menu Alterado com sucesso!');
+    return redirect()->route('menus.index')->with('success', 'Menu Alterado com sucesso!');
+}
 
-    }
 
     /**
      * Remove the specified resource from storage.

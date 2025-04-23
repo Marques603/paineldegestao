@@ -101,31 +101,7 @@
         @error('rota')
             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
         @enderror
-                     </label>
-                      <!-- Status -->
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <label class="label">
-                            <span class="block mb-1">Status do Menu</span>
-                            
-                            <!-- Toggle Switch -->
-                            <div class="flex items-center gap-4">
-                                <label for="toggle-status" class="toggle">
-                                    <input 
-                                        class="toggle-input peer sr-only" 
-                                        id="toggle-status" 
-                                        type="checkbox" 
-                                        name="status"
-                                        value="1"
-                                        {{ (old('status', $menu->status ?? 1) == 1) ? 'checked' : '' }}
-                                    >
-                                    <div class="toggle-body"></div>
-                                    <span class="label">{{ (old('status', $menu->ativo ?? 1) == 1) ? 'Ativo' : 'Inativo' }}</span>
-                                </label>
-                            </div>
-                    
-                            @error('status')
-                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                            @enderror
+
                         </label>
                     </div>
                     
