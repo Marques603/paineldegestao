@@ -172,7 +172,8 @@
                                                 <div class="mt-6">
 
                             <div class="space-y-2">
-                                @foreach ($submenus as $submenu)
+                                @foreach ($todosSubmenus as $submenu)
+
                                     <div class="flex items-center">
                                         <input 
                                             type="checkbox" 
