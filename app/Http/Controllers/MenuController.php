@@ -71,35 +71,35 @@ public function edit(Menu $menu)
      * Atualiza um menu existente.
      */
     public function update(Request $request, Menu $menu)
-    {
-        $formulario = $request->input('formulario');
-    
-        if ($formulario === 'editar_informacoes') {
+{
+    $formulario = $request->input('formulario');
+
+    switch ($formulario) {
+        case 'editar_informacoes':
+        case 'editar_informacoes3':
             $data = $request->validate([
                 'nome' => 'required|string|max:255',
                 'descricao' => 'nullable|string|max:255',
                 'icone' => 'nullable|string',
                 'rota' => 'nullable|string|max:255',
             ]);
-    
+
             $menu->update($data);
-    
-            return redirect()->route('menus.index')->with('success', 'Informações do menu atualizadas com sucesso!');
-        }
-    
-        if ($formulario === 'editar_ativo') {
-            $data = $request->validate([
-                'ativo' => 'nullable|boolean',
-            ]);
-    
+            break;
+
+        case 'editar_ativo':
             $menu->ativo = $request->has('ativo') ? 1 : 0;
             $menu->save();
-    
-            return redirect()->route('menus.index')->with('success', 'Status de ativação atualizado com sucesso!');
-        }
-    
-        return redirect()->route('menus.index')->with('error', 'Formulário não reconhecido.');
+            break;
+
+        default:
+            return redirect()->route('menus.index')->with('error', 'Formulário não reconhecido.');
     }
+
+    return redirect()->route('menus.index')->with('success', 'Menu atualizado com sucesso!');
+}
+
+    
     
 
     /**

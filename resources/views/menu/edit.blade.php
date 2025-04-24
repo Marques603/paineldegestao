@@ -41,7 +41,7 @@
                     <form method="POST" action="{{ route('menus.update', $menu) }}" class="flex flex-col gap-6">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" name="formulario" value="editar_inform">
+                        <input type="hidden" name="formulario" value="editar_informacoes">
 
                         <!-- Nome e Descrição -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -118,7 +118,7 @@
                     <form method="POST" action="{{ route('menus.update', $menu) }}" class="flex flex-col gap-6">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" name="formulario" value="editar_informacoes2">
+                        <input type="hidden" name="formulario" value="editar_ativo">
 
                         <input type="hidden" name="nome" value="{{ old('nome', $menu->nome) }}">
                         <input type="hidden" name="descricao" value="{{ old('descricao', $menu->descricao) }}">
