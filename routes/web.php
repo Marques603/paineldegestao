@@ -4,6 +4,8 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SubmenuController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SectorController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -47,5 +49,7 @@ Route::middleware(['auth'])->group(function () {
    // Rotas de menus (CRUD)
    Route::resource('submenus', SubmenuController::class);
    // Rotas de submenus (CRUD)
+   Route::resource('sector', SectorController::class);
+   // Rotas de setores (CRUD)
 
 });
