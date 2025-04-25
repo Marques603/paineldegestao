@@ -1,13 +1,11 @@
 <?php
 
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-
     protected $fillable = [
         'name',
         'description',
@@ -15,4 +13,10 @@ class Company extends Model
         'responsavel',
         'status',
     ];
+
+    // Relação muitos-para-muitos com documentos
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class);
+    }
 }

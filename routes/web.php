@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MacroController;
+use App\Http\Controllers\DocumentController;
 
 
 
@@ -58,6 +59,8 @@ Route::middleware(['auth'])->group(function () {
    // Rotas de empresas (CRUD)
    Route::resource('macro', MacroController::class);
    // Rotas de macro (CRUD)
+   Route::resource('documents', DocumentController::class);
+   // Rotas de documentos (CRUD)
 
 
 });

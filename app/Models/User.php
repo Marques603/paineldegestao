@@ -56,5 +56,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Submenu::class, 'submenu_user');
     }
+    public function documents()
+{
+    return $this->belongsToMany(Document::class);
+}
+
+public function uploadedDocuments()
+{
+    return $this->hasMany(Document::class, 'user_upload_id');
+}
+
 
 }

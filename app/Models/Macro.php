@@ -10,6 +10,11 @@ class Macro extends Model
         'name', 
         'description', 
         'procedure', 
-        'responsible']  ;
-}
+        'responsible'
+    ];
 
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+}
