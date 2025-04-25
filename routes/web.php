@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\MacroController;
+
 
 
 /*
@@ -54,6 +56,8 @@ Route::middleware(['auth'])->group(function () {
    // Rotas de setores (CRUD)
    Route::resource('company', CompanyController::class);
    // Rotas de empresas (CRUD)
+   Route::resource('macro', MacroController::class);
+   // Rotas de macro (CRUD)
 
 
 });

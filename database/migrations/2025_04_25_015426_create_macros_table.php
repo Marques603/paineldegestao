@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('macros', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->text('procedure')->nullable();
+            $table->string('responsible')->nullable(); // Responsável
             $table->timestamps();
         });
     }
