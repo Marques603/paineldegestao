@@ -10,7 +10,8 @@ class Macro extends Model
         'name', 
         'description', 
         'procedure', 
-        'responsible'
+        'responsible',
+        'status'
     ];
 
     public function documents()

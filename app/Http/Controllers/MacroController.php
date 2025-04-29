@@ -56,6 +56,7 @@ class MacroController extends Controller
             'description' => 'nullable|string',
             'procedure' => 'nullable|string',
             'responsible' => 'nullable|string|max:255',
+            'status' => 'required|in:0,1',
         ]);
 
         $macro->update($request->all());
