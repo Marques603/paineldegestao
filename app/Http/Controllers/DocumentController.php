@@ -16,11 +16,25 @@ class DocumentController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index()
+    public function index(Request $request)
     {
-        $documents = Document::with(['macro', 'user', 'sectors', 'companies'])->paginate(8);
+        $query = Document::with(['macro', 'user', 'sectors', 'companies']);
+    
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+    
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('file_path', 'like', "%{$search}%");
+                  // adicione aqui outros campos se quiser (ex: description)
+            });
+        }
+    
+        $documents = $query->paginate(8)->appends($request->only('search'));
+    
         return view('documents.index', compact('documents'));
     }
+    
 
     public function create()
     {

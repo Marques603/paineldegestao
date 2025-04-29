@@ -60,14 +60,16 @@
                           </label>
 
                           <!-- Procedimento -->
+
                           <label class="label">
-                              <span class="block mb-1">Procedimento</span>
-                              <textarea name="procedure" class="input @error('procedure') border-red-500 @enderror">{{ old('procedure', $macro->procedure ?? '') }}</textarea>
-                              @error('procedure')
-                                  <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                              @enderror
-                          </label>
-                      </div>
+                            <span class="block mb-1">Procedimento</span>
+                            <input type="text" name="procedure" class="input @error('procedure') border-red-500 @enderror"
+                                   value="{{ old('procedure', $macro->procedure ?? '') }}" />
+                            @error('procedure')
+                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            @enderror
+                        </label>
+                        </div>
 
                       <!-- Botões -->
                       <div class="flex items-center justify-end gap-4">
