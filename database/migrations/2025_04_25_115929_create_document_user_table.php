@@ -9,17 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    
     public function up(): void
     {
-        Schema::table('document_user', function (Blueprint $table) {
-            // Verificar se a coluna já existe antes de adicionar
-            if (!Schema::hasColumn('document_user', 'document_id')) {
-                $table->foreignId('document_id')->constrained()->onDelete('cascade');
-            }
-
-            if (!Schema::hasColumn('document_user', 'user_id')) {
-                $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            }
+        Schema::create('document_user', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('document_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
