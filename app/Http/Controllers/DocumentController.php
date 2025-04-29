@@ -4,19 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Models\Macro;
-use App\Models\User;
 use App\Models\Sector;
 use App\Models\Company;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DocumentController extends Controller
 {
+    use AuthorizesRequests;
 
     public function index()
     {
-        $documents = Document::with(['macro', 'users', 'sectors', 'companies'])->get();
+        $documents = Document::with(['macro', 'user', 'sectors', 'companies'])->paginate(8);
         return view('documents.index', compact('documents'));
     }
 
@@ -24,51 +26,174 @@ class DocumentController extends Controller
     {
         return view('documents.create', [
             'macros' => Macro::all(),
-            'users' => User::all(),
             'sectors' => Sector::all(),
-            'companies' => Company::all(),
+            'companies' => Company::all()
         ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name'        => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'revision'    => 'nullable|string|max:50',
-            'macro_id'    => 'nullable|exists:macros,id',
-            'file'        => 'required|file|max:10240', // 10MB
-            'status'      => 'required|in:0,1',
-            'users'       => 'array',
-            'users.*'     => 'exists:users,id',
-            'sectors'     => 'array',
-            'sectors.*'   => 'exists:sectors,id',
-            'companies'   => 'array',
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'file' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'macro_id' => 'required|exists:macros,id',
+            'sectors' => 'nullable|array',
+            'sectors.*' => 'exists:sectors,id',
+            'companies' => 'nullable|array',
             'companies.*' => 'exists:companies,id',
         ]);
 
-        // Salvar o arquivo
-        $file = $request->file('file');
-        $path = $file->store('documents', 'public');
-        $type = $file->getClientOriginalExtension();
+        DB::beginTransaction();
 
-        // Criar o documento
-        $document = Document::create([
-            'name'           => $request->name,
-            'description'    => $request->description,
-            'revision'       => $request->revision,
-            'macro_id'       => $request->macro_id,
-            'status'         => $request->status,
-            'user_upload_id' => Auth::id(),
-            'file_path'      => $path,
-            'file_type'      => $type,
+        try {
+            $file = $request->file('file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('documents', $fileName, 'public');
+
+            $document = Document::create([
+                'name' => $validatedData['name'],
+                'file_path' => $path,
+                'macro_id' => $validatedData['macro_id'],
+                'revision' => 1,
+                'user_id' => auth()->id(),
+                'locked' => false
+            ]);
+
+            $document->sectors()->attach($validatedData['sectors'] ?? []);
+            $document->companies()->attach($validatedData['companies'] ?? []);
+
+            DB::commit();
+            return redirect()->route('documents.index')->with('success', 'Documento enviado com sucesso!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Erro ao salvar documento: ' . $e->getMessage());
+            Storage::disk('public')->delete($path ?? '');
+            return redirect()->route('documents.create')->with('error', 'Erro ao salvar documento.');
+        }
+    }
+
+    public function edit(Document $document)
+    {
+        return view('documents.edit', [
+            'document' => $document,
+            'macros' => Macro::all(),
+            'sectors' => Sector::all(),
+            'companies' => Company::all()
+        ]);
+    }
+
+    public function update(Request $request, Document $document)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'macro_id' => 'required|exists:macros,id',
+            'sectors' => 'nullable|array',
+            'sectors.*' => 'exists:sectors,id',
+            'companies' => 'nullable|array',
+            'companies.*' => 'exists:companies,id',
         ]);
 
-        // Relacionamentos N:N
-        $document->users()->sync($request->input('users', []));
-        $document->sectors()->sync($request->input('sectors', []));
-        $document->companies()->sync($request->input('companies', []));
+        DB::beginTransaction();
 
-        return redirect()->route('documents.index')->with('success', 'Documento criado com sucesso!');
+        try {
+            $document->name = $validatedData['name'];
+            $document->macro_id = $validatedData['macro_id'];
+
+            if ($request->hasFile('file')) {
+                // Salva a versão atual ANTES de sobrescrever qualquer coisa
+                $document->versions()->create([
+                    'file_path' => $document->file_path,
+                    'revision' => $document->revision,
+                ]);
+
+                // Armazena o novo arquivo
+                $file = $request->file('file');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('documents', $fileName, 'public');
+
+                // Atualiza o documento com o novo path
+                $document->file_path = $path;
+            }
+
+            // Incrementa automaticamente a revisão
+            $document->revision += 1;
+
+            $document->save();
+
+            $document->sectors()->sync($validatedData['sectors'] ?? []);
+            $document->companies()->sync($validatedData['companies'] ?? []);
+
+            DB::commit();
+            return redirect()->route('documents.index')->with('success', 'Documento atualizado com sucesso! Nova versão salva.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Erro ao atualizar documento: ' . $e->getMessage());
+            return redirect()->route('documents.edit', $document->id)->with('error', 'Erro ao atualizar documento.');
+        }
+    }
+
+    public function destroy(Document $document)
+    {
+        $this->authorize('delete', $document);
+
+        try {
+            $document->delete();
+            return redirect()->route('documents.index')->with('success', 'Documento movido para a lixeira.');
+        } catch (\Exception $e) {
+            Log::error('Erro ao mover documento para a lixeira: ' . $e->getMessage());
+            return redirect()->route('documents.index')->with('error', 'Erro ao mover documento.');
+        }
+    }
+
+    public function toggleLock(Document $document)
+    {
+        try {
+            $this->authorize('update', $document);
+
+            $document->locked = !$document->locked;
+            $document->save();
+
+            return response()->json([
+                'success' => true,
+                'locked' => $document->locked,
+                'status' => $document->locked ? 'Inativo' : 'Ativo'
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Erro ao alternar bloqueio: ' . $e->getMessage());
+            return response()->json(['success' => false], 500);
+        }
+    }
+
+    public function trash()
+    {
+        $documents = Document::onlyTrashed()->with(['macro', 'user', 'sectors', 'companies'])->paginate(10);
+        return view('documents.trash', compact('documents'));
+    }
+
+    public function restore($id)
+    {
+        $document = Document::onlyTrashed()->findOrFail($id);
+        $document->restore();
+
+        return redirect()->route('documents.trash')->with('success', 'Documento restaurado com sucesso!');
+    }
+    
+    public function editSectors(Document $document)
+    {
+        $sectors = Sector::all();
+        return view('documents.edit-sectors', compact('document', 'sectors'));
+    }
+
+    public function updateSectors(Request $request, Document $document)
+    {
+        $validated = $request->validate([
+            'sectors' => 'nullable|array',
+            'sectors.*' => 'exists:sectors,id',
+        ]);
+
+        $document->sectors()->sync($validated['sectors'] ?? []);
+
+        return redirect()->route('documents.index')->with('success', 'Setores atualizados com sucesso!');
     }
 }

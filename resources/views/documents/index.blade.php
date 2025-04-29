@@ -1,10 +1,10 @@
 <x-app-layout>
-    <x-page-title page="Documentos" pageUrl="{{ route('document.index') }}" header="Lista de Documentos" />
+    <x-page-title page="Documentos" pageUrl="{{ route('documents.index') }}" header="Lista de Documentos" />
   
     <div class="card">
       <div class="card-body">
         <div class="flex justify-end mb-4">
-          <a href="{{ route('document.create') }}" class="btn btn-primary">Novo Documento</a>
+          <a href="{{ route('documents.create') }}" class="btn btn-primary">Novo Documento</a>
         </div>
   
         <table class="table-auto w-full">

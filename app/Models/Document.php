@@ -2,24 +2,21 @@
 
 namespace App\Models;
 
-namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Document extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
-        'description',
-        'user_upload_id',
-        'revision',
-        'macro_id',
         'file_path',
-        'file_type',
         'status',
+        'macro_id',
+        'revision',
+        'user_id',
     ];
 
     public function macro()
@@ -27,23 +24,33 @@ class Document extends Model
         return $this->belongsTo(Macro::class);
     }
 
-    public function uploadedBy()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_upload_id');
-    }
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function sectors()
     {
-        return $this->belongsToMany(Sector::class);
+        return $this->belongsToMany(Sector::class, 'document_sector');
     }
 
     public function companies()
     {
-        return $this->belongsToMany(Company::class);
+        return $this->belongsToMany(Company::class, 'document_company');
+    }
+
+    public function triages()
+    {
+        return $this->hasMany(DocumentTriage::class);
+    }
+
+    public function versions()
+    {
+        return $this->hasMany(DocumentVersion::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'document_user');
     }
 }
