@@ -37,6 +37,10 @@ Rodar as migrations
 ```sh
 php artisan migrate
 
+Rodar para criar storage
+```sh
+php artisan storage:link
+
 Pare os containers se acaso
 ```sh
 docker compose down
