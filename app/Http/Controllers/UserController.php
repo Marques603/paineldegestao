@@ -66,6 +66,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'status' => 'required|boolean',
         ]);
 
         if ($request->filled('password')) {
@@ -116,6 +117,23 @@ class UserController extends Controller
     ->with('status', 'Empresas atualizadas com sucesso!');
 
 
+}
+public function updateStatus(Request $request, $id)
+{
+    // Validação para garantir que o status seja 0 ou 1
+    $request->validate([
+        'status' => 'required|in:0,1', // 0 - Inativo, 1 - Ativo
+    ]);
+
+    // Encontrar o usuário
+    $user = User::findOrFail($id);
+
+    // Atualizar o status
+    $user->status = (int) $request->status; // Garantir que seja tratado como inteiro
+    $user->save();
+
+    // Redirecionar com sucesso
+    return redirect()->route('users.index')->with('status', 'Status do usuário atualizado com sucesso!');
 }
 
 }

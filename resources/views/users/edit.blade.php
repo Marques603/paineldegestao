@@ -88,6 +88,43 @@
                 </div>
             </div>
 
+            <!-- Formulário para editar o status -->
+<div class="card">
+    <div class="card-body">
+        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Editar Status do Usuário</h2>
+        <p class="mb-4 text-sm font-normal text-slate-400">Atualize o status do usuário.</p>
+
+        <form method="POST" action="{{ route('users.update.status', $user->id) }}">
+            @csrf
+            @method('PUT')
+
+            <!-- Status -->
+<!-- Status -->
+<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+    <label class="label">
+        <span class="my-1 block">Status</span>
+        <select name="status" class="input @error('status') border-red-500 @enderror">
+            <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Ativo</option>
+            <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Inativo</option>
+        </select>
+        @error('status')
+            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+        @enderror
+    </label>
+</div>
+
+            <!-- Botões -->
+            <div class="flex items-center justify-end gap-4 mt-4">
+                <a href="{{ route('users.index') }}"
+                   class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">Atualizar Status</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 
 

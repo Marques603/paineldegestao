@@ -51,6 +51,10 @@ Route::middleware(['auth'])->group(function () {
    Route::put('/users/{user}/sectors', [UserController::class, 'updateSectors'])->name('users.update.sectors');
    // Atualiza os setores associados a um usuário específico
    Route::put('/users/{user}/companies', [UserController::class, 'updateCompanies'])->name('users.update.companies');
+   // Atualiza as empresas associadas a um usuário específico
+   Route::put('users/{id}/status', [UserController::class, 'updateStatus'])->name('users.update.status');
+
+
 
 
    Route::resource('menus', MenuController::class);
