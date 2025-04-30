@@ -14,7 +14,7 @@ class Macro extends Model
         'status'
     ];
 
-    public function documents()
+    public function document()
     {
         return $this->hasMany(Document::class);
     }

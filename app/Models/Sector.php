@@ -10,7 +10,7 @@ class Sector extends Model
     protected $fillable = ['nome', 'descricao', 'user_id', 'centro_custo', 'status'];
 
     // Relação muitos-para-muitos com documentos
-    public function documents()
+    public function document()
     {
         return $this->belongsToMany(Document::class);
     }

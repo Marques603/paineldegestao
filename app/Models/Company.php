@@ -17,7 +17,7 @@ class Company extends Model
     ];
 
     // Relação muitos-para-muitos com documentos
-    public function documents()
+    public function document()
     {
         return $this->belongsToMany(Document::class);
     }

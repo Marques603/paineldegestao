@@ -10,6 +10,8 @@ class Document extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'document'; // 👈 f
+
     protected $fillable = [
         'name',
         'file_path',
