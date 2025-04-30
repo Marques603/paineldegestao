@@ -10,7 +10,7 @@ class SubmenuController extends Controller
 {
     public function index()
     {
-        $submenus = Submenu::latest()->paginate(10);
+        $submenus = Submenu::orderBy('id', 'asc')->paginate(10);
         return view('menu.submenu.index', compact('submenus'));
     }
 

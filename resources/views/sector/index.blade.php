@@ -73,17 +73,23 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Responsável</th>
-                        <th>Centro de Custo</th>
-                        <th>Status</th>
-                        <th class="!text-right">Ações</th>
+                        <th class="w-[5%]">
+                            <input class="checkbox" type="checkbox" data-check-all data-check-all-target=".sector-checkbox" />
+                        </th>
+                        <th class="w-[20%] uppercase">Nome</th>
+                        <th class="w-[20%] uppercase">Descrição</th>
+                        <th class="w-[20%] uppercase">Responsável</th>
+                        <th class="w-[20%] uppercase">Centro de Custo</th>
+                        <th class="w-[10%] uppercase">Status</th>
+                        <th class="w-[5%] !text-right uppercase">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($sectors as $sector)
                         <tr>
+                            <td>
+                                <input class="checkbox company-checkbox" type="checkbox" />
+                            </td>
                             <td>{{ $sector->nome }}</td>
                             <td>{{ $sector->descricao ?? 'Sem descrição' }}</td>
                             <td>{{ $sector->responsavel ?? '-' }}</td>

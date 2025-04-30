@@ -33,7 +33,7 @@
                     <p class="mb-4 text-sm font-normal text-slate-400">Atualize as informações do usuário</p>
 
                     <form method="POST"
-                          action="{{ route('users.update', $user->id) }}"
+                          action="{{ route('users.update.profile', $user->id) }}"
                           enctype="multipart/form-data"
                           class="flex flex-col gap-5">
                         @csrf

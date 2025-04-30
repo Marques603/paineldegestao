@@ -69,17 +69,23 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Responsável</th>
-                        <th>Procedimento</th>
-                        <th>Status</th>
-                        <th class="!text-right">Ações</th>
+                        <th class="w-[5%]">
+                            <input class="checkbox" type="checkbox" data-check-all data-check-all-target=".procedure-checkbox" />
+                        </th>
+                        <th class="w-[20%] uppercase">Nome</th>
+                        <th class="w-[20%] uppercase">Descrição</th>
+                        <th class="w-[20%] uppercase">Responsável</th>
+                        <th class="w-[20%] uppercase">Procedimento</th>
+                        <th class="w-[10%] uppercase">Status</th>
+                        <th class="w-[5%] !text-right uppercase">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($macros as $macro)
                         <tr>
+                            <td>
+                                <input class="checkbox procedure-checkbox" type="checkbox" />
+                            </td>
                             <td>{{ $macro->name }}</td>
                             <td>{{ $macro->description ?? 'Sem descrição' }}</td>
                             <td>{{ $macro->responsible ?? '-' }}</td>

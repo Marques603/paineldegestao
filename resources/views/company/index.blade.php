@@ -75,18 +75,23 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>CNPJ</th>
-                        <th>Responsável</th>
-                        <th>Status</th>
-                        <th class="!text-right">Ações</th>
+                        <th class="w-[5%]">
+                            <input class="checkbox" type="checkbox" data-check-all data-check-all-target=".company-checkbox" />
+                        </th>
+                        <th class="w-[20%] uppercase">Nome</th>
+                        <th class="w-[20%] uppercase">Descrição</th>
+                        <th class="w-[20%] uppercase">CNPJ</th>
+                        <th class="w-[15%] uppercase">Responsável</th>
+                        <th class="w-[10%] uppercase">Status</th>
+                        <th class="w-[5%] !text-right uppercase">Ações</th>
                     </tr>
-                </thead>
+                </thead>             
                 <tbody>
                     @foreach($companies as $company)
-                        <tr>
-                            <td>{{ $company->name }}</td>
+                    <td>
+                        <input class="checkbox company-checkbox" type="checkbox" />
+                    </td>
+                    <td>{{ $company->name }}</td>
                             <td>{{ $company->description ?? 'Sem descrição' }}</td>
                             <td>{{ $company->cnpj }}</td>
                             <td>{{ $company->responsavel ?? '-' }}</td>

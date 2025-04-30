@@ -136,4 +136,30 @@ public function updateStatus(Request $request, $id)
     return redirect()->route('users.index')->with('status', 'Status do usuário atualizado com sucesso!');
 }
 
+public function updateProfile(Request $request, User $user)
+{
+    $input = $request->validate([
+        'name' => 'required|string',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'password' => 'nullable|min:8|confirmed',
+        'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    if ($request->filled('password')) {
+        $input['password'] = bcrypt($input['password']);
+    } else {
+        unset($input['password']);
+    }
+
+    if ($request->hasFile('avatar')) {
+        $input['avatar'] = $request->file('avatar')->store('images/profiles', 'public');
+    }
+
+    $user->update($input);
+
+    return redirect()->route('users.index')->with('status', 'Usuário atualizado com sucesso.');
+}
+
+
+
 }

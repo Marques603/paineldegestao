@@ -45,6 +45,8 @@ Route::middleware(['auth'])->group(function () {
 
    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
    // Atualiza os dados de um usuário após edição
+   Route::put('/users/{user}/update-profile', [UserController::class, 'updateProfile'])->name('users.update.profile');
+   // Atualiza o perfil do usuário autenticado
 
    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
    // Remove o usuário selecionado do banco de dados

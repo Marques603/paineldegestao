@@ -92,7 +92,7 @@
                 class="sidebar-menu {{ request()->routeIs(['users.index', 'sector.index','company.index','menus.index','submenus.index']) ? 'active' : '' }}">
 
                 <span class="sidebar-menu-icon">
-                    <i data-feather="users"></i>
+                    <i data-feather="cpu"></i>
                 </span>
                 <span class="sidebar-menu-text">Gestão Tecnologia</span>
                 <span class="sidebar-menu-arrow">
