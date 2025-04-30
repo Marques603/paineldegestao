@@ -91,7 +91,7 @@
                                 Cancelar
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                Atualizar Macro
+                                Atualizar
                             </button>
                         </div>
                     </form>

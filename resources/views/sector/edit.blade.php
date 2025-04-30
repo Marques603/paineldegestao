@@ -89,7 +89,7 @@
                               Cancelar
                           </a>
                           <button type="submit" class="btn btn-primary">
-                              Atualizar Setor
+                              Atualizar
                           </button>
                       </div>
                   </form>

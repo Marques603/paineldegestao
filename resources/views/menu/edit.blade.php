@@ -102,7 +102,7 @@
                                 Cancelar
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                Atualizar Menu
+                                Atualizar
                             </button>
                         </div>
                     </form>
@@ -148,7 +148,7 @@
                                 Cancelar
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                Atualizar Menu
+                                Atualizar
                             </button>
                         </div>
                     </form>
@@ -197,7 +197,7 @@
                                 Cancelar
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                Atualizar Menu
+                                Atualizar
                             </button>
                         </div>
                     </form>

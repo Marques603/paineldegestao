@@ -119,7 +119,7 @@
                    class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
                     Cancelar
                 </a>
-                <button type="submit" class="btn btn-primary">Atualizar Status</button>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
             </div>
         </form>
     </div>
