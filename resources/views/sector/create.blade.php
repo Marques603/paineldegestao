@@ -50,14 +50,22 @@
 
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                           <!-- Responsável -->
-                          <label class="label">
-                              <span class="block mb-1">Responsável</span>
-                              <input type="text" name="responsavel" class="input @error('responsavel') border-red-500 @enderror"
-                                     value="{{ old('responsavel', $sector->responsavel ?? '') }}" />
-                              @error('responsavel')
-                                  <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                              @enderror
-                          </label>
+                    
+<label class="label">
+    <span class="block mb-1">Responsável</span>
+    <select name="user_id" class="input @error('user_id') border-red-500 @enderror">
+        <option value="">Selecione um usuário</option>
+        @foreach($users as $user)
+            <option value="{{ $user->id }}" 
+                {{ old('user_id', $sector->user_id ?? '') == $user->id ? 'selected' : '' }}>
+                {{ $user->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('user_id')
+        <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+    @enderror
+</label>
 
                           <!-- Centro de Custo -->
                           <label class="label">
