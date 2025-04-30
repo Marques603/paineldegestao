@@ -92,7 +92,8 @@
                             </td>
                             <td>{{ $sector->nome }}</td>
                             <td>{{ $sector->descricao ?? 'Sem descrição' }}</td>
-                            <td>{{ $sector->responsavel ?? '-' }}</td>
+                            <td>{{ $sector->user?->name ?? '-' }}</td>
+
                             <td>{{ $sector->centro_custo ?? '-' }}</td>
                             <td>
                                 @if($sector->status)

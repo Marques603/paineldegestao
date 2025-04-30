@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
+    protected $table = 'company'; // 👈 corrige o nome da tabela
+
     protected $fillable = [
         'name',
         'description',
@@ -19,8 +21,9 @@ class Company extends Model
     {
         return $this->belongsToMany(Document::class);
     }
+
     public function users()
-{
-    return $this->belongsToMany(User::class);
-}
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

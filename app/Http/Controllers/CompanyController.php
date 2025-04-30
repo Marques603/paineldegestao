@@ -31,7 +31,7 @@ class CompanyController extends Controller
     $request->validate([
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'cnpj' => 'required|string|max:18|unique:companies,cnpj',
+        'cnpj' => 'required|string|max:18|unique:company,cnpj',
         'responsavel' => 'nullable|string|max:255',
         'status' => 'required|boolean',
     ]);
@@ -59,7 +59,7 @@ class CompanyController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'cnpj' => 'required|string|max:18|unique:companies,cnpj,' . $company->id,
+            'cnpj' => 'required|string|max:18|unique:company,cnpj,' . $company->id,
             'responsavel' => 'nullable|string|max:255',
             'status' => 'required|boolean',
         ]);

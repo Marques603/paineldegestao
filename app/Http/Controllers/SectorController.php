@@ -20,7 +20,7 @@ class SectorController extends Controller
             $query->where('status', $request->status);
         }
 
-        $sectors = $query->paginate(14);
+        $sectors = Sector::with('user')->paginate(14);
 
         return view('sector.index', compact('sectors'));
     }

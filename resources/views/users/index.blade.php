@@ -120,7 +120,7 @@
               </td>
               <td>{{ $user->email }}</td>
               <td>{{ $user->sectors->isEmpty() ? 'Nenhum setor vinculado' : $user->sectors->pluck('nome')->join(', ') }}</td>
-              <td>{{ $user->companies->isEmpty() ? 'Nenhuma empresa vinculada' : $user->companies->pluck('name')->join(', ') }}</td>
+              <td>{{ $user->company->isEmpty() ? 'Nenhuma empresa vinculada' : $user->company->pluck('name')->join(', ') }}</td>
               <td>{{ $user->created_at }}</td>
               <td>
                                 @if($user->status)

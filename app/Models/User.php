@@ -70,7 +70,7 @@ public function sectors()
 {
     return $this->belongsToMany(Sector::class);
 }
-public function companies()
+public function company()
 {
     return $this->belongsToMany(Company::class);
 }

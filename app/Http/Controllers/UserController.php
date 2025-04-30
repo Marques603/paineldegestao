@@ -54,9 +54,9 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $companies = Company::where('status', 1)->get();
+        $company = Company::where('status', 1)->get();
         $sectors = Sector::where('status', 1)->get();
-        return view('users.edit', compact('user', 'sectors','companies'));
+        return view('users.edit', compact('user', 'sectors','company'));
     }
 
     public function update(Request $request, User $user)
@@ -104,14 +104,14 @@ class UserController extends Controller
 
         
     }
-    public function updateCompanies(Request $request, User $user)
+    public function updatecompany(Request $request, User $user)
 {
     $request->validate([
-        'companies' => 'array',
-        'companies.*' => 'exists:companies,id',
+        'company' => 'array',
+        'company.*' => 'exists:company,id',
     ]);
 
-    $user->companies()->sync($request->companies ?? []);
+    $user->company()->sync($request->company ?? []);
 
     return redirect()->route('users.index')
     ->with('status', 'Empresas atualizadas com sucesso!');

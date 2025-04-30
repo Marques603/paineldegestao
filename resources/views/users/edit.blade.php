@@ -173,20 +173,20 @@
         <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Empresas</h2>
         <p class="mb-4 text-sm font-normal text-slate-400">Selecione as empresas ao qual o usuário pertence</p>
 
-        <form method="POST" action="{{ route('users.update.companies', $user->id) }}">
+        <form method="POST" action="{{ route('users.update.company', $user->id) }}">
             @csrf
             @method('PUT')
 
             <!-- Exibição das empresas com checkboxes -->
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                @foreach ($companies as $company)
+                @foreach ($company as $company)
                     <div class="flex items-center gap-1.5">
                         <input id="company-{{ $company->id }}" 
                                class="checkbox checkbox-primary" 
                                type="checkbox" 
-                               name="companies[]" 
+                               name="company[]" 
                                value="{{ $company->id }}"
-                               {{ $user->companies->contains($company->id) ? 'checked' : '' }} />
+                               {{ $user->company->contains($company->id) ? 'checked' : '' }} />
                         <label for="company-{{ $company->id }}" class="label">
                             {{ $company->name }}
                         </label>

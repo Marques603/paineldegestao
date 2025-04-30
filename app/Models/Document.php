@@ -34,7 +34,7 @@ class Document extends Model
         return $this->belongsToMany(Sector::class, 'document_sector');
     }
 
-    public function companies()
+    public function company()
     {
         return $this->belongsToMany(Company::class, 'document_company');
     }
