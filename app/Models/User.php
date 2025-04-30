@@ -65,6 +65,14 @@ public function uploadedDocuments()
 {
     return $this->hasMany(Document::class, 'user_upload_id');
 }
+public function sectors()
+{
+    return $this->belongsToMany(Sector::class);
+}
+public function companies()
+{
+    return $this->belongsToMany(Company::class);
+}
 
 
 }

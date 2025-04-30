@@ -2,6 +2,7 @@
     <x-page-title page="Lista de Usuários" pageUrl="{{ route('users.index') }}" header="Editar Usuário" />
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
+        <!-- Coluna Esquerda - Avatar -->
         <section class="col-span-1 flex h-min w-full flex-col gap-6 lg:sticky lg:top-20">
             <div class="card">
                 <div class="card-body flex flex-col items-center">
@@ -23,7 +24,9 @@
             </div>
         </section>
 
+        <!-- Coluna Direita - Formulários -->
         <section class="col-span-1 flex w-full flex-1 flex-col gap-6 lg:col-span-3 lg:w-auto">
+            <!-- Detalhes Pessoais -->
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Detalhes Pessoais</h2>
@@ -36,7 +39,7 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Name & Email -->
+                        <!-- Nome e Email -->
                         <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                             <label class="label">
                                 <span class="my-1 block">Nome</span>
@@ -57,7 +60,7 @@
                             </label>
                         </div>
 
-                        <!-- Password -->
+                        <!-- Senha -->
                         <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                             <label class="label">
                                 <span class="my-1 block">Senha</span>
@@ -73,8 +76,8 @@
                             </label>
                         </div>
 
-                        <!-- Buttons -->
-                        <div class="flex items-center justify-end gap-4">
+                        <!-- Botões -->
+                        <div class="flex items-center justify-end gap-4 mt-4">
                             <a href="{{ route('users.index') }}"
                                class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
                                 Cancelar
@@ -84,15 +87,88 @@
                     </form>
                 </div>
             </div>
+
+
+
+
+            <!-- Vincular Setores -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Setores</h2>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Selecione os setores ao qual o usuário pertence</p>
+
+                    <form method="POST" action="{{ route('users.update.sectors', $user->id) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Setores -->
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            @foreach ($sectors as $sector)
+                                <div class="flex items-center gap-1.5">
+                                    <input id="checkbox-{{ $sector->id }}" 
+                                           class="checkbox checkbox-primary" 
+                                           type="checkbox" 
+                                           name="sectors[]" 
+                                           value="{{ $sector->id }}"
+                                           {{ $user->sectors->contains($sector->id) ? 'checked' : '' }} />
+                                    <label for="checkbox-{{ $sector->id }}" class="label">
+                                        {{ $sector->nome }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="flex items-center justify-end gap-4 mt-4">
+                            <a href="{{ route('users.index') }}"
+                               class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Formulário para vincular empresas -->
+<div class="card">
+    <div class="card-body">
+        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Empresas</h2>
+        <p class="mb-4 text-sm font-normal text-slate-400">Selecione as empresas ao qual o usuário pertence</p>
+
+        <form method="POST" action="{{ route('users.update.companies', $user->id) }}">
+            @csrf
+            @method('PUT')
+
+            <!-- Exibição das empresas com checkboxes -->
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                @foreach ($companies as $company)
+                    <div class="flex items-center gap-1.5">
+                        <input id="company-{{ $company->id }}" 
+                               class="checkbox checkbox-primary" 
+                               type="checkbox" 
+                               name="companies[]" 
+                               value="{{ $company->id }}"
+                               {{ $user->companies->contains($company->id) ? 'checked' : '' }} />
+                        <label for="company-{{ $company->id }}" class="label">
+                            {{ $company->name }}
+                        </label>
+                    </div>
+                @endforeach
+            </div>
+
+            <!-- Botões de ação -->
+            <div class="flex items-center justify-end gap-4 mt-4">
+                <a href="{{ route('users.index') }}"
+                   class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
         </section>
     </div>
-
-    <script>
-        document.getElementById('upload-avatar').addEventListener('change', function (event) {
-            const [file] = event.target.files;
-            if (file) {
-                document.getElementById('user-image-preview').src = URL.createObjectURL(file);
-            }
-        });
-    </script>
 </x-app-layout>

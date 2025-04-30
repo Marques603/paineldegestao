@@ -48,6 +48,10 @@ Route::middleware(['auth'])->group(function () {
 
    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
    // Remove o usuário selecionado do banco de dados
+   Route::put('/users/{user}/sectors', [UserController::class, 'updateSectors'])->name('users.update.sectors');
+   // Atualiza os setores associados a um usuário específico
+   Route::put('/users/{user}/companies', [UserController::class, 'updateCompanies'])->name('users.update.companies');
+
 
    Route::resource('menus', MenuController::class);
    // Rotas de menus (CRUD)
