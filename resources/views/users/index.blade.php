@@ -93,6 +93,7 @@
               <th class="w-[30%] uppercase">Nome</th>
               <th class="w-[20%] uppercase">Email</th>
               <th class="w-[15%] uppercase">Setor</td>
+              <th class="w-[15%] uppercase">Empresa</td>
               <th class="w-[15%] uppercase">Data de Criação</th>
               <th class="w-[15%] uppercase">Status</th>
               <th class="w-[5%] !text-right uppercase">Acão</th>
@@ -118,7 +119,8 @@
                 </div>
               </td>
               <td>{{ $user->email }}</td>
-              <td>Setor</td>
+              <td>{{ $user->sectors->pluck('nome')->join(', ') }}</td>
+              <td>{{ $user->companies->pluck('name')->join(', ') }}</td>
               <td>{{ $user->created_at }}</td>
               <td>
                 <div class="badge badge-soft-success">Ativo</div>
