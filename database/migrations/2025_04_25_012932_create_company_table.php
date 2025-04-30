@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('cnpj')->unique();
-            $table->string('responsavel')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->boolean('status')->default(0); // 1 = Ativo, 0 = Inativo
             $table->timestamps();
         });

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('documents', function (Blueprint $table) {
+        Schema::table('document', function (Blueprint $table) {
             $table->unsignedBigInteger('user_upload_id')->nullable()->after('macro_id');
     
             $table->foreign('user_upload_id')
@@ -26,7 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('documents', function (Blueprint $table) {
+        Schema::table('document', function (Blueprint $table) {
             $table->dropForeign(['user_upload_id']);
             $table->dropColumn('user_upload_id');
         });

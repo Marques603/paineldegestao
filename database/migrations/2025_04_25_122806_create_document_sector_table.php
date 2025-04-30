@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('document_sector', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('document_id')->constrained()->onDelete('cascade');
+            $table->foreignId('document_id')->constrained('document')->onDelete('cascade');
             $table->foreignId('sector_id')->constrained()->onDelete('cascade');
         
         });
