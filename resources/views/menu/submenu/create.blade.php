@@ -70,7 +70,7 @@
                                 Cancelar
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                {{ isset($submenu) ? 'Atualizar' : 'Criar' }} Submenu
+                                Adicionar
                             </button>
                         </div>
 

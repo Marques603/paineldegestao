@@ -73,7 +73,7 @@
                             <a href="{{ route('company.index') }}" class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
                                 Cancelar
                             </a>
-                            <button type="submit" class="btn btn-primary">Criar Empresa</button>
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
                         </div>
                     </form>
                 </div>

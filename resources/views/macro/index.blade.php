@@ -75,7 +75,7 @@
                         <th class="w-[20%] uppercase">Nome</th>
                         <th class="w-[20%] uppercase">Descrição</th>
                         <th class="w-[20%] uppercase">Responsável</th>
-                        <th class="w-[20%] uppercase">Procedimento</th>
+                        <th class="w-[20%] uppercase">Documentos</th>
                         <th class="w-[10%] uppercase">Status</th>
                         <th class="w-[5%] !text-right uppercase">Ações</th>
                     </tr>
@@ -89,7 +89,7 @@
                             <td>{{ $macro->name }}</td>
                             <td>{{ $macro->description ?? 'Sem descrição' }}</td>
                             <td>{{ $macro->responsible ?? '-' }}</td>
-                            <td>{{ $macro->procedure ?? 'Sem procedimento' }}</td>
+                            <td>Quantidades</td>
                             <td>
                                 @if($macro->status)
                                     <div class="badge badge-soft-success">Ativo</div>

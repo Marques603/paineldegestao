@@ -77,7 +77,7 @@
                               Cancelar
                           </a>
                           <button type="submit" class="btn btn-primary">
-                              {{ isset($sector) ? 'Atualizar' : 'Criar' }} Setor
+                               Adicionar
                           </button>
                       </div>
                   </form>

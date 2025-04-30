@@ -114,7 +114,7 @@
                               Cancelar
                           </a>
                           <button type="submit" class="btn btn-primary">
-                              {{ isset($menu) ? 'Atualizar' : 'Criar' }} Menu
+                              Adicionar
                           </button>
                       </div>
                   

@@ -78,7 +78,7 @@
                               Cancelar
                           </a>
                           <button type="submit" class="btn btn-primary">
-                              {{ isset($macro) ? 'Atualizar' : 'Criar' }} Macro
+                              Adicionar
                           </button>
                       </div>
                   </form>
