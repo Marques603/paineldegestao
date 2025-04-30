@@ -75,7 +75,7 @@
 
           <a class="btn btn-primary" href="{{ route('users.create') }}" role="button">
             <i data-feather="plus" height="1rem" width="1rem"></i>
-            <span class="hidden sm:inline-block">Criar Usuário</span>
+            <span class="hidden sm:inline-block">Criar</span>
           </a>
         </div>
         <!-- User Action Ends -->
@@ -119,12 +119,16 @@
                 </div>
               </td>
               <td>{{ $user->email }}</td>
-              <td>{{ $user->sectors->pluck('nome')->join(', ') }}</td>
-              <td>{{ $user->companies->pluck('name')->join(', ') }}</td>
+              <td>{{ $user->sectors->isEmpty() ? 'Nenhum setor vinculado' : $user->sectors->pluck('nome')->join(', ') }}</td>
+              <td>{{ $user->companies->isEmpty() ? 'Nenhuma empresa vinculada' : $user->companies->pluck('name')->join(', ') }}</td>
               <td>{{ $user->created_at }}</td>
               <td>
-                <div class="badge badge-soft-success">Ativo</div>
-              </td>
+                                @if($user->status)
+                                    <div class="badge badge-soft-success">Ativo</div>
+                                @else
+                                    <div class="badge badge-soft-danger">Inativo</div>
+                                @endif
+                            </td>
               <td>
                 <div class="flex justify-end">
                   <div class="dropdown" data-placement="bottom-start">

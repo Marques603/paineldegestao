@@ -69,7 +69,7 @@
 
                 <a class="btn btn-primary" href="{{ route('submenus.create') }}" role="button">
                     <i data-feather="plus" height="1rem" width="1rem"></i>
-                    <span class="hidden sm:inline-block">Criar Submenu</span>
+                    <span class="hidden sm:inline-block">Criar</span>
                 </a>
             </div>
             <!-- submenu Action Ends -->
