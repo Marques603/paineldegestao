@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->text('descricao')->nullable();
             $table->boolean('status')->default(true);
-            $table->string('responsavel')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('centro_custo')->nullable();
             $table->timestamps();
         });
