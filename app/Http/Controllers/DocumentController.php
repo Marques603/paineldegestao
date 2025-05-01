@@ -39,7 +39,7 @@ class DocumentController extends Controller
     public function create()
     {
         return view('documents.create', [
-            'macros' => Macro::all(),
+            'macro' => Macro::all(),
             'sectors' => Sector::all(),
             'company' => Company::all()
         ]);
@@ -50,7 +50,7 @@ class DocumentController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'file' => 'required|file|mimes:pdf,doc,docx|max:2048',
-            'macro_id' => 'required|exists:macros,id',
+            'macro_id' => 'required|exists:macro,id',
             'sectors' => 'nullable|array',
             'sectors.*' => 'exists:sectors,id',
             'company' => 'nullable|array',
@@ -90,7 +90,7 @@ class DocumentController extends Controller
     {
         return view('documents.edit', [
             'document' => $document,
-            'macros' => Macro::all(),
+            'macro' => Macro::all(),
             'sectors' => Sector::all(),
             'company' => Company::all()
         ]);
@@ -101,7 +101,7 @@ class DocumentController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'macro_id' => 'required|exists:macros,id',
+            'macro_id' => 'required|exists:macro,id',
             'sectors' => 'nullable|array',
             'sectors.*' => 'exists:sectors,id',
             'company' => 'nullable|array',

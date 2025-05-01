@@ -51,7 +51,7 @@
                                 <span class="block mb-1">Macro</span>
                                 <select name="macro_id" class="input @error('macro_id') border-red-500 @enderror" required>
                                     <option value="" disabled selected>Selecione uma Macro</option>
-                                    @foreach($macros as $macro)
+                                    @foreach($macro as $macro)
                                         <option value="{{ $macro->id }}">{{ $macro->name }}</option>
                                     @endforeach
                                 </select>
