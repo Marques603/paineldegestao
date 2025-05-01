@@ -57,7 +57,7 @@
         <option value="">Selecione um usuário</option>
         @foreach($users as $user)
             <option value="{{ $user->id }}" 
-                {{ old('user_id', $sector->user_id ?? '') == $user->id ? 'selected' : '' }}>
+            {{ isset($sector) && $sector->user_id == $user->id ? 'selected' : '' }}>
                 {{ $user->name }}
             </option>
         @endforeach
