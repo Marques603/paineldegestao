@@ -8,6 +8,7 @@ use App\Http\Controllers\SectorController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MacroController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\PositionController;
 
 
 
@@ -55,10 +56,9 @@ Route::middleware(['auth'])->group(function () {
    Route::put('/users/{user}/company', [UserController::class, 'updatecompany'])->name('users.update.company');
    // Atualiza as empresas associadas a um usuário específico
    Route::put('users/{id}/status', [UserController::class, 'updateStatus'])->name('users.update.status');
-
-
-
-
+   // Atualiza o status de um usuário específico (ativo/inativo)
+   Route::resource('position', PositionController::class);
+   // Rotas de cargos (CRUD)
    Route::resource('menus', MenuController::class);
    // Rotas de menus (CRUD)
    Route::resource('submenus', SubmenuController::class);

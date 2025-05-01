@@ -58,22 +58,27 @@ class User extends Authenticatable
         return $this->belongsToMany(Submenu::class, 'submenu_user');
     }
     public function document()
-{
+    {
     return $this->belongsToMany(Document::class);
-}
+    }
 
-public function uploadeddocument()
-{
+    public function uploadeddocument()
+    {
     return $this->hasMany(Document::class, 'user_upload_id');
-}
-public function sector()
-{
+    }
+    public function sector()
+    {
     return $this->belongsToMany(Sector::class);
-}
-public function company()
-{
+    }
+    public function company()
+    {
     return $this->belongsToMany(Company::class);
-}
+    }
+    public function position()
+    {
+    return $this->hasOne(Position::class);
+    }
+
 
 
 }

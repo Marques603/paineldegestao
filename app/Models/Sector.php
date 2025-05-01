@@ -19,6 +19,11 @@ class Sector extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function position()
+    {
+    return $this->hasMany(Position::class); // mesmo no singular, pode retornar vários
+    }
+
     
 }
 
