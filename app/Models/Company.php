@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    protected $table = 'company'; // 👈 corrige o nome da tabela
-
+    protected $table = 'company'; // Nome da tabela no banco de dados
     protected $fillable = [
         'name',
         'description',
         'cnpj',
-        'responsavel',
+        'user_id',
         'status',
     ];
 
