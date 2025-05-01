@@ -85,7 +85,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($sectors as $sector)
+                    @foreach($sector as $sector)
                         <tr>
                             <td>
                                 <input class="checkbox company-checkbox" type="checkbox" />
@@ -169,9 +169,9 @@
         <!-- Pagination Starts -->
         <div class="flex flex-col items-center justify-between gap-y-4 md:flex-row">
             <p class="text-xs font-normal text-slate-400">
-                Mostrando {{ $sectors->firstItem() }} a {{ $sectors->lastItem() }} de {{ $sectors->total() }} resultados
+                Mostrando {{ $sector->firstItem() }} a {{ $sector->lastItem() }} de {{ $sector->total() }} resultados
             </p>
-            {{ $sectors->appends(request()->query())->links('vendor.pagination.custom') }}
+            {{ $sector->appends(request()->query())->links('vendor.pagination.custom') }}
         </div>
         <!-- Pagination Ends -->
     </div>

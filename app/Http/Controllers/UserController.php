@@ -28,8 +28,8 @@ class UserController extends Controller
 
     public function create()
     {
-        $sectors = Sector::all();
-        return view('users.create', compact('sectors'));
+        $sector = Sector::all();
+        return view('users.create', compact('sector'));
     }
 
     public function store(Request $request)
@@ -55,8 +55,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $company = Company::where('status', 1)->get();
-        $sectors = Sector::where('status', 1)->get();
-        return view('users.edit', compact('user', 'sectors','company'));
+        $sector = Sector::where('status', 1)->get();
+        return view('users.edit', compact('user', 'sector','company'));
     }
 
     public function update(Request $request, User $user)
@@ -90,14 +90,14 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('status', 'Usuário removido com sucesso.');
     }
 
-    public function updateSectors(Request $request, User $user)
+    public function updatesector(Request $request, User $user)
 {
     $validated = $request->validate([
-        'sectors' => 'nullable|array',
-        'sectors.*' => 'exists:sectors,id',
+        'sector' => 'nullable|array',
+        'sector.*' => 'exists:sector,id',
     ]);
 
-    $user->sectors()->sync($validated['sectors'] ?? []);
+    $user->sector()->sync($validated['sector'] ?? []);
 
     return redirect()->route('users.index')
                      ->with('status', 'Setores atualizados com sucesso.');

@@ -140,7 +140,7 @@
 
                         <!-- Setores -->
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            @foreach ($sectors as $sector)
+                            @foreach ($sector as $sector)
                                 <div class="flex items-center gap-1.5">
                                     <input id="checkbox-{{ $sector->id }}" 
                                            class="checkbox checkbox-primary" 

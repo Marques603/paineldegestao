@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sector extends Model
 {
-    protected $table = 'macro';
+    protected $table = 'sector';
     
     protected $fillable = ['name', 'descricao', 'user_id', 'centro_custo', 'status'];
 
