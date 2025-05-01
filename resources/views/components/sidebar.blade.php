@@ -129,5 +129,36 @@
                 </li>
             </ul>
         </li>
-      
+        <!-- Recursos -->
+                 <li>
+            <a href="javascript:void(0);"
+                class="sidebar-menu {{ request()->routeIs(['users.index', 'sector.index','position.index']) ? 'active' : '' }}">
+
+                <span class="sidebar-menu-icon">
+                    <i data-feather="heart"></i>
+                </span>
+                <span class="sidebar-menu-text">Gestão HCM</span>
+                <span class="sidebar-menu-arrow">
+                    <i data-feather="chevron-right"></i>
+                </span>
+            </a>
+            <ul class="sidebar-submenu ">
+
+                <li>
+                    <a href="{{ route('users.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                        Usuários</a>
+                </li>
+                <li>
+                    <a href="{{ route('sector.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('sector.index') ? 'active' : '' }}">
+                        Setores</a>
+                </li>
+                <li>
+                    <a href="{{ route('position.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('position.index') ? 'active' : '' }}">
+                        Cargos</a>
+                </li>
+           </ul>
+        </li>
 </aside>
