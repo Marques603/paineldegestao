@@ -26,7 +26,7 @@ return new class extends Migration
             // Chave estrangeira para o usuário
             $table->foreign('user_upload')->references('id')->on('users')->onDelete('cascade');
             // Chave estrangeira para a macro
-            $table->foreign('macro_id')->references('id')->on('macros')->onDelete('cascade');
+            $table->foreign('macro_id')->references('id')->on('macro')->onDelete('cascade');
         });
     }
 

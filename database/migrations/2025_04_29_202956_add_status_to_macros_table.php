@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('macros', function (Blueprint $table) {
+        Schema::table('macro', function (Blueprint $table) {
             $table->boolean('status')->default(1);
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('macros', function (Blueprint $table) {
+        Schema::table('macro', function (Blueprint $table) {
             $table->dropColumn('status');
         });
     }
