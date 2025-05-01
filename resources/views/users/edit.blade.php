@@ -149,7 +149,7 @@
                                            value="{{ $sector->id }}"
                                            {{ $user->sector->contains($sector->id) ? 'checked' : '' }} />
                                     <label for="checkbox-{{ $sector->id }}" class="label">
-                                        {{ $sector->nome }}
+                                        {{ $sector->name }}
                                     </label>
                                 </div>
                             @endforeach

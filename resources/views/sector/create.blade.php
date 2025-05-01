@@ -30,9 +30,9 @@
                           <!-- Nome -->
                           <label class="label">
                               <span class="block mb-1">Nome</span>
-                              <input type="text" name="nome" class="input @error('nome') border-red-500 @enderror"
-                                     value="{{ old('nome', $sector->nome ?? '') }}" />
-                              @error('nome')
+                              <input type="text" name="name" class="input @error('name') border-red-500 @enderror"
+                                     value="{{ old('name', $sector->name ?? '') }}" />
+                              @error('name')
                                   <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                               @enderror
                           </label>

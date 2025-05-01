@@ -8,22 +8,19 @@ use Illuminate\Http\Request;
 
 class SectorController extends Controller
 {
+    
     public function index(Request $request)
     {
-        $query = Sector::query();
-
+        $sector = Sector::query();
+    
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $sector->where('name', 'like', '%' . $request->input('search') . '%');
         }
-
-        if ($request->has('status') && $request->status !== '') {
-            $query->where('status', $request->status);
-        }
-
-        $sector = Sector::with('user')->paginate(14);
-
+    
+        $sector = $sector->paginate(10);
         return view('sector.index', compact('sector'));
     }
+    
 
     public function create()
     {
@@ -33,6 +30,7 @@ class SectorController extends Controller
 
     public function store(Request $request)
     {
+        // Validação
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'descricao' => 'nullable|string',
@@ -40,8 +38,10 @@ class SectorController extends Controller
             'centro_custo' => 'nullable|string|max:255',
         ]);
 
+        // Definindo status como inativo (0) por padrão
         $validated['status'] = 0;
 
+        // Criando o setor
         Sector::create($validated);
 
         return redirect()->route('sector.index')->with('success', 'Setor criado como inativo!');
@@ -55,7 +55,8 @@ class SectorController extends Controller
 
     public function update(Request $request, Sector $sector)
     {
-        $request->validate([
+        // Validação
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'status' => 'required|boolean',
@@ -63,13 +64,15 @@ class SectorController extends Controller
             'centro_custo' => 'nullable|string|max:255',
         ]);
 
-        $sector->update($request->all());
+        // Atualizando apenas os campos validados
+        $sector->update($validated);
 
         return redirect()->route('sector.index')->with('success', 'Setor atualizado com sucesso!');
     }
 
     public function destroy(Sector $sector)
     {
+        // Excluindo o setor
         $sector->delete();
         return redirect()->route('sector.index')->with('success', 'Setor deletado com sucesso!');
     }

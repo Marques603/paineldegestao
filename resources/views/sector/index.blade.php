@@ -44,20 +44,20 @@
                             <ul class="dropdown-list space-y-4 p-4">
                                 <li class="dropdown-list-item">
                                     <h2 class="my-1 text-sm font-medium">Status</h2>
-                                    <select class="tom-select w-full" autocomplete="off">
+                                    <select class="tom-select w-full" autocomplete="off" name="status" onchange="this.form.submit()">
                                         <option value="">Selecione um status</option>
-                                        <option value="1">Ativo</option>
-                                        <option value="0">Inativo</option>
+                                        <option value="1" {{ request()->input('status') == '1' ? 'selected' : '' }}>Ativo</option>
+                                        <option value="0" {{ request()->input('status') == '0' ? 'selected' : '' }}>Inativo</option>
                                     </select>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <button class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
-                    <i class="h-4" data-feather="upload"></i>
-                    <span class="hidden sm:inline-block">Export</span>
-                </button>
-          </div>
+                        <i class="h-4" data-feather="upload"></i>
+                        <span class="hidden sm:inline-block">Exportar</span>
+                    </button>
+                </div>
 
                 <a class="btn btn-primary" href="{{ route('sector.create') }}" role="button">
                     <i data-feather="plus" height="1rem" width="1rem"></i>
@@ -85,79 +85,75 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($sector as $sector)
+                    @foreach($sector as $sectorItem)
                         <tr>
                             <td>
                                 <input class="checkbox company-checkbox" type="checkbox" />
                             </td>
-                            <td>{{ $sector->nome }}</td>
-                            <td>{{ $sector->descricao ?? 'Sem descrição' }}</td>
-                            <td>{{ $sector->user?->name ?? '-' }}</td>
-
-                            <td>{{ $sector->centro_custo ?? '-' }}</td>
+                            <td>{{ $sectorItem->name }}</td>
+                            <td>{{ $sectorItem->descricao ?? 'Sem descrição' }}</td>
+                            <td>{{ $sectorItem->user?->name ?? '-' }}</td>
+                            <td>{{ $sectorItem->centro_custo ?? '-' }}</td>
                             <td>
-                                @if($sector->status)
+                                @if($sectorItem->status)
                                     <div class="badge badge-soft-success">Ativo</div>
                                 @else
                                     <div class="badge badge-soft-danger">Inativo</div>
                                 @endif
                             </td>
                             <td class="text-right">
-    <div class="flex justify-end">
-        <div class="dropdown" data-placement="bottom-start">
-            <div class="dropdown-toggle">
-                <i class="w-6 text-slate-400" data-feather="more-horizontal"></i>
-            </div>
-            <div class="dropdown-content">
-                <ul class="dropdown-list">
-                    <li class="dropdown-list-item">
-                        <a href="{{ route('sector.edit', $sector->id) }}" class="dropdown-link">
-                            <i class="h-5 text-slate-400" data-feather="edit"></i>
-                            <span>Editar</span>
-                        </a>
-                    </li>
-                    <li class="dropdown-list-item">
-                        <a href="javascript:void(0)" class="dropdown-link" data-toggle="modal" data-target="#deleteModal-{{ $sector->id }}">
-                            <i class="h-5 text-slate-400" data-feather="trash"></i>
-                            <span>Excluir</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+                                <div class="flex justify-end">
+                                    <div class="dropdown" data-placement="bottom-start">
+                                        <div class="dropdown-toggle">
+                                            <i class="w-6 text-slate-400" data-feather="more-horizontal"></i>
+                                        </div>
+                                        <div class="dropdown-content">
+                                            <ul class="dropdown-list">
+                                                <li class="dropdown-list-item">
+                                                    <a href="{{ route('sector.edit', $sectorItem->id) }}" class="dropdown-link">
+                                                        <i class="h-5 text-slate-400" data-feather="edit"></i>
+                                                        <span>Editar</span>
+                                                    </a>
+                                                </li>
+                                                <li class="dropdown-list-item">
+                                                    <a href="javascript:void(0)" class="dropdown-link" data-toggle="modal" data-target="#deleteModal-{{ $sectorItem->id }}">
+                                                        <i class="h-5 text-slate-400" data-feather="trash"></i>
+                                                        <span>Excluir</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
 
-    <!-- Modal de Confirmação -->
-    <div class="modal modal-centered" id="deleteModal-{{ $sector->id }}">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="flex items-center justify-between">
-                        <h6>Confirmação</h6>
-                        <button type="button" class="btn btn-plain-secondary" data-dismiss="modal">
-                            <i data-feather="x" width="1.5rem" height="1.5rem"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <p class="text-sm text-slate-500 dark:text-slate-300">
-                        Tem certeza que deseja excluir <strong>{{ $sector->nome }}</strong>?
-                    </p>
-                </div>
-                <div class="modal-footer flex justify-center">
-                    <form method="POST" action="{{ route('sector.destroy', $sector->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Sim, excluir</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</td>
-
-
+                                <!-- Modal de Confirmação -->
+                                <div class="modal modal-centered" id="deleteModal-{{ $sectorItem->id }}">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <div class="flex items-center justify-between">
+                                                    <h6>Confirmação</h6>
+                                                    <button type="button" class="btn btn-plain-secondary" data-dismiss="modal">
+                                                        <i data-feather="x" width="1.5rem" height="1.5rem"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="text-sm text-slate-500 dark:text-slate-300">
+                                                    Tem certeza que deseja excluir <strong>{{ $sectorItem->name }}</strong>?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer flex justify-center">
+                                                <form method="POST" action="{{ route('sector.destroy', $sectorItem->id) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-danger">Sim, excluir</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
