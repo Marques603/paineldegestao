@@ -18,7 +18,7 @@ class DocumentController extends Controller
 
     public function index(Request $request)
     {
-        $query = Document::with(['macro', 'user', 'sectors', 'company']);
+        $query = Document::with(['macro', 'user', 'sector', 'company']);
     
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -40,7 +40,7 @@ class DocumentController extends Controller
     {
         return view('documents.create', [
             'macro' => Macro::all(),
-            'sectors' => Sector::all(),
+            'sector' => Sector::all(),
             'company' => Company::all()
         ]);
     }
@@ -51,8 +51,8 @@ class DocumentController extends Controller
             'name' => 'required|string|max:255',
             'file' => 'required|file|mimes:pdf,doc,docx|max:2048',
             'macro_id' => 'required|exists:macro,id',
-            'sectors' => 'nullable|array',
-            'sectors.*' => 'exists:sectors,id',
+            'sector' => 'nullable|array',
+            'sector.*' => 'exists:sector,id',
             'company' => 'nullable|array',
             'company.*' => 'exists:company,id',
         ]);
@@ -73,7 +73,7 @@ class DocumentController extends Controller
                 'locked' => false
             ]);
 
-            $document->sectors()->attach($validatedData['sectors'] ?? []);
+            $document->sector()->attach($validatedData['sector'] ?? []);
             $document->company()->attach($validatedData['company'] ?? []);
 
             DB::commit();
@@ -91,7 +91,7 @@ class DocumentController extends Controller
         return view('documents.edit', [
             'document' => $document,
             'macro' => Macro::all(),
-            'sectors' => Sector::all(),
+            'sector' => Sector::all(),
             'company' => Company::all()
         ]);
     }
@@ -102,8 +102,8 @@ class DocumentController extends Controller
             'name' => 'required|string|max:255',
             'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             'macro_id' => 'required|exists:macro,id',
-            'sectors' => 'nullable|array',
-            'sectors.*' => 'exists:sectors,id',
+            'sector' => 'nullable|array',
+            'sector.*' => 'exists:sector,id',
             'company' => 'nullable|array',
             'company.*' => 'exists:company,id',
         ]);
@@ -135,7 +135,7 @@ class DocumentController extends Controller
 
             $document->save();
 
-            $document->sectors()->sync($validatedData['sectors'] ?? []);
+            $document->sector()->sync($validatedData['sector'] ?? []);
             $document->company()->sync($validatedData['company'] ?? []);
 
             DB::commit();
@@ -181,7 +181,7 @@ class DocumentController extends Controller
 
     public function trash()
     {
-        $documents = Document::onlyTrashed()->with(['macro', 'user', 'sectors', 'company'])->paginate(10);
+        $documents = Document::onlyTrashed()->with(['macro', 'user', 'sector', 'company'])->paginate(10);
         return view('documents.trash', compact('documents'));
     }
 
@@ -193,20 +193,20 @@ class DocumentController extends Controller
         return redirect()->route('documents.trash')->with('success', 'Documento restaurado com sucesso!');
     }
     
-    public function editSectors(Document $document)
+    public function editsector(Document $document)
     {
-        $sectors = Sector::all();
-        return view('documents.edit-sectors', compact('document', 'sectors'));
+        $sector = Sector::all();
+        return view('documents.edit-sector', compact('document', 'sector'));
     }
 
-    public function updateSectors(Request $request, Document $document)
+    public function updatesector(Request $request, Document $document)
     {
         $validated = $request->validate([
-            'sectors' => 'nullable|array',
-            'sectors.*' => 'exists:sectors,id',
+            'sector' => 'nullable|array',
+            'sector.*' => 'exists:sector,id',
         ]);
 
-        $document->sectors()->sync($validated['sectors'] ?? []);
+        $document->sector()->sync($validated['sector'] ?? []);
 
         return redirect()->route('documents.index')->with('success', 'Setores atualizados com sucesso!');
     }

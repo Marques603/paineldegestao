@@ -13,7 +13,7 @@ class SectorController extends Controller
         $query = Sector::query();
 
         if ($request->has('search')) {
-            $query->where('nome', 'like', '%' . $request->search . '%');
+            $query->where('name', 'like', '%' . $request->search . '%');
         }
 
         if ($request->has('status') && $request->status !== '') {
@@ -34,7 +34,7 @@ class SectorController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nome' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'user_id' => 'nullable|exists:users,id',
             'centro_custo' => 'nullable|string|max:255',
@@ -56,7 +56,7 @@ class SectorController extends Controller
     public function update(Request $request, Sector $sector)
     {
         $request->validate([
-            'nome' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'status' => 'required|boolean',
             'user_id' => 'nullable|exists:users,id',

@@ -31,7 +31,7 @@ class Document extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function sectors()
+    public function sector()
     {
         return $this->belongsToMany(Sector::class, 'document_sector');
     }

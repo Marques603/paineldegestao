@@ -134,7 +134,7 @@
                     <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Setores</h2>
                     <p class="mb-4 text-sm font-normal text-slate-400">Selecione os setores ao qual o usuário pertence</p>
 
-                    <form method="POST" action="{{ route('users.update.sectors', $user->id) }}">
+                    <form method="POST" action="{{ route('users.update.sector', $user->id) }}">
                         @csrf
                         @method('PUT')
 
@@ -145,9 +145,9 @@
                                     <input id="checkbox-{{ $sector->id }}" 
                                            class="checkbox checkbox-primary" 
                                            type="checkbox" 
-                                           name="sectors[]" 
+                                           name="sector[]" 
                                            value="{{ $sector->id }}"
-                                           {{ $user->sectors->contains($sector->id) ? 'checked' : '' }} />
+                                           {{ $user->sector->contains($sector->id) ? 'checked' : '' }} />
                                     <label for="checkbox-{{ $sector->id }}" class="label">
                                         {{ $sector->nome }}
                                     </label>

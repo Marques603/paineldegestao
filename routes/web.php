@@ -50,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
 
    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
    // Remove o usuário selecionado do banco de dados
-   Route::put('/users/{user}/sectors', [UserController::class, 'updateSectors'])->name('users.update.sectors');
+   Route::put('/users/{user}/sector', [UserController::class, 'updatesector'])->name('users.update.sector');
    // Atualiza os setores associados a um usuário específico
    Route::put('/users/{user}/company', [UserController::class, 'updatecompany'])->name('users.update.company');
    // Atualiza as empresas associadas a um usuário específico

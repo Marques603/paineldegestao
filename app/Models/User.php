@@ -66,7 +66,7 @@ public function uploadeddocument()
 {
     return $this->hasMany(Document::class, 'user_upload_id');
 }
-public function sectors()
+public function sector()
 {
     return $this->belongsToMany(Sector::class);
 }
