@@ -1,4 +1,3 @@
-<!-- resources/views/company/edit.blade.php -->
 <x-app-layout>
     <x-page-title page="Editar Empresa" pageUrl="{{ route('company.index') }}" header="Editar Empresa" />
 
@@ -15,14 +14,14 @@
             </div>
         </section>
 
-        <!-- Formulário -->
+        <!-- Formulários -->
         <section class="col-span-1 flex w-full flex-1 flex-col gap-6 lg:col-span-3 lg:w-auto">
+            <!-- Formulário de Detalhes -->
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Detalhes da Empresa</h2>
                     <p class="mb-4 text-sm font-normal text-slate-400">Preencha as informações da empresa</p>
 
-                    <!-- Formulário de Edição -->
                     <form method="POST" action="{{ route('company.update', $company->id) }}" class="flex flex-col gap-6">
                         @csrf
                         @method('PUT')
@@ -67,20 +66,51 @@
                             </label>
                         </div>
 
-                        <!-- Status -->
-                        <label class="label">
-                            <span class="block mb-1">Status</span>
-                            <select name="status" class="input @error('status') border-red-500 @enderror">
-                                <option value="1" {{ old('status', $company->status) == 1 ? 'selected' : '' }}>Ativo</option>
-                                <option value="0" {{ old('status', $company->status) == 0 ? 'selected' : '' }}>Inativo</option>
-                            </select>
-                            @error('status')
-                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                            @enderror
-                        </label>
-
                         <!-- Botões -->
                         <div class="flex items-center justify-end gap-4">
+                            <a href="{{ route('company.index') }}" class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Formulário de Status -->
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('company.update.status', $company->id) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <input type="hidden" name="status" value="0">
+
+                        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Status da Empresa</h2>
+                        <p class="text-sm font-normal text-slate-400">Defina se esta empresa estará ativa no sistema.</p>
+
+                        <label for="status" class="toggle my-2 flex items-center justify-between">
+                            <div class="label">
+                                <p class="text-sm font-normal text-slate-400">Ativar esta empresa</p>
+                            </div>
+                            <div class="relative">
+                                <input
+                                    class="toggle-input peer sr-only"
+                                    id="status"
+                                    type="checkbox"
+                                    name="status"
+                                    value="1"
+                                    {{ old('status', $company->status) == 1 ? 'checked' : '' }}
+                                >
+                                <div class="toggle-body"></div>
+                            </div>
+                        </label>
+
+                        @error('status')
+                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                        @enderror
+
+                        <div class="flex items-center justify-end gap-4 mt-6">
                             <a href="{{ route('company.index') }}" class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
                                 Cancelar
                             </a>

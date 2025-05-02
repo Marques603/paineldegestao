@@ -74,4 +74,15 @@ class CompanyController extends Controller
         $company->delete();
         return redirect()->route('company.index')->with('success', 'Empresa Deletada com sucesso!');
     }
+    public function updateStatus(Request $request, Company $company)
+    {
+        $validated = $request->validate([
+            'status' => 'required|boolean',
+        ]);
+    
+        $company->update(['status' => $validated['status']]);
+    
+        return redirect()->route('company.index', $company->id)->with('success', 'Status atualizado com sucesso!');
+    }
+    
 }
