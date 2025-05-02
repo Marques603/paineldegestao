@@ -73,6 +73,8 @@ Route::middleware(['auth'])->group(function () {
    // Atualiza o status de uma empresa específica (ativo/inativo)
    Route::resource('macro', MacroController::class);
    // Rotas de macro (CRUD)
+   Route::put('/macros/{macro}/status', [MacroController::class, 'updateStatus'])->name('macro.update.status');
+   // Atualiza o status de uma macro específica (ativo/inativo)
    Route::resource('documents', DocumentController::class);
    // Rotas de documentos (CRUD)
 

@@ -70,4 +70,15 @@ class MacroController extends Controller
         $macro->delete();
         return redirect()->route('macro.index')->with('success', 'Macro excluída com sucesso!');
     }
+    public function updateStatus(Request $request, Macro $macro)
+    {
+    $validated = $request->validate([
+        'status' => 'required|boolean',
+    ]);
+
+    $macro->update(['status' => $validated['status']]);
+
+    return redirect()->route('macro.index', $macro->id)->with('success', 'Status atualizado com sucesso!');
+    }
+
 }
