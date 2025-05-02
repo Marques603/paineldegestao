@@ -51,31 +51,9 @@
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                           <!-- Responsável -->
                     
-<label class="label">
-    <span class="block mb-1">Responsável</span>
-    <select name="user_id" class="input @error('user_id') border-red-500 @enderror">
-        <option value="">Selecione um usuário</option>
-        @foreach($users as $user)
-            <option value="{{ $user->id }}" 
-            {{ isset($sector) && $sector->user_id == $user->id ? 'selected' : '' }}>
-                {{ $user->name }}
-            </option>
-        @endforeach
-    </select>
-    @error('user_id')
-        <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-    @enderror
-</label>
 
-                          <!-- Centro de Custo -->
-                          <label class="label">
-                              <span class="block mb-1">Centro de Custo</span>
-                              <input type="text" name="centro_custo" class="input @error('centro_custo') border-red-500 @enderror"
-                                     value="{{ old('centro_custo', $sector->centro_custo ?? '') }}" />
-                              @error('centro_custo')
-                                  <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                              @enderror
-                          </label>
+
+
                       </div>
 
                       <!-- Botões -->

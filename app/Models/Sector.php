@@ -8,7 +8,7 @@ class Sector extends Model
 {
     protected $table = 'sector';
     
-    protected $fillable = ['name', 'descricao', 'user_id', 'centro_custo', 'status'];
+    protected $fillable = ['name', 'descricao', 'user_id', 'cost_center_id', 'status'];
 
     
     public function document()

@@ -69,14 +69,23 @@
                             </label>
   
                             <!-- Centro de Custo -->
-                            <label class="label">
-                                <span class="block mb-1">Centro de Custo</span>
-                                <input type="text" name="centro_custo" class="input @error('centro_custo') border-red-500 @enderror"
-                                       value="{{ old('centro_custo', $sector->centro_custo) }}" />
-                                @error('centro_custo')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
+                            <!-- Centro de Custo -->
+<label class="label">
+    <span class="block mb-1">Centro de Custo</span>
+    <select name="cost_center_id" class="input @error('cost_center_id') border-red-500 @enderror">
+        <option value="">Selecione um centro de custo</option>
+        @foreach($cost_center as $center)
+            <option value="{{ $center->id }}"
+                {{ old('cost_center_id', $sector->cost_center_id) == $center->id ? 'selected' : '' }}>
+                {{ $center->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('cost_center_id')
+        <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+    @enderror
+</label>
+
                         </div>
   
                         <!-- Botões -->

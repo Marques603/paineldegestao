@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Sector;
 use App\Models\User;
+use App\Models\CostCenter; 
 use Illuminate\Http\Request;
 
 class SectorController extends Controller
 {
-    
     public function index(Request $request)
     {
         $sector = Sector::query();
@@ -22,23 +22,22 @@ class SectorController extends Controller
     
         return view('sector.index', compact('sector'));
     }
-    
-    
 
     public function create()
     {
         $users = User::all();
-        return view('sector.create', compact('users'));
+        $costCenters = CostCenter::all(); // Passa os centros de custo para a view
+        return view('sector.create', compact('users', 'costCenters'));
     }
 
     public function store(Request $request)
     {
-        // Validação
+        // Validação para o formulário de criação do setor
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'user_id' => 'nullable|exists:users,id',
-            'centro_custo' => 'nullable|string|max:255',
+            'cost_center_id' => 'nullable|exists:cost_center,id', // Validação para o centro de custo
         ]);
 
         // Definindo status como inativo (0) por padrão
@@ -52,19 +51,21 @@ class SectorController extends Controller
 
     public function edit(Sector $sector)
     {
-        $users = User::all();
-        return view('sector.edit', compact('sector', 'users'));
+        $users = User::orderBy('name')->get();
+        $cost_center = CostCenter::orderBy('name')->get(); // singular
+
+        return view('sector.edit', compact('sector', 'users', 'cost_center'));
     }
 
     public function update(Request $request, Sector $sector)
     {
-        // Validação
+        // Validação para o formulário de edição do setor (campo status não obrigatório aqui)
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'descricao' => 'nullable|string',
-            'status' => 'required|boolean',
             'user_id' => 'nullable|exists:users,id',
-            'centro_custo' => 'nullable|string|max:255',
+            'cost_center_id' => 'nullable|exists:cost_center,id', // Validação para o centro de custo
+            // Não validamos o status aqui, pois ele está em um formulário separado
         ]);
 
         // Atualizando apenas os campos validados
@@ -79,15 +80,16 @@ class SectorController extends Controller
         $sector->delete();
         return redirect()->route('sector.index')->with('success', 'Setor deletado com sucesso!');
     }
+
     public function updateStatus(Request $request, Sector $sector)
     {
-    $validated = $request->validate([
-        'status' => 'required|boolean',
-    ]);
+        // Validação para o formulário de atualização do status
+        $validated = $request->validate([
+            'status' => 'required|boolean',
+        ]);
 
-    $sector->update(['status' => $validated['status']]);
+        $sector->update(['status' => $validated['status']]);
 
-    return redirect()->route('sector.index', $sector)->with('success', 'Status do setor atualizado com sucesso!');
+        return redirect()->route('sector.index')->with('success', 'Status do setor atualizado com sucesso!');
     }
-
 }

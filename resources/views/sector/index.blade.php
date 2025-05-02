@@ -93,7 +93,13 @@
                             <td>{{ $sectorItem->name }}</td>
                             <td>{{ $sectorItem->descricao ?? 'Sem descrição' }}</td>
                             <td>{{ $sectorItem->user?->name ?? '-' }}</td>
-                            <td>{{ $sectorItem->centro_custo ?? '-' }}</td>
+                            <td>
+                                @if($sectorItem->costCenter)
+                                    {{ $sectorItem->costCenter->name . ' | ' . $sectorItem->costCenter->code }}
+                                @else
+                                    Sem centro de custo relacionado
+                                @endif
+                            </td>
                             <td>
                                 @if($sectorItem->status)
                                     <div class="badge badge-soft-success">Ativo</div>
