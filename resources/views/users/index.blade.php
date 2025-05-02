@@ -114,7 +114,15 @@
                     <h6 class="whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-100">
                       {{ $user->name }}
                     </h6>
-                    <p class="truncate text-xs text-slate-500 dark:text-slate-400">alterar depois função</p>
+                    @if($user->position)
+                    <p class="truncate text-xs text-slate-500 dark:text-slate-400">
+                     {{ $user->position->name ?? 'Sem setor' }}
+                   </p>
+                    @else
+                    <p class="truncate text-xs text-slate-500 dark:text-slate-400">
+                     Sem cargo atribuído
+                    </p>
+                    @endif
                   </div>
                 </div>
               </td>
