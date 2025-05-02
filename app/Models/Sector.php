@@ -23,6 +23,10 @@ class Sector extends Model
     {
     return $this->hasMany(Position::class); // mesmo no singular, pode retornar vários
     }
+    public function costCenter()
+    {
+    return $this->belongsTo(CostCenter::class);
+    }
 
     
 }

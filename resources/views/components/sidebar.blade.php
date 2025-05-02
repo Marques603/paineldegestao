@@ -132,7 +132,7 @@
         <!-- Recursos -->
                  <li>
             <a href="javascript:void(0);"
-                class="sidebar-menu {{ request()->routeIs(['users.index', 'sector.index','position.index']) ? 'active' : '' }}">
+                class="sidebar-menu {{ request()->routeIs(['cost_center','position.index']) ? 'active' : '' }}">
 
                 <span class="sidebar-menu-icon">
                     <i data-feather="heart"></i>
@@ -143,16 +143,10 @@
                 </span>
             </a>
             <ul class="sidebar-submenu ">
-
                 <li>
-                    <a href="{{ route('users.index') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
-                        Usuários</a>
-                </li>
-                <li>
-                    <a href="{{ route('sector.index') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('sector.index') ? 'active' : '' }}">
-                        Setores</a>
+                    <a href="{{ route('cost_center.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('cost_center.index') ? 'active' : '' }}">
+                        Centro de Custo</a>
                 </li>
                 <li>
                     <a href="{{ route('position.index') }}"

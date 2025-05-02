@@ -17,9 +17,12 @@ class SectorController extends Controller
             $sector->where('name', 'like', '%' . $request->input('search') . '%');
         }
     
-        $sector = $sector->paginate(10);
+        // Aplica os relacionamentos e pagina a query final
+        $sector = $sector->with(['user', 'costCenter'])->paginate(10);
+    
         return view('sector.index', compact('sector'));
     }
+    
     
 
     public function create()
