@@ -13,7 +13,7 @@ class CostCenter extends Model
 
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'status'];
+    protected $fillable = ['name', 'code', 'status'];
 
     public function sector()
     {

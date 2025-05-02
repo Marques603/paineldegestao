@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cost_center', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('code')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();

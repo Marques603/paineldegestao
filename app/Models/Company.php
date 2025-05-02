@@ -21,8 +21,9 @@ class Company extends Model
         return $this->belongsToMany(Document::class);
     }
 
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class);
+    return $this->belongsTo(User::class);
     }
+
 }

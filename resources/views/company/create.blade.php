@@ -54,15 +54,6 @@
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>
-
-                            <!-- Responsável -->
-                            <label class="label">
-                                <span class="block mb-1">Responsável</span>
-                                <input type="text" name="responsavel" class="input @error('responsavel') border-red-500 @enderror" value="{{ old('responsavel') }}" />
-                                @error('responsavel')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
                         </div>
 
                         <!-- Campo Status fixo como Ativo -->

@@ -62,11 +62,11 @@
                                 <span class="block mb-1">Código</span>
                                 <input 
                                     type="text" 
-                                    name="description" 
-                                    class="input @error('description') border-red-500 @enderror"
-                                    value="{{ old('description', $cost_center->description ?? '') }}" 
+                                    name="code" 
+                                    class="input @error('code') border-red-500 @enderror"
+                                    value="{{ old('code', $cost_center->code ?? '') }}" 
                                 />
-                                @error('description')
+                                @error('code')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>

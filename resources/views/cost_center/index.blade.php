@@ -89,7 +89,7 @@
                                 <input class="checkbox cost-center-checkbox" type="checkbox" />
                             </td>
                             <td>{{ $center->name }}</td>
-                            <td>{{ $center->description ?? 'Sem descrição' }}</td>
+                            <td>{{ $center->code ?? 'Sem descrição' }}</td>
                             <td>
                                 @if($center->status)
                                     <div class="badge badge-soft-success">Ativo</div>

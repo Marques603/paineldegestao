@@ -56,14 +56,23 @@
                                 @enderror
                             </label>
 
-                            <!-- Responsável -->
-                            <label class="label">
-                                <span class="block mb-1">Responsável</span>
-                                <input type="text" name="responsavel" class="input @error('responsavel') border-red-500 @enderror" value="{{ old('responsavel', $company->responsavel) }}" />
-                                @error('responsavel')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
+
+                         <!-- Responsável (select de usuários) -->
+<label class="label">
+    <span class="block mb-1">Responsável</span>
+    <select name="user_id" class="input @error('user_id') border-red-500 @enderror">
+        <option value="">Selecione um usuário</option>
+        @foreach($users as $user)
+            <option value="{{ $user->id }}" {{ old('user_id', $company->user_id ?? '') == $user->id ? 'selected' : '' }}>
+                {{ $user->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('user_id')
+        <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+    @enderror
+</label>
+
                         </div>
 
                         <!-- Botões -->
@@ -83,7 +92,7 @@
                     <form method="POST" action="{{ route('company.update.status', $company->id) }}">
                         @csrf
                         @method('PUT')
-
+                        <input type="hidden" name="status" value="{{ $company->status }}">
                         <input type="hidden" name="status" value="0">
 
                         <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Status da Empresa</h2>

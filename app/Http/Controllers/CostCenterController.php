@@ -23,7 +23,7 @@ class CostCenterController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'code' => 'nullable|string',
         ]);
 
         CostCenter::create($request->all());
@@ -40,7 +40,7 @@ class CostCenterController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'code' => 'nullable|string',
         ]);
 
         $cost_center->update($request->all());

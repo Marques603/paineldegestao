@@ -94,7 +94,7 @@
                     <td>{{ $company->name }}</td>
                             <td>{{ $company->description ?? 'Sem descrição' }}</td>
                             <td>{{ $company->cnpj }}</td>
-                            <td>{{ $company->responsavel ?? '-' }}</td>
+                            <td>{{ $company->user?->name ?? '-' }}</td>
                             <td>
                                 @if($company->status)
                                     <div class="badge badge-soft-success">Ativo</div>
