@@ -88,45 +88,52 @@
                 </div>
             </div>
 
-            <!-- Formulário para editar o status -->
-<div class="card">
-    <div class="card-body">
-        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Editar Status do Usuário</h2>
-        <p class="mb-4 text-sm font-normal text-slate-400">Atualize o status do usuário.</p>
+            <!-- Atualizar Status -->
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('users.update.status', $user->id) }}">
+                        @csrf
+                        @method('PUT')
 
-        <form method="POST" action="{{ route('users.update.status', $user->id) }}">
-            @csrf
-            @method('PUT')
+                        <!-- Campo oculto para garantir que um valor 0 seja enviado quando o checkbox não estiver marcado -->
+                        <input type="hidden" name="status" value="0">
+                        
+                        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Usuário</h2>
+                        <p class="text-sm font-normal text-slate-400">Defina se este usuário estará ativo no sistema.</p>
 
-            <!-- Status -->
-<!-- Status -->
-<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-    <label class="label">
-        <span class="my-1 block">Status</span>
-        <select name="status" class="input @error('status') border-red-500 @enderror">
-            <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Ativo</option>
-            <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Inativo</option>
-        </select>
-        @error('status')
-            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-        @enderror
-    </label>
-</div>
+                        <!-- Ativar Usuário -->
+                        <label for="status" class="toggle my-2 flex items-center justify-between">
+                            <div class="label">
+                                <p class="text-sm font-normal text-slate-400">Ativar este usuário</p>
+                            </div>
+                            <div class="relative">
+                                <input
+                                    class="toggle-input peer sr-only"
+                                    id="status"
+                                    type="checkbox"
+                                    name="status"
+                                    value="1"
+                                    {{ old('status', $user->status) == 1 ? 'checked' : '' }}
+                                >
+                                <div class="toggle-body"></div>
+                            </div>
+                        </label>
 
-            <!-- Botões -->
-            <div class="flex items-center justify-end gap-4 mt-4">
-                <a href="{{ route('users.index') }}"
-                   class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
-                    Cancelar
-                </a>
-                <button type="submit" class="btn btn-primary">Atualizar</button>
+                        @error('status')
+                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                        @enderror
+
+                        <!-- Botões -->
+                        <div class="flex items-center justify-end gap-4 mt-6">
+                            <a href="{{ route('users.index') }}"
+                               class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
-    </div>
-</div>
-
-
-
 
             <!-- Vincular Setores -->
             <div class="card">
@@ -168,43 +175,43 @@
             </div>
 
             <!-- Formulário para vincular empresas -->
-<div class="card">
-    <div class="card-body">
-        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Empresas</h2>
-        <p class="mb-4 text-sm font-normal text-slate-400">Selecione as empresas ao qual o usuário pertence</p>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Empresas</h2>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Selecione as empresas ao qual o usuário pertence</p>
 
-        <form method="POST" action="{{ route('users.update.company', $user->id) }}">
-            @csrf
-            @method('PUT')
+                    <form method="POST" action="{{ route('users.update.company', $user->id) }}">
+                        @csrf
+                        @method('PUT')
 
-            <!-- Exibição das empresas com checkboxes -->
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                @foreach ($company as $company)
-                    <div class="flex items-center gap-1.5">
-                        <input id="company-{{ $company->id }}" 
-                               class="checkbox checkbox-primary" 
-                               type="checkbox" 
-                               name="company[]" 
-                               value="{{ $company->id }}"
-                               {{ $user->company->contains($company->id) ? 'checked' : '' }} />
-                        <label for="company-{{ $company->id }}" class="label">
-                            {{ $company->name }}
-                        </label>
-                    </div>
-                @endforeach
+                        <!-- Exibição das empresas com checkboxes -->
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            @foreach ($company as $company)
+                                <div class="flex items-center gap-1.5">
+                                    <input id="company-{{ $company->id }}" 
+                                           class="checkbox checkbox-primary" 
+                                           type="checkbox" 
+                                           name="company[]" 
+                                           value="{{ $company->id }}"
+                                           {{ $user->company->contains($company->id) ? 'checked' : '' }} />
+                                    <label for="company-{{ $company->id }}" class="label">
+                                        {{ $company->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Botões de ação -->
+                        <div class="flex items-center justify-end gap-4 mt-4">
+                            <a href="{{ route('users.index') }}"
+                               class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <!-- Botões de ação -->
-            <div class="flex items-center justify-end gap-4 mt-4">
-                <a href="{{ route('users.index') }}"
-                   class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
-                    Cancelar
-                </a>
-                <button type="submit" class="btn btn-primary">Atualizar</button>
-            </div>
-        </form>
-    </div>
-</div>
 
         </section>
     </div>
