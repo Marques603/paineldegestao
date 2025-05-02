@@ -76,4 +76,15 @@ class SectorController extends Controller
         $sector->delete();
         return redirect()->route('sector.index')->with('success', 'Setor deletado com sucesso!');
     }
+    public function updateStatus(Request $request, Sector $sector)
+    {
+    $validated = $request->validate([
+        'status' => 'required|boolean',
+    ]);
+
+    $sector->update(['status' => $validated['status']]);
+
+    return redirect()->route('sector.index', $sector)->with('success', 'Status do setor atualizado com sucesso!');
+    }
+
 }

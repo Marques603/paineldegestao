@@ -65,6 +65,8 @@ Route::middleware(['auth'])->group(function () {
    // Rotas de submenus (CRUD)
    Route::resource('sector', SectorController::class);
    // Rotas de setores (CRUD)
+   Route::put('/sector/{sector}/status', [SectorController::class, 'updateStatus'])->name('sector.update.status');
+   // Atualiza o status de um setor específico (ativo/inativo)
    Route::resource('company', CompanyController::class);
    // Rotas de empresas (CRUD)
    Route::resource('macro', MacroController::class);
