@@ -106,7 +106,8 @@
                                     {{ $statusLabels[$item->status] ?? 'Desconhecido' }}
                                 </div>
                             </td>
-                            <td class="text-right">
+                            <td>
+                            <div class="flex justify-end">
                                 <div class="dropdown" data-placement="bottom-start">
                                     <div class="dropdown-toggle">
                                         <i class="w-6 text-slate-400" data-feather="more-horizontal"></i>
@@ -115,18 +116,47 @@
                                         <ul class="dropdown-list">
                                             <li class="dropdown-list-item">
                                                 <a href="{{ route('position.edit', $item->id) }}" class="dropdown-link">
-                                                    <i class="h-5 text-slate-400" data-feather="edit"></i>
+                                                    <i class="h-5 text-slate-400" data-feather="external-link"></i>
                                                     <span>Editar</span>
                                                 </a>
                                             </li>
                                             <li class="dropdown-list-item">
-                                                <form method="POST" action="{{ route('position.destroy', $item->id) }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="dropdown-link text-left w-full">
-                                                        <i class="h-5 text-slate-400" data-feather="trash"></i>
-                                                        <span>Excluir</span>
+                                                <a href="javascript:void(0)"
+                                                   class="dropdown-link"
+                                                   data-toggle="modal"
+                                                   data-target="#deleteModal-{{ $item->id }}">
+                                                    <i class="h-5 text-slate-400" data-feather="trash"></i>
+                                                    <span>Excluir</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Modal de Confirmação de Exclusão -->
+                                <div class="modal modal-centered" id="deleteModal-{{ $item->id }}">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <div class="flex items-center justify-between">
+                                                    <h6>Confirmação</h6>
+                                                    <button type="button" class="btn btn-plain-secondary" data-dismiss="modal">
+                                                        <i data-feather="x" width="1.5rem" height="1.5rem"></i>
                                                     </button>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="text-sm text-slate-500 dark:text-slate-300">
+                                                    Tem certeza que deseja excluir <strong>{{ $item->nome }}</strong>?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer flex justify-center">
+                                                <div class="flex items-center justify-center gap-4">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <form method="POST" action="{{ route('position.destroy', $item) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Sim, excluir</button>
                                                 </form>
                                             </li>
                                         </ul>
