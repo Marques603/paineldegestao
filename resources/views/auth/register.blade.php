@@ -78,7 +78,7 @@
             <!-- Login Button -->
       
             <div class="mt-8">
-              <button class="btn btn-primary w-full py-2.5"><a href="{{ route('login') }}">Entrar</a></button>
+              <button class="btn btn-primary w-full py-2.5"><a href="{{ route('login') }}">Cadastrar</a></button>
               <div class="relative mt-4 flex h-6 items-center justify-center py-4">
                 <div class="h-[1px] w-full bg-slate-200 dark:bg-slate-600"></div>
                 <div class="t absolute w-10 bg-white text-center text-xs text-slate-400 dark:bg-slate-800">Ou</div>
