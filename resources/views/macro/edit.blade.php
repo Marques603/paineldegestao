@@ -50,13 +50,6 @@
                                 <input type="text" name="responsible" class="input @error('responsible') border-red-500 @enderror" value="{{ old('responsible', $macro->responsible) }}" />
                                 @error('responsible') <p class="text-sm text-red-500 mt-1">{{ $message }}</p> @enderror
                             </label>
-
-                            <!-- Procedimento -->
-                            <label class="label">
-                                <span class="mb-1 block">Procedimento</span>
-                                <input type="text" name="procedure" class="input @error('procedure') border-red-500 @enderror" value="{{ old('procedure', $macro->procedure) }}" />
-                                @error('procedure') <p class="text-sm text-red-500 mt-1">{{ $message }}</p> @enderror
-                            </label>
                         </div>
 
                         <!-- Botões -->

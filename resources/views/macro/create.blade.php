@@ -48,28 +48,7 @@
                           </label>
                       </div>
 
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                          <!-- Responsável -->
-                          <label class="label">
-                              <span class="block mb-1">Responsável</span>
-                              <input type="text" name="responsible" class="input @error('responsible') border-red-500 @enderror"
-                                     value="{{ old('responsible', $macro->responsible ?? '') }}" />
-                              @error('responsible')
-                                  <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                              @enderror
-                          </label>
 
-                          <!-- Procedimento -->
-
-                          <label class="label">
-                            <span class="block mb-1">Procedimento</span>
-                            <input type="text" name="procedure" class="input @error('procedure') border-red-500 @enderror"
-                                   value="{{ old('procedure', $macro->procedure ?? '') }}" />
-                            @error('procedure')
-                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                            @enderror
-                        </label>
-                        </div>
 
                       <!-- Botões -->
                       <div class="flex items-center justify-end gap-4">

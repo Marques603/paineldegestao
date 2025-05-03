@@ -11,7 +11,6 @@ class Macro extends Model
 
     protected $fillable = [
         'name', 
-        'description', 
         'procedure', 
         'responsible',
         'status'
