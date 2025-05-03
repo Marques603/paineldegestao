@@ -47,10 +47,7 @@
                               @enderror
                           </label>
                       </div>
-
-
-
-                      <!-- Botões -->
+                    <!-- Botões -->
                       <div class="flex items-center justify-end gap-4">
                           <a href="{{ route('macro.index') }}"
                              class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
