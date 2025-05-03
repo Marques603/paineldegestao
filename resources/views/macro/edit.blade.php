@@ -45,11 +45,20 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <!-- Responsável -->
-                            <label class="label">
-                                <span class="mb-1 block">Responsável</span>
-                                <input type="text" name="responsible" class="input @error('responsible') border-red-500 @enderror" value="{{ old('responsible', $macro->responsible) }}" />
-                                @error('responsible') <p class="text-sm text-red-500 mt-1">{{ $message }}</p> @enderror
-                            </label>
+                            <!-- Responsável -->
+<label class="label">
+    <span class="mb-1 block">Responsável</span>
+    <select name="responsible" class="input @error('responsible') border-red-500 @enderror">
+        <option value="">Selecione um usuário</option>
+        @foreach ($users as $user)
+            <option value="{{ $user->name }}" {{ old('responsible', $macro->responsible) == $user->name ? 'selected' : '' }}>
+                {{ $user->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('responsible') <p class="text-sm text-red-500 mt-1">{{ $message }}</p> @enderror
+</label>
+
                         </div>
 
                         <!-- Botões -->

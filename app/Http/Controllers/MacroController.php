@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Macro;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MacroController extends Controller
@@ -47,7 +48,8 @@ class MacroController extends Controller
     // Exibir o formulário de edição
     public function edit(Macro $macro)
     {
-        return view('macro.edit', compact('macro'));
+    $users = User::orderBy('name')->get(); // ou qualquer outro filtro que quiser
+    return view('macro.edit', compact('macro', 'users'));
     }
 
     // Atualizar uma macro existente
