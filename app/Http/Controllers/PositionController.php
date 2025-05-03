@@ -35,17 +35,18 @@ class PositionController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'sector_id' => 'required|exists:sector,id',
-            'status' => 'required|in:0,1,3,4',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'sector_id' => 'nullable|exists:sector,id', // Agora é opcional
+        'status' => 'required|in:0,1,3,4',
+    ]);
 
-        Position::create($request->all());
+    Position::create($request->only(['name', 'status', 'sector_id']));
 
-        return redirect()->route('position.index')->with('success', 'Cargo criado com sucesso!');
-    }
+    return redirect()->route('position.index')->with('success', 'Cargo criado com sucesso!');
+}
+
 
     public function edit(Position $position)
     {

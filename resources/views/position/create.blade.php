@@ -48,55 +48,9 @@
                           </label>
                       </div>
 
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                          <!-- Setor -->
-                          <label class="label">
-                              <span class="block mb-1">Setor</span>
-                              <select name="sector_id" class="input @error('sector_id') border-red-500 @enderror">
-                                  <option value="">Selecione um setor</option>
-                                  @foreach($sectors as $sector)
-                                      <option value="{{ $sector->id }}"
-                                          {{ old('sector_id', $position->sector_id ?? '') == $sector->id ? 'selected' : '' }}>
-                                          {{ $sector->name }}
-                                      </option>
-                                  @endforeach
-                              </select>
-                              @error('sector_id')
-                                  <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                              @enderror
-                          </label>
 
-                          <!-- Usuário Responsável -->
-                          <label class="label">
-                              <span class="block mb-1">Usuário (se ocupado)</span>
-                              <select name="user_id" class="input @error('user_id') border-red-500 @enderror">
-                                  <option value="">Nenhum</option>
-                                  @foreach($users as $user)
-                                      <option value="{{ $user->id }}"
-                                          {{ old('user_id', $position->user_id ?? '') == $user->id ? 'selected' : '' }}>
-                                          {{ $user->name }}
-                                      </option>
-                                  @endforeach
-                              </select>
-                              @error('user_id')
-                                  <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                              @enderror
-                          </label>
-                      </div>
 
-                      <!-- Status -->
-                      <label class="label">
-                          <span class="block mb-1">Status</span>
-                          <select name="status" class="input @error('status') border-red-500 @enderror">
-                              <option value="0" {{ old('status', $position->status ?? '') == '0' ? 'selected' : '' }}>Inativa</option>
-                              <option value="1" {{ old('status', $position->status ?? '') == '1' ? 'selected' : '' }}>Ativa</option>
-                              <option value="3" {{ old('status', $position->status ?? '') == '3' ? 'selected' : '' }}>Ausente</option>
-                              <option value="4" {{ old('status', $position->status ?? '') == '4' ? 'selected' : '' }}>Ocupada</option>
-                          </select>
-                          @error('status')
-                              <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                          @enderror
-                      </label>
+
 
                       <!-- Botões -->
                       <div class="flex items-center justify-end gap-4">
