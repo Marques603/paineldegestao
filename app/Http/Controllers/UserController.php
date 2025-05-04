@@ -120,19 +120,14 @@ class UserController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        // Validação para garantir que o status seja 0 ou 1
         $request->validate([
-            'status' => 'required|in:0,1', // 0 - Inativo, 1 - Ativo
+            'status' => 'required|in:0,1',
         ]);
 
-        // Encontrar o usuário
         $user = User::findOrFail($id);
-
-        // Atualizar o status
-        $user->status = (int) $request->status; // Garantir que seja tratado como inteiro
+        $user->status = (int) $request->status;
         $user->save();
 
-        // Redirecionar com sucesso
         return redirect()->route('users.index')->with('status', 'Status do usuário atualizado com sucesso!');
     }
 
@@ -158,17 +153,20 @@ class UserController extends Controller
         $user->update($input);
 
         return redirect()->route('users.index')->with('status', 'Usuário atualizado com sucesso.');
-    }
+        }
 
-    public function updateMenus(Request $request, User $user)
-    {
-        $validated = $request->validate([
-            'menus' => 'array',
-            'menus.*' => 'exists:menu,id',
-        ]);
+        public function updateMenus(Request $request, User $user)
+        {
+        // Verifica se o campo menus existe e é um array de IDs de menus válidos
+         $validated = $request->validate([
+             'menus' => 'nullable|array',
+             'menus.*' => 'exists:menus,id', // Garante que os IDs dos menus sejam válidos
+         ]);
 
-        $user->menus()->sync($validated['menus'] ?? []);
+         // Sincroniza os menus do usuário com os menus passados no request
+         $user->menus()->sync($validated['menus'] ?? []);
 
         return redirect()->route('users.edit', $user->id)->with('success', 'Menus atualizados com sucesso.');
-    }
+}
+
 }
