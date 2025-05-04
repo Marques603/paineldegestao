@@ -48,9 +48,19 @@
                           </label>
                       </div>
 
-
-
-
+                      <!-- Status -->
+                      <label class="label">
+                          <span class="block mb-1">Status</span>
+                          <select name="status" class="input @error('status') border-red-500 @enderror">
+                              <option value="0" {{ old('status', $position->status ?? '') == '0' ? 'selected' : '' }}>Inativa</option>
+                              <option value="1" {{ old('status', $position->status ?? '') == '1' ? 'selected' : '' }}>Ativa</option>
+                              <option value="3" {{ old('status', $position->status ?? '') == '3' ? 'selected' : '' }}>Ausente</option>
+                              <option value="4" {{ old('status', $position->status ?? '') == '4' ? 'selected' : '' }}>Ocupada</option>
+                          </select>
+                          @error('status')
+                              <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                          @enderror
+                      </label>
 
                       <!-- Botões -->
                       <div class="flex items-center justify-end gap-4">
