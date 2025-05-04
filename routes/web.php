@@ -57,6 +57,8 @@ Route::middleware(['auth'])->group(function () {
    // Atualiza as empresas associadas a um usuário específico
    Route::put('users/{id}/status', [UserController::class, 'updateStatus'])->name('users.update.status');
    // Atualiza o status de um usuário específico (ativo/inativo)
+   Route::put('/users/{user}/menus', [UserController::class, 'updateMenus'])->name('users.update.menus');
+   // Atualiza os menus associados a um usuário específico
    Route::resource('position', PositionController::class);
    // Rotas de cargos (CRUD)
    Route::resource('menus', MenuController::class);

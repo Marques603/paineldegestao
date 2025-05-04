@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Sector;
 use App\Models\Company;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -56,7 +57,8 @@ class UserController extends Controller
     {
         $company = Company::where('status', 1)->get();
         $sector = Sector::where('status', 1)->get();
-        return view('users.edit', compact('user', 'sector','company'));
+        $menus = Menu::all();  // Carregando menus
+        return view('users.edit', compact('user', 'sector', 'company', 'menus'));
     }
 
     public function update(Request $request, User $user)
@@ -91,75 +93,82 @@ class UserController extends Controller
     }
 
     public function updatesector(Request $request, User $user)
-{
-    $validated = $request->validate([
-        'sector' => 'nullable|array',
-        'sector.*' => 'exists:sector,id',
-    ]);
+    {
+        $validated = $request->validate([
+            'sector' => 'nullable|array',
+            'sector.*' => 'exists:sector,id',
+        ]);
 
-    $user->sector()->sync($validated['sector'] ?? []);
+        $user->sector()->sync($validated['sector'] ?? []);
 
-    return redirect()->route('users.index')
-                     ->with('status', 'Setores atualizados com sucesso.');
-
-        
+        return redirect()->route('users.index')
+                         ->with('status', 'Setores atualizados com sucesso.');
     }
+
     public function updatecompany(Request $request, User $user)
-{
-    $request->validate([
-        'company' => 'array',
-        'company.*' => 'exists:company,id',
-    ]);
+    {
+        $request->validate([
+            'company' => 'array',
+            'company.*' => 'exists:company,id',
+        ]);
 
-    $user->company()->sync($request->company ?? []);
+        $user->company()->sync($request->company ?? []);
 
-    return redirect()->route('users.index')
-    ->with('status', 'Empresas atualizadas com sucesso!');
-
-
-}
-public function updateStatus(Request $request, $id)
-{
-    // Validação para garantir que o status seja 0 ou 1
-    $request->validate([
-        'status' => 'required|in:0,1', // 0 - Inativo, 1 - Ativo
-    ]);
-
-    // Encontrar o usuário
-    $user = User::findOrFail($id);
-
-    // Atualizar o status
-    $user->status = (int) $request->status; // Garantir que seja tratado como inteiro
-    $user->save();
-
-    // Redirecionar com sucesso
-    return redirect()->route('users.index')->with('status', 'Status do usuário atualizado com sucesso!');
-}
-
-public function updateProfile(Request $request, User $user)
-{
-    $input = $request->validate([
-        'name' => 'required|string',
-        'email' => 'required|email|unique:users,email,' . $user->id,
-        'password' => 'nullable|min:8|confirmed',
-        'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-    ]);
-
-    if ($request->filled('password')) {
-        $input['password'] = bcrypt($input['password']);
-    } else {
-        unset($input['password']);
+        return redirect()->route('users.index')
+                         ->with('status', 'Empresas atualizadas com sucesso!');
     }
 
-    if ($request->hasFile('avatar')) {
-        $input['avatar'] = $request->file('avatar')->store('images/profiles', 'public');
+    public function updateStatus(Request $request, $id)
+    {
+        // Validação para garantir que o status seja 0 ou 1
+        $request->validate([
+            'status' => 'required|in:0,1', // 0 - Inativo, 1 - Ativo
+        ]);
+
+        // Encontrar o usuário
+        $user = User::findOrFail($id);
+
+        // Atualizar o status
+        $user->status = (int) $request->status; // Garantir que seja tratado como inteiro
+        $user->save();
+
+        // Redirecionar com sucesso
+        return redirect()->route('users.index')->with('status', 'Status do usuário atualizado com sucesso!');
     }
 
-    $user->update($input);
+    public function updateProfile(Request $request, User $user)
+    {
+        $input = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:8|confirmed',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
-    return redirect()->route('users.index')->with('status', 'Usuário atualizado com sucesso.');
-}
+        if ($request->filled('password')) {
+            $input['password'] = bcrypt($input['password']);
+        } else {
+            unset($input['password']);
+        }
 
+        if ($request->hasFile('avatar')) {
+            $input['avatar'] = $request->file('avatar')->store('images/profiles', 'public');
+        }
 
+        $user->update($input);
 
+        return redirect()->route('users.index')->with('status', 'Usuário atualizado com sucesso.');
+    }
+
+    public function updateMenus(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'menus' => 'array',
+            'menus.*' => 'exists:menu,id',
+        ]);
+
+        $user->menus()->sync($validated['menus'] ?? []);
+
+        return redirect()->route('users.edit', $user->id)->with('success', 'Menus atualizados com sucesso.');
+    }
 }

@@ -39,7 +39,6 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Nome e Email -->
                         <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                             <label class="label">
                                 <span class="my-1 block">Nome</span>
@@ -60,7 +59,6 @@
                             </label>
                         </div>
 
-                        <!-- Senha -->
                         <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                             <label class="label">
                                 <span class="my-1 block">Senha</span>
@@ -76,7 +74,6 @@
                             </label>
                         </div>
 
-                        <!-- Botões -->
                         <div class="flex items-center justify-end gap-4 mt-4">
                             <a href="{{ route('users.index') }}"
                                class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
@@ -94,14 +91,11 @@
                     <form method="POST" action="{{ route('users.update.status', $user->id) }}">
                         @csrf
                         @method('PUT')
-
-                        <!-- Campo oculto para garantir que um valor 0 seja enviado quando o checkbox não estiver marcado -->
                         <input type="hidden" name="status" value="0">
-                        
+
                         <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Usuário</h2>
                         <p class="text-sm font-normal text-slate-400">Defina se este usuário estará ativo no sistema.</p>
 
-                        <!-- Ativar Usuário -->
                         <label for="status" class="toggle my-2 flex items-center justify-between">
                             <div class="label">
                                 <p class="text-sm font-normal text-slate-400">Ativar este usuário</p>
@@ -123,7 +117,6 @@
                             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                         @enderror
 
-                        <!-- Botões -->
                         <div class="flex items-center justify-end gap-4 mt-6">
                             <a href="{{ route('users.index') }}"
                                class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
@@ -145,24 +138,22 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Setores -->
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            @foreach ($sector as $sector)
+                            @foreach ($sector as $s)
                                 <div class="flex items-center gap-1.5">
-                                    <input id="checkbox-{{ $sector->id }}" 
+                                    <input id="checkbox-{{ $s->id }}" 
                                            class="checkbox checkbox-primary" 
                                            type="checkbox" 
                                            name="sector[]" 
-                                           value="{{ $sector->id }}"
-                                           {{ $user->sector->contains($sector->id) ? 'checked' : '' }} />
-                                    <label for="checkbox-{{ $sector->id }}" class="label">
-                                        {{ $sector->name }}
+                                           value="{{ $s->id }}"
+                                           {{ $user->sector->contains($s->id) ? 'checked' : '' }} />
+                                    <label for="checkbox-{{ $s->id }}" class="label">
+                                        {{ $s->name }}
                                     </label>
                                 </div>
                             @endforeach
                         </div>
 
-                        <!-- Botões -->
                         <div class="flex items-center justify-end gap-4 mt-4">
                             <a href="{{ route('users.index') }}"
                                class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
@@ -174,7 +165,7 @@
                 </div>
             </div>
 
-            <!-- Formulário para vincular empresas -->
+            <!-- Vincular Empresas -->
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Empresas</h2>
@@ -184,24 +175,22 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Exibição das empresas com checkboxes -->
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            @foreach ($company as $company)
+                            @foreach ($company as $c)
                                 <div class="flex items-center gap-1.5">
-                                    <input id="company-{{ $company->id }}" 
+                                    <input id="company-{{ $c->id }}" 
                                            class="checkbox checkbox-primary" 
                                            type="checkbox" 
                                            name="company[]" 
-                                           value="{{ $company->id }}"
-                                           {{ $user->company->contains($company->id) ? 'checked' : '' }} />
-                                    <label for="company-{{ $company->id }}" class="label">
-                                        {{ $company->name }}
+                                           value="{{ $c->id }}"
+                                           {{ $user->company->contains($c->id) ? 'checked' : '' }} />
+                                    <label for="company-{{ $c->id }}" class="label">
+                                        {{ $c->name }}
                                     </label>
                                 </div>
                             @endforeach
                         </div>
 
-                        <!-- Botões de ação -->
                         <div class="flex items-center justify-end gap-4 mt-4">
                             <a href="{{ route('users.index') }}"
                                class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
@@ -213,6 +202,42 @@
                 </div>
             </div>
 
+            <!-- Vincular Menus -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Menus</h2>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Selecione os menus ao qual o usuário tem acesso</p>
+
+                    <form method="POST" action="{{ route('users.update.menus', $user->id) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            @foreach ($menus as $m)
+                                <div class="flex items-center gap-1.5">
+                                    <input id="menu-{{ $m->id }}" 
+                                           class="checkbox checkbox-primary" 
+                                           type="checkbox" 
+                                           name="menus[]" 
+                                           value="{{ $m->id }}"
+                                           {{ $user->menus->contains($m->id) ? 'checked' : '' }} />
+                                    <label for="menu-{{ $m->id }}" class="label">
+                                        {{ $m->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div class="flex items-center justify-end gap-4 mt-4">
+                            <a href="{{ route('users.index') }}"
+                               class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </section>
     </div>
 </x-app-layout>
