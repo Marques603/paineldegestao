@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Macro;
 use App\Models\User;
+Use App\Models\Document;
 use Illuminate\Http\Request;
 
 class MacroController extends Controller
@@ -11,7 +12,7 @@ class MacroController extends Controller
     // Exibir todas as macros
     public function index(Request $request)
     {
-        $macros = Macro::query()
+        $macros = Macro::withCount('document') // <--- Aqui
             ->when($request->search, function ($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->search . '%');
             })

@@ -103,7 +103,8 @@
                             <td>{{ $macro->name }}</td>
                             <td>{{ $macro->description ?? 'Sem descrição' }}</td>
                             <td>{{ $macro->responsible ?? '-' }}</td>
-                            <td>Quantidades</td>
+                            <td>{{ $macro->document_count }}</td>
+
                             <td>
                                 @if($macro->status)
                                     <div class="badge badge-soft-success">Ativo</div>
