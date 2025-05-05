@@ -113,9 +113,9 @@
                             <td>{{ $submenu->created_at }}</td>
                             <td>
                                 @if($submenu->status)
-                                    <div class="badge badge-soft-success">status</div>
+                                    <div class="badge badge-soft-success">Ativo</div>
                                 @else
-                                    <div class="badge badge-soft-danger">Instatus</div>
+                                    <div class="badge badge-soft-danger">Inativo</div>
                                 @endif
                             </td>
                             <td>

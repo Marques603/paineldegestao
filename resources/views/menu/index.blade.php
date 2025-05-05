@@ -54,8 +54,8 @@
                                     <h2 class="my-1 text-sm font-medium">Status</h2>
                                     <select class="tom-select w-full" autocomplete="off">
                                         <option value="">Selecione um status</option>
-                                        <option value="1">status</option>
-                                        <option value="2">Instatus</option>
+                                        <option value="1">Ativo</option>
+                                        <option value="2">Inativo</option>
                                     </select>
                                 </li>
                             </ul>
@@ -134,9 +134,9 @@
                             <td>{{ $menu->created_at }}</td>
                             <td>
                                 @if($menu->status)
-                                    <div class="badge badge-soft-success">status</div>
+                                    <div class="badge badge-soft-success">Ativo</div>
                                 @else
-                                    <div class="badge badge-soft-danger">Instatus</div>
+                                    <div class="badge badge-soft-danger">Inativo</div>
                                 @endif
                             </td>
                             <td>
