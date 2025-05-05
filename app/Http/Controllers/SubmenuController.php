@@ -24,14 +24,14 @@ class SubmenuController extends Controller
         // Validação dos dados recebidos sem a validação de 'rota'
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'descricao' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:255',
             'ativo' => 'nullable|boolean', // Ativo pode ser nulo
         ]);
 
         // Criação do submenu
         Submenu::create([
             'name' => $data['name'],
-            'descricao' => $data['descricao'],
+            'description' => $data['description'],
             'rota' => $request->input('rota', ''), // Usando o valor de 'rota', ou vazio caso não enviado
             'ativo' => $request->has('ativo') ? 1 : 0, // Se "ativo" não for informado, usa "false" (0)
         ]);
@@ -54,12 +54,12 @@ class SubmenuController extends Controller
             case 'editar_informacoes':
                 $data = $request->validate([
                     'name' => 'required|string|max:255',
-                    'descricao' => 'nullable|string|max:255',
+                    'description' => 'nullable|string|max:255',
                 ]);
     
                 $submenu->update([
                     'name' => $data['name'],
-                    'descricao' => $data['descricao'],
+                    'description' => $data['description'],
                     'rota' => $request->input('rota', $submenu->rota),
                 ]);
                 break;

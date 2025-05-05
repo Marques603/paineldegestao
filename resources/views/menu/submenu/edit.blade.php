@@ -39,9 +39,9 @@
 
                             <label class="label">
                                 <span class="block mb-1">Descrição</span>
-                                <input type="text" name="descricao" class="input @error('descricao') border-red-500 @enderror"
-                                    value="{{ old('descricao', $submenu->descricao) }}" />
-                                @error('descricao')
+                                <input type="text" name="description" class="input @error('description') border-red-500 @enderror"
+                                    value="{{ old('description', $submenu->description) }}" />
+                                @error('description')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>
@@ -84,7 +84,7 @@
                         <input type="hidden" name="formulario" value="ativar_submenu">
 
                         <input type="hidden" name="name" value="{{ old('name', $submenu->name) }}">
-                        <input type="hidden" name="descricao" value="{{ old('descricao', $submenu->descricao) }}">
+                        <input type="hidden" name="description" value="{{ old('description', $submenu->description) }}">
                         <input type="hidden" name="rota" value="{{ old('rota', $submenu->rota) }}">
                         @foreach($submenu->menus as $menu)
                             <input type="hidden" name="menus[]" value="{{ $menu->id }}">
@@ -127,7 +127,7 @@
                         <input type="hidden" name="formulario" value="ativar_menus">
 
                         <input type="hidden" name="name" value="{{ old('name', $submenu->name) }}">
-                        <input type="hidden" name="descricao" value="{{ old('descricao', $submenu->descricao) }}">
+                        <input type="hidden" name="description" value="{{ old('description', $submenu->description) }}">
                         <input type="hidden" name="rota" value="{{ old('rota', $submenu->rota) }}">
                         <input type="hidden" name="ativo" value="{{ $submenu->ativo }}">
 

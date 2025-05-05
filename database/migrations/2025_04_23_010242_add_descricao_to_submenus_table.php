@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('submenus', function (Blueprint $table) {
-            $table->string('descricao')->nullable(); // Adiciona a coluna 'descricao'
+            $table->string('description')->nullable(); // Adiciona a coluna 'descricao'
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('submenus', function (Blueprint $table) {
-            $table->dropColumn('descricao'); // Remove a coluna 'descricao' se necessário
+            $table->dropColumn('description'); // Remove a coluna 'descricao' se necessário
         });
     }
 };
