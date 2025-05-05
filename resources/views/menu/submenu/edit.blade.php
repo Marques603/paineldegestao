@@ -30,9 +30,9 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <label class="label">
                                 <span class="block mb-1">Nome do Submenu</span>
-                                <input type="text" name="nome" class="input @error('nome') border-red-500 @enderror"
-                                    value="{{ old('nome', $submenu->nome) }}" />
-                                @error('nome')
+                                <input type="text" name="name" class="input @error('name') border-red-500 @enderror"
+                                    value="{{ old('name', $submenu->name) }}" />
+                                @error('name')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>
@@ -83,7 +83,7 @@
                         @method('PUT')
                         <input type="hidden" name="formulario" value="ativar_submenu">
 
-                        <input type="hidden" name="nome" value="{{ old('nome', $submenu->nome) }}">
+                        <input type="hidden" name="name" value="{{ old('name', $submenu->name) }}">
                         <input type="hidden" name="descricao" value="{{ old('descricao', $submenu->descricao) }}">
                         <input type="hidden" name="rota" value="{{ old('rota', $submenu->rota) }}">
                         @foreach($submenu->menus as $menu)
@@ -126,7 +126,7 @@
                         @method('PUT')
                         <input type="hidden" name="formulario" value="ativar_menus">
 
-                        <input type="hidden" name="nome" value="{{ old('nome', $submenu->nome) }}">
+                        <input type="hidden" name="name" value="{{ old('name', $submenu->name) }}">
                         <input type="hidden" name="descricao" value="{{ old('descricao', $submenu->descricao) }}">
                         <input type="hidden" name="rota" value="{{ old('rota', $submenu->rota) }}">
                         <input type="hidden" name="ativo" value="{{ $submenu->ativo }}">
@@ -147,7 +147,7 @@
                                         value="{{ $menu->id }}"
                                         {{ $isChecked ? 'checked' : '' }}
                                     >
-                                    <label for="{{ $id }}" class="label">{{ $menu->nome }}</label>
+                                    <label for="{{ $id }}" class="label">{{ $menu->name }}</label>
                                 </div>
                             @endforeach
                         </div>

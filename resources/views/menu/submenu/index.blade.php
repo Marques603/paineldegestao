@@ -102,7 +102,7 @@
                                 <div class="flex items-center gap-3">
                                     <div>
                                         <h6 class="whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-100">
-                                            {{ $submenu->nome }}
+                                            {{ $submenu->name }}
                                         </h6>
                                         <p class="truncate text-xs text-slate-500 dark:text-slate-400">{{ $submenu->descricao ?? 'Sem descrição' }}</p>
                                     </div>
@@ -159,7 +159,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p class="text-sm text-slate-500 dark:text-slate-300">
-                                                        Tem certeza que deseja excluir <strong>{{ $submenu->nome }}</strong>?
+                                                        Tem certeza que deseja excluir <strong>{{ $submenu->name }}</strong>?
                                                     </p>
                                                 </div>
                                                 <div class="modal-footer flex justify-center">

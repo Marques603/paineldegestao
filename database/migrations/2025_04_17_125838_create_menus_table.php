@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->string('name');
             $table->string('icone')->nullable(); // Ex: feather icon
             $table->boolean('ativo')->default(true);
             $table->timestamps();

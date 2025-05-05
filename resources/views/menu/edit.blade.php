@@ -43,13 +43,13 @@
                         @method('PUT')
                         <input type="hidden" name="formulario" value="editar_informacoes">
 
-                        <!-- Nome e Descrição -->
+                        <!-- name e Descrição -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <label class="label">
                                 <span class="block mb-1">Nome do Menu</span>
-                                <input type="text" name="nome" class="input @error('nome') border-red-500 @enderror"
-                                    value="{{ old('nome', $menu->nome) }}" />
-                                @error('nome')
+                                <input type="text" name="name" class="input @error('name') border-red-500 @enderror"
+                                    value="{{ old('name', $menu->name) }}" />
+                                @error('name')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>
@@ -120,7 +120,7 @@
                         @method('PUT')
                         <input type="hidden" name="formulario" value="editar_ativo">
 
-                        <input type="hidden" name="nome" value="{{ old('nome', $menu->nome) }}">
+                        <input type="hidden" name="name" value="{{ old('name', $menu->name) }}">
                         <input type="hidden" name="descricao" value="{{ old('descricao', $menu->descricao) }}">
                         <input type="hidden" name="icone" value="{{ old('icone', $menu->icone) }}">
                         <input type="hidden" name="rota" value="{{ old('rota', $menu->rota) }}">
@@ -167,7 +167,7 @@
                         @method('PUT')
                         <input type="hidden" name="formulario" value="editar_informacoes3">
 
-                        <!-- Nome e Descrição -->
+                        <!-- name e Descrição -->
                                                 <!-- Submenus -->
                                                 <div class="mt-6">
 
@@ -181,7 +181,7 @@
                                             value="{{ $submenu->id }}" 
                                             {{ in_array($submenu->id, $menu->submenus->pluck('id')->toArray()) ? 'checked' : '' }}
                                             class="form-checkbox">
-                                        <label class="ml-2 text-sm">{{ $submenu->nome }}</label>
+                                        <label class="ml-2 text-sm">{{ $submenu->name }}</label>
                                     </div>
                                 @endforeach
                             </div>

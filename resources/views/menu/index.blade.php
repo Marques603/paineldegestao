@@ -109,7 +109,7 @@
 
                                     <div>
                                         <h6 class="whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-100">
-                                            {{ $menu->nome }}
+                                            {{ $menu->name }}
                                         </h6>
                                         <p class="truncate text-xs text-slate-500 dark:text-slate-400">{{ $menu->descricao ?? 'Sem descrição' }}</p>
                                     </div>
@@ -118,7 +118,7 @@
 
                             @php
                             $submenuCount = $menu->submenus->count();
-                            $submenuNames = $menu->submenus->pluck('nome')->join(', ');
+                            $submenuNames = $menu->submenus->pluck('name')->join(', ');
                             @endphp
                             <td>
                                 <a
@@ -180,7 +180,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p class="text-sm text-slate-500 dark:text-slate-300">
-                                                        Tem certeza que deseja excluir <strong>{{ $menu->nome }}</strong>?
+                                                        Tem certeza que deseja excluir <strong>{{ $menu->name }}</strong>?
                                                     </p>
                                                 </div>
                                                 <div class="modal-footer flex justify-center">

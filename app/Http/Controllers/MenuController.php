@@ -16,7 +16,7 @@ class MenuController extends Controller
         $search = $request->input('search');
 
         $menus = Menu::when($search, function ($query, $search) {
-            return $query->where('nome', 'like', '%' . $search . '%');
+            return $query->where('name', 'like', '%' . $search . '%');
         })->paginate(8);
 
         return view('menu.index', compact('menus'));
@@ -37,7 +37,7 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nome' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'descricao' => 'nullable|string|max:255',
             'icone' => 'nullable|string',
             'rota' => 'nullable|string|max:255',
@@ -73,7 +73,7 @@ class MenuController extends Controller
         switch ($formulario) {
             case 'editar_informacoes':
                 $data = $request->validate([
-                    'nome' => 'required|string|max:255',
+                    'name' => 'required|string|max:255',
                     'descricao' => 'nullable|string|max:255',
                     'icone' => 'nullable|string',
                     'rota' => 'nullable|string|max:255',

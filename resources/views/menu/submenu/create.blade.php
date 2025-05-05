@@ -29,14 +29,14 @@
                         @csrf
                         @if(isset($submenu)) @method('PUT') @endif
 
-                        <!-- Primeira linha: Nome | Descrição -->
+                        <!-- Primeira linha: name | Descrição -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <!-- Nome -->
+                            <!-- name -->
                             <label class="label">
                                 <span class="block mb-1">Nome do Submenu</span>
-                                <input type="text" name="nome" class="input @error('nome') border-red-500 @enderror"
-                                       value="{{ old('nome', $submenu->nome ?? '') }}" />
-                                @error('nome')
+                                <input type="text" name="name" class="input @error('name') border-red-500 @enderror"
+                                       value="{{ old('name', $submenu->name ?? '') }}" />
+                                @error('name')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>

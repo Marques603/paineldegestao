@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('submenus', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->string('name');
             $table->string('rota'); // Nome da rota Laravel
             $table->boolean('ativo')->default(true);
             $table->timestamps();

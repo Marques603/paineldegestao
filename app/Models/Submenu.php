@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Submenu extends Model
 {
     // Definir os campos que podem ser preenchidos em massa
-    protected $fillable = ['nome', 'rota', 'ativo', 'descricao'];
+    protected $fillable = ['name', 'rota', 'ativo', 'descricao'];
 
     /**
      * Relacionamento muitos-para-muitos com Menu
