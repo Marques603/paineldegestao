@@ -55,6 +55,9 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+
+        $user->load('menus'); 
+        
         $company = Company::where('status', 1)->get();
         $sector = Sector::where('status', 1)->get();
         $menus = Menu::all();  // Carregando menus
