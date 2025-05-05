@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('rota'); // Nome da rota Laravel
-            $table->boolean('ativo')->default(true);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
         

@@ -58,11 +58,11 @@
                             </label>
                         </div>
 
-                        <!-- Enviar os menus e ativo como hidden -->
+                        <!-- Enviar os menus e status como hidden -->
                         @foreach($submenu->menus as $menu)
                             <input type="hidden" name="menus[]" value="{{ $menu->id }}">
                         @endforeach
-                        <input type="hidden" name="ativo" value="{{ $submenu->ativo }}">
+                        <input type="hidden" name="status" value="{{ $submenu->status }}">
 
                         <div class="flex items-center justify-end gap-4">
                             <a href="{{ route('submenus.index') }}" class="btn border text-slate-500 dark:border-slate-700 dark:text-slate-300">Cancelar</a>
@@ -76,7 +76,7 @@
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Submenu</h2>
-                    <p class="mb-4 text-sm font-normal text-slate-400">Defina se este submenu estará ativo no sistema.</p>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Defina se este submenu estará status no sistema.</p>
 
                     <form method="POST" action="{{ route('submenus.update', $submenu) }}" class="flex flex-col gap-6">
                         @csrf
@@ -90,18 +90,18 @@
                             <input type="hidden" name="menus[]" value="{{ $menu->id }}">
                         @endforeach
 
-                        <label for="ativo" class="toggle my-2 flex items-center justify-between">
+                        <label for="status" class="toggle my-2 flex items-center justify-between">
                             <div class="label">
                                 <p class="text-sm font-normal text-slate-400">Ativar este submenu</p>
                             </div>
                             <div class="relative">
                                 <input
                                     class="toggle-input peer sr-only"
-                                    id="ativo"
+                                    id="status"
                                     type="checkbox"
-                                    name="ativo"
+                                    name="status"
                                     value="1"
-                                    {{ old('ativo', $submenu->ativo ?? 1) == 1 ? 'checked' : '' }}
+                                    {{ old('status', $submenu->status ?? 1) == 1 ? 'checked' : '' }}
                                 >
                                 <div class="toggle-body"></div>
                             </div>
@@ -119,7 +119,7 @@
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Menus</h2>
-                    <p class="mb-4 text-sm font-normal text-slate-400">Defina quais menus estarão ativos nesse submenu.</p>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Defina quais menus estarão statuss nesse submenu.</p>
 
                     <form method="POST" action="{{ route('submenus.update', $submenu) }}" class="flex flex-col gap-6">
                         @csrf
@@ -129,7 +129,7 @@
                         <input type="hidden" name="name" value="{{ old('name', $submenu->name) }}">
                         <input type="hidden" name="description" value="{{ old('description', $submenu->description) }}">
                         <input type="hidden" name="rota" value="{{ old('rota', $submenu->rota) }}">
-                        <input type="hidden" name="ativo" value="{{ $submenu->ativo }}">
+                        <input type="hidden" name="status" value="{{ $submenu->status }}">
 
                         <div class="flex flex-wrap gap-4">
                             @foreach($menus as $menu)

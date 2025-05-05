@@ -43,7 +43,7 @@ class MenuController extends Controller
             'rota' => 'nullable|string|max:255',
         ]);
 
-        $data['ativo'] = 0; // Define como inativo por padrão
+        $data['status'] = 0; // Define como instatus por padrão
 
         Menu::create($data);
 
@@ -81,8 +81,8 @@ class MenuController extends Controller
                 $menu->update($data);
                 break;
 
-            case 'editar_ativo':
-                $menu->ativo = $request->has('ativo') ? 1 : 0;
+            case 'editar_status':
+                $menu->status = $request->has('status') ? 1 : 0;
                 $menu->save();
                 break;
 

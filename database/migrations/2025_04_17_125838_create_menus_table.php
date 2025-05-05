@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('icone')->nullable(); // Ex: feather icon
-            $table->boolean('ativo')->default(true);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
         

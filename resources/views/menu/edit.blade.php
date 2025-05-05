@@ -113,30 +113,30 @@
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Ativar Menu</h2>
-                    <p class="mb-4 text-sm font-normal text-slate-400">Defina se este menu estará ativo no sistema.</p>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Defina se este menu estará status no sistema.</p>
 
                     <form method="POST" action="{{ route('menus.update', $menu) }}" class="flex flex-col gap-6">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" name="formulario" value="editar_ativo">
+                        <input type="hidden" name="formulario" value="editar_status">
 
                         <input type="hidden" name="name" value="{{ old('name', $menu->name) }}">
                         <input type="hidden" name="description" value="{{ old('description', $menu->description) }}">
                         <input type="hidden" name="icone" value="{{ old('icone', $menu->icone) }}">
                         <input type="hidden" name="rota" value="{{ old('rota', $menu->rota) }}">
 
-                        <label for="ativo" class="toggle my-2 flex items-center justify-between">
+                        <label for="status" class="toggle my-2 flex items-center justify-between">
                             <div class="label">
                                 <p class="text-sm font-normal text-slate-400">Ativar este menu</p>
                             </div>
                             <div class="relative">
                                 <input
                                     class="toggle-input peer sr-only"
-                                    id="ativo"
+                                    id="status"
                                     type="checkbox"
-                                    name="ativo"
+                                    name="status"
                                     value="1"
-                                    {{ old('ativo', $menu->ativo) ? 'checked' : '' }}
+                                    {{ old('status', $menu->status) ? 'checked' : '' }}
                                 >
                                 <div class="toggle-body"></div>
                             </div>
