@@ -39,10 +39,10 @@
 
                           <!-- Descrição -->
                           <label class="label">
-                              <span class="block mb-1">Descrição</span>
-                              <input type="text" name="description" class="input @error('description') border-red-500 @enderror"
-                                     value="{{ old('description', $position->description ?? '') }}" />
-                              @error('description')
+                              <span class="block mb-1">Código</span>
+                              <input type="text" name="code" class="input @error('code') border-red-500 @enderror"
+                                     value="{{ old('code', $position->code ?? '') }}" />
+                              @error('code')
                                   <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                               @enderror
                           </label>

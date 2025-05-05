@@ -12,7 +12,7 @@ class Position extends Model
 
     // Adicione os campos que você quer permitir a atribuição em massa
     protected $fillable = [
-        'name', 'description', 'status', 'user_id', 'sector_id'
+        'name', 'code', 'status', 'user_id', 'sector_id'
     ];
     
     protected $table = 'position'; // força uso no singular

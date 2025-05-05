@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('position', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('code')->nullable();
             $table->unsignedBigInteger('sector_id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->tinyInteger('status')->default(1); // 1 = ativa
