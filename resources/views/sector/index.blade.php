@@ -91,7 +91,7 @@
                                 <input class="checkbox company-checkbox" type="checkbox" />
                             </td>
                             <td>{{ $sectorItem->name }}</td>
-                            <td>{{ $sectorItem->descricao ?? 'Sem descrição' }}</td>
+                            <td>{{ $sectorItem->description ?? 'Sem descrição' }}</td>
                             <td>{{ $sectorItem->user?->name ?? '-' }}</td>
                             <td>
                                 @if($sectorItem->costCenter)

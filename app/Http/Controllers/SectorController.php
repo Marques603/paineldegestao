@@ -35,7 +35,7 @@ class SectorController extends Controller
         // Validação para o formulário de criação do setor
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
+            'description' => 'nullable|string',
             'user_id' => 'nullable|exists:users,id',
             'cost_center_id' => 'nullable|exists:cost_center,id', // Validação para o centro de custo
         ]);
@@ -62,7 +62,7 @@ class SectorController extends Controller
         // Validação para o formulário de edição do setor (campo status não obrigatório aqui)
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
+            'description' => 'nullable|string',
             'user_id' => 'nullable|exists:users,id',
             'cost_center_id' => 'nullable|exists:cost_center,id', // Validação para o centro de custo
             // Não validamos o status aqui, pois ele está em um formulário separado

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sector', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('descricao')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('status')->default(true);
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('centro_custo')->nullable();
