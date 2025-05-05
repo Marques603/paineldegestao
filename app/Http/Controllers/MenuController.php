@@ -38,7 +38,7 @@ class MenuController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'descricao' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:255',
             'icone' => 'nullable|string',
             'rota' => 'nullable|string|max:255',
         ]);
@@ -74,7 +74,7 @@ class MenuController extends Controller
             case 'editar_informacoes':
                 $data = $request->validate([
                     'name' => 'required|string|max:255',
-                    'descricao' => 'nullable|string|max:255',
+                    'description' => 'nullable|string|max:255',
                     'icone' => 'nullable|string',
                     'rota' => 'nullable|string|max:255',
                 ]);

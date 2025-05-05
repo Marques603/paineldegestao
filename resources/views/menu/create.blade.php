@@ -66,9 +66,9 @@
     <!-- Descrição -->
     <label class="label">
         <span class="block mb-1">Descrição</span>
-        <input type="text" name="descricao" class="input @error('descricao') border-red-500 @enderror" 
-               value="{{ old('descricao', $menu->descricao ?? '') }}" />
-        @error('descricao')
+        <input type="text" name="description" class="input @error('description') border-red-500 @enderror" 
+               value="{{ old('description', $menu->description ?? '') }}" />
+        @error('description')
             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
         @enderror
     </label>

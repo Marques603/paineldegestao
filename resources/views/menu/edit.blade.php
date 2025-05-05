@@ -56,9 +56,9 @@
 
                             <label class="label">
                                 <span class="block mb-1">Descrição</span>
-                                <input type="text" name="descricao" class="input @error('descricao') border-red-500 @enderror"
-                                    value="{{ old('descricao', $menu->descricao) }}" />
-                                @error('descricao')
+                                <input type="text" name="description" class="input @error('description') border-red-500 @enderror"
+                                    value="{{ old('description', $menu->description) }}" />
+                                @error('description')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>
@@ -121,7 +121,7 @@
                         <input type="hidden" name="formulario" value="editar_ativo">
 
                         <input type="hidden" name="name" value="{{ old('name', $menu->name) }}">
-                        <input type="hidden" name="descricao" value="{{ old('descricao', $menu->descricao) }}">
+                        <input type="hidden" name="description" value="{{ old('description', $menu->description) }}">
                         <input type="hidden" name="icone" value="{{ old('icone', $menu->icone) }}">
                         <input type="hidden" name="rota" value="{{ old('rota', $menu->rota) }}">
 

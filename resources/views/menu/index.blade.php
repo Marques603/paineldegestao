@@ -111,7 +111,7 @@
                                         <h6 class="whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-100">
                                             {{ $menu->name }}
                                         </h6>
-                                        <p class="truncate text-xs text-slate-500 dark:text-slate-400">{{ $menu->descricao ?? 'Sem descrição' }}</p>
+                                        <p class="truncate text-xs text-slate-500 dark:text-slate-400">{{ $menu->description ?? 'Sem descrição' }}</p>
                                     </div>
                                 </div>
                             </td>
