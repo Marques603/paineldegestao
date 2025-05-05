@@ -169,7 +169,7 @@ class UserController extends Controller
          // Sincroniza os menus do usuário com os menus passados no request
          $user->menus()->sync($validated['menus'] ?? []);
 
-        return redirect()->route('users.edit', $user->id)->with('success', 'Menus atualizados com sucesso.');
+        return redirect()->route('users.index', $user->id)->with('status', 'Menus atualizados com sucesso.');
 }
 
 }
