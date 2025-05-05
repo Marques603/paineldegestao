@@ -222,7 +222,7 @@
                                value="{{ $menu->id }}"
                                {{ $user->menus->contains($menu->id) ? 'checked' : '' }} />
                         <label for="menu-{{ $menu->id }}" class="label">
-                            {{ $menu->nome }}
+                            {{ $menu->name }}
                         </label>
                     </div>
                 @endforeach
