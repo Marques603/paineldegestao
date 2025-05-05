@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('macro', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('procedure')->nullable();
+            $table->text('description')->nullable();
             $table->string('responsible')->nullable(); // Responsável
             $table->timestamps();
         });
