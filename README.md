@@ -125,3 +125,8 @@ VALUES (
     NOW(),
     NOW()
 );
+
+
+ @can('view', App\Models\Menu::find(1)) {{-- ou use slug, ex: where('slug', 'users') --}}
+
+ @endcan

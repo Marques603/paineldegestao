@@ -202,41 +202,6 @@
                 </div>
             </div>
 
-            <!-- Vincular Menus -->
-<div class="card">
-    <div class="card-body">
-        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Menus</h2>
-        <p class="mb-4 text-sm font-normal text-slate-400">Selecione os menus acessíveis por este usuário</p>
-
-        <form method="POST" action="{{ route('users.update.menus', $user->id) }}">
-            @csrf
-            @method('PUT')
-
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                @foreach ($menus as $menu)
-                    <div class="flex items-center gap-1.5">
-                        <input id="menu-{{ $menu->id }}" 
-                               class="checkbox checkbox-primary" 
-                               type="checkbox" 
-                               name="menus[]" 
-                               value="{{ $menu->id }}"
-                               {{ $user->menus->contains($menu->id) ? 'checked' : '' }} />
-                        <label for="menu-{{ $menu->id }}" class="label">
-                            {{ $menu->name }}
-                        </label>
-                    </div>
-                @endforeach
-            </div>
-            <div class="flex items-center justify-end gap-4 mt-4">
-                <a href="{{ route('users.index') }}"
-                   class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
-                    Cancelar
-                </a>
-                <button type="submit" class="btn btn-primary">Atualizar</button>
-            </div>
-        </form>
-    </div>
-</div>
 
             <!-- Vincular Permissões -->
             <!-- Vincular Papéis (Roles) -->

@@ -89,7 +89,7 @@
         <!-- Users -->
         
         <li>
-            @can('view', App\Models\Menu::find(1)) {{-- ou use slug, ex: where('slug', 'users') --}}
+           
             <a href="javascript:void(0);"
                 class="sidebar-menu {{ request()->routeIs(['users.index', 'sector.index','company.index','menus.index','submenus.index']) ? 'active' : '' }}">
 
@@ -120,19 +120,8 @@
                         class="sidebar-submenu-item {{ request()->routeIs('company.index') ? 'active' : '' }}">
                         Empresa</a>
                 </li>
-                <li>
-                    <a href="{{ route('menus.index') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('menus.index') ? 'active' : '' }}">
-                        Menu</a>
-                </li>
-
-                <li>
-                    <a href="{{ route('submenus.index') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('submenus.index') ? 'active' : '' }}">
-                        SubMenu</a>
-                </li>
             </ul>
-            @endcan
+            
         </li>
        
         <!-- Recursos -->
