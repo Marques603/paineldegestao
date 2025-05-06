@@ -51,6 +51,7 @@
        <!-- ecommnerce -->
 
         <li>
+        @can('view', App\Models\Menu::find(3)) 
             <a href="javascript:void(0);"
                 class="sidebar-menu {{ request()->routeIs(['documents.index', 'macro.index'])
                     ? 'active'
@@ -84,6 +85,7 @@
 
 
             </ul>
+            @endcan
         </li>
 
         <!-- Users -->
@@ -126,6 +128,7 @@
        
         <!-- Recursos -->
                  <li>
+            @can('view', App\Models\Menu::find(2))    
             <a href="javascript:void(0);"
                 class="sidebar-menu {{ request()->routeIs(['cost_center','position.index']) ? 'active' : '' }}">
 
@@ -149,5 +152,6 @@
                         Cargos</a>
                 </li>
            </ul>
+              @endcan
         </li>
 </aside>

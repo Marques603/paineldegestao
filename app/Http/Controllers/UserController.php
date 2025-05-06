@@ -16,7 +16,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-        Gate::authorize('view', Menu::find(1)); 
+ 
+        Gate::authorize('view', Menu::find(1)); // Tecnologia
+        Gate::authorize('view', Menu::find(2)); // Qualidade
+        Gate::authorize('view', Menu::find(3)); // RH
+
         
         $users = User::query();
 
