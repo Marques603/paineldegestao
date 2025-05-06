@@ -238,6 +238,44 @@
     </div>
 </div>
 
+            <!-- Vincular Permissões -->
+            <!-- Vincular Papéis (Roles) -->
+<div class="card">
+    <div class="card-body">
+        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Papéis</h2>
+        <p class="mb-4 text-sm font-normal text-slate-400">Defina os papéis (roles) que este usuário pode assumir</p>
+
+        <form method="POST" action="{{ route('users.update.roles', $user->id) }}">
+            @csrf
+            @method('PUT')
+
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                @foreach ($roles as $role)
+                    <div class="flex items-center gap-1.5">
+                        <input id="role-{{ $role->id }}"
+                               class="checkbox checkbox-primary"
+                               type="checkbox"
+                               name="roles[]"
+                               value="{{ $role->id }}"
+                               {{ $user->roles->contains($role->id) ? 'checked' : '' }} />
+                        <label for="role-{{ $role->id }}" class="label">
+                            {{ $role->name }}
+                        </label>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="flex items-center justify-end gap-4 mt-4">
+                <a href="{{ route('users.index') }}"
+                   class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
         </section>
     </div>
 </x-app-layout>

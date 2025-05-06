@@ -102,9 +102,11 @@
             <ul class="sidebar-submenu ">
 
                 <li>
+                    @can('edit', App\Models\User::class)
                     <a href="{{ route('users.index') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
                         Usuários</a>
+                        @endcan
                 </li>
                 <li>
                     <a href="{{ route('sector.index') }}"

@@ -146,9 +146,11 @@
                     <div class="dropdown-content">
   <ul class="dropdown-list">
     <li class="dropdown-list-item">
+      @can('edit', App\Models\User::class)
     <a href="{{ route('users.edit', $user->id) }}" class="dropdown-link">
         <i class="h-5 text-slate-400" data-feather="external-link"></i>
         <span>Editar</span>
+        @endcan
       </a>
     </li>
     <li class="dropdown-list-item">

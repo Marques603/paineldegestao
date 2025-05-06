@@ -83,3 +83,45 @@ rm -rf ./.docker/mysql/dbdata/*
 
 # Suba novamente
 docker compose up -d
+
+
+rodar isso quando rodar um fresh migrate 
+
+INSERT INTO appz.roles (
+    id,
+    name,
+    created_at,
+    updated_at
+)
+VALUES (
+    1,
+    'admin',
+    NOW(),
+    NOW()
+);
+
+INSERT INTO appz.roles (
+    id,
+    name,
+    created_at,
+    updated_at
+)
+VALUES (
+    2,
+    'edit',
+    NOW(),
+    NOW()
+);
+
+INSERT INTO appz.roles (
+    id,
+    name,
+    created_at,
+    updated_at
+)
+VALUES (
+    3,
+    'view',
+    NOW(),
+    NOW()
+);
