@@ -15,6 +15,9 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+
+        
+
         $users = User::query();
 
         $users->when($request->input('search'), function ($query, $keyword) {
@@ -79,8 +82,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        Gate::authorize('edit', $user::class);
-
+        
         $input = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $user->id,
@@ -112,15 +114,14 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        Gate::authorize('edit', $user::class);
-        
+                
         $user->delete();
         return redirect()->route('users.index')->with('status', 'Usuário removido com sucesso.');
     }
 
     public function updatesector(Request $request, User $user)
     {
-        Gate::authorize('edit', $user::class);
+        
 
         $validated = $request->validate([
             'sector' => 'nullable|array',
@@ -135,8 +136,7 @@ class UserController extends Controller
 
     public function updatecompany(Request $request, User $user)
     {
-        Gate::authorize('edit', $user::class);
-
+        
         $request->validate([
             'company' => 'array',
             'company.*' => 'exists:company,id',
@@ -165,8 +165,7 @@ class UserController extends Controller
 
     public function updateProfile(Request $request, User $user)
     {
-        // Não exige autorização via Gate, pois é o próprio usuário atualizando o próprio perfil
-
+       
         $input = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $user->id,
@@ -191,8 +190,7 @@ class UserController extends Controller
 
     public function updateMenus(Request $request, User $user)
     {
-        Gate::authorize('edit', $user::class);
-
+        
         $validated = $request->validate([
             'menus' => 'nullable|array',
             'menus.*' => 'exists:menus,id',
@@ -205,8 +203,7 @@ class UserController extends Controller
 
     public function updateRoles(Request $request, User $user)
     {
-        Gate::authorize('edit', $user::class);
-
+        
         $input = $request->validate([
             'roles' => 'nullable|array',
             'roles.*' => 'exists:roles,id',  // Validando os IDs de papéis

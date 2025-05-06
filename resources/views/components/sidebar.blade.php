@@ -87,7 +87,9 @@
         </li>
 
         <!-- Users -->
+        
         <li>
+            @can('view', App\Models\Menu::find(1)) {{-- ou use slug, ex: where('slug', 'users') --}}
             <a href="javascript:void(0);"
                 class="sidebar-menu {{ request()->routeIs(['users.index', 'sector.index','company.index','menus.index','submenus.index']) ? 'active' : '' }}">
 
@@ -102,11 +104,11 @@
             <ul class="sidebar-submenu ">
 
                 <li>
-                    @can('edit', App\Models\User::class)
+                    
                     <a href="{{ route('users.index') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
                         Usuários</a>
-                        @endcan
+                        
                 </li>
                 <li>
                     <a href="{{ route('sector.index') }}"
@@ -130,7 +132,9 @@
                         SubMenu</a>
                 </li>
             </ul>
+            @endcan
         </li>
+       
         <!-- Recursos -->
                  <li>
             <a href="javascript:void(0);"
