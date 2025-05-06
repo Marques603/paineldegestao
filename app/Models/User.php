@@ -50,12 +50,7 @@ class User extends Authenticatable
     }
     public function menus()
     {
-        return $this->belongsToMany(Menu::class, 'menu_user');
-    }
-
-    public function submenus()
-    {
-        return $this->belongsToMany(Submenu::class, 'submenu_user');
+    return $this->belongsToMany(Menu::class);
     }
     public function document()
     {

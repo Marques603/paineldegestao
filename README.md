@@ -125,8 +125,35 @@ VALUES (
     NOW(),
     NOW()
 );
+INSERT INTO menu_user (user_id, menu_id) VALUES (1, 1);
+
+INSERT INTO menus (
+    id,
+    name,
+    created_at,
+    updated_at
+)
+VALUES (
+    1,
+    'tecnologia',
+    NOW(),
+    NOW()
+);
+
+INSERT INTO menus (
+    id,
+    name,
+    created_at,
+    updated_at
+)
+VALUES (
+    2,
+    'qualidade',
+    NOW(),
+    NOW()
+);
 
 
- @can('view', App\Models\Menu::find(1)) {{-- ou use slug, ex: where('slug', 'users') --}}
+ @can('view', App\Models\Menu::find(1)) 
 
  @endcan

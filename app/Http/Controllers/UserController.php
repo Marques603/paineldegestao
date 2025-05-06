@@ -16,8 +16,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
+        Gate::authorize('view', Menu::find(1)); 
         
-
         $users = User::query();
 
         $users->when($request->input('search'), function ($query, $keyword) {
@@ -68,7 +68,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
 
-        Gate::authorize('edit', $user::class);
+        Gate::authorize('edit', User::class); // Só admins
+        
 
         $user->load('menus', 'roles'); // Carregando menus e papéis
 
@@ -151,7 +152,6 @@ class UserController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        Gate::authorize('edit', $user::class);
 
         $request->validate([
             'status' => 'required|in:0,1',

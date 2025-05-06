@@ -89,7 +89,7 @@
         <!-- Users -->
         
         <li>
-           
+        @can('view', App\Models\Menu::find(1)) 
             <a href="javascript:void(0);"
                 class="sidebar-menu {{ request()->routeIs(['users.index', 'sector.index','company.index','menus.index','submenus.index']) ? 'active' : '' }}">
 
@@ -121,7 +121,7 @@
                         Empresa</a>
                 </li>
             </ul>
-            
+            @endcan
         </li>
        
         <!-- Recursos -->
