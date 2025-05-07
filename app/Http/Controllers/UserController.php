@@ -192,19 +192,7 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('status', 'Usuário atualizado com sucesso.');
     }
 
-    public function updateMenus(Request $request, User $user)
-    {
-        
-        $validated = $request->validate([
-            'menus' => 'nullable|array',
-            'menus.*' => 'exists:menus,id',
-        ]);
-
-        $user->menus()->sync($validated['menus'] ?? []);
-
-        return redirect()->route('users.index')->with('status', 'Menus atualizados com sucesso.');
-    }
-
+    
     public function updateRoles(Request $request, User $user)
     {
         
