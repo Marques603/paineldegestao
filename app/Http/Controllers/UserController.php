@@ -15,13 +15,15 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+        // Permitir acesso se o usuário tiver permissão para pelo menos um menu
+        if (! (
+            Gate::allows('view', Menu::find(1)) ||
+            Gate::allows('view', Menu::find(2)) ||
+            Gate::allows('view', Menu::find(3))
+        )) {
+            abort(403);
+        }
 
- 
-        Gate::authorize('view', Menu::find(1)); // Tecnologia
-        Gate::authorize('view', Menu::find(2)); // Qualidade
-        Gate::authorize('view', Menu::find(3)); // RH
-
-        
         $users = User::query();
 
         $users->when($request->input('search'), function ($query, $keyword) {
@@ -39,7 +41,7 @@ class UserController extends Controller
     public function create()
     {
         $sector = Sector::all();
-        $roles = Role::all();  // Carregando todos os papéis
+        $roles = Role::all();
         return view('users.create', compact('sector', 'roles'));
     }
 
@@ -50,18 +52,17 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'roles' => 'nullable|array',  // Validando os papéis
+            'roles' => 'nullable|array',
+            'roles.*' => 'exists:roles,id',
         ]);
 
-        if ($request->hasFile('avatar')) {
-            $input['avatar'] = $request->file('avatar')->store('images/profiles', 'public');
+        if ($avatarPath = $this->handleAvatarUpload($request)) {
+            $input['avatar'] = $avatarPath;
         }
 
         $input['password'] = bcrypt($input['password']);
-
         $user = User::create($input);
 
-        // Sincronizando os papéis
         if ($request->has('roles')) {
             $user->roles()->sync($request->roles);
         }
@@ -71,45 +72,41 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        Gate::authorize('edit', User::class);
 
-        Gate::authorize('edit', User::class); // Só admins
-        
-
-        $user->load('menus', 'roles'); // Carregando menus e papéis
-
+        $user->load('menus', 'roles');
         $company = Company::where('status', 1)->get();
         $sector = Sector::where('status', 1)->get();
-        $menus = Menu::all();  // Carregando menus
-        $roles = Role::all();  // Carregando papéis
+        $menus = Menu::all();
+        $roles = Role::all();
 
         return view('users.edit', compact('user', 'sector', 'company', 'menus', 'roles'));
     }
 
     public function update(Request $request, User $user)
     {
-        
         $input = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'required|boolean',
-            'roles' => 'nullable|array',  // Validando os papéis
+            'roles' => 'nullable|array',
+            'roles.*' => 'exists:roles,id',
         ]);
 
         if ($request->filled('password')) {
-            $input['password'] = Hash::make($input['password']);
+            $input['password'] = Hash::make($request->password);
         } else {
             unset($input['password']);
         }
 
-        if ($request->hasFile('avatar')) {
-            $input['avatar'] = $request->file('avatar')->store('images/profiles', 'public');
+        if ($avatarPath = $this->handleAvatarUpload($request)) {
+            $input['avatar'] = $avatarPath;
         }
 
         $user->update($input);
 
-        // Sincronizando os papéis
         if ($request->has('roles')) {
             $user->roles()->sync($request->roles);
         }
@@ -119,38 +116,30 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-                
         $user->delete();
         return redirect()->route('users.index')->with('status', 'Usuário removido com sucesso.');
     }
 
     public function updatesector(Request $request, User $user)
     {
-        
-
         $validated = $request->validate([
             'sector' => 'nullable|array',
             'sector.*' => 'exists:sector,id',
         ]);
 
         $user->sector()->sync($validated['sector'] ?? []);
-
-        return redirect()->route('users.index')
-                         ->with('status', 'Setores atualizados com sucesso.');
+        return redirect()->route('users.index')->with('status', 'Setores atualizados com sucesso.');
     }
 
     public function updatecompany(Request $request, User $user)
     {
-        
-        $request->validate([
-            'company' => 'array',
+        $validated = $request->validate([
+            'company' => 'nullable|array',
             'company.*' => 'exists:company,id',
         ]);
 
-        $user->company()->sync($request->company ?? []);
-
-        return redirect()->route('users.index')
-                         ->with('status', 'Empresas atualizadas com sucesso!');
+        $user->company()->sync($validated['company'] ?? []);
+        return redirect()->route('users.index')->with('status', 'Empresas atualizadas com sucesso!');
     }
 
     public function updateStatus(Request $request, $id)
@@ -169,7 +158,6 @@ class UserController extends Controller
 
     public function updateProfile(Request $request, User $user)
     {
-       
         $input = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $user->id,
@@ -178,13 +166,13 @@ class UserController extends Controller
         ]);
 
         if ($request->filled('password')) {
-            $input['password'] = bcrypt($input['password']);
+            $input['password'] = bcrypt($request->password);
         } else {
             unset($input['password']);
         }
 
-        if ($request->hasFile('avatar')) {
-            $input['avatar'] = $request->file('avatar')->store('images/profiles', 'public');
+        if ($avatarPath = $this->handleAvatarUpload($request)) {
+            $input['avatar'] = $avatarPath;
         }
 
         $user->update($input);
@@ -192,18 +180,32 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('status', 'Usuário atualizado com sucesso.');
     }
 
-    
     public function updateRoles(Request $request, User $user)
     {
-        
         $input = $request->validate([
             'roles' => 'nullable|array',
-            'roles.*' => 'exists:roles,id',  // Validando os IDs de papéis
+            'roles.*' => 'exists:roles,id',
         ]);
 
-        // Sincronizando os papéis
         $user->roles()->sync($input['roles'] ?? []);
-
         return redirect()->route('users.index')->with('status', 'Funções atualizadas com sucesso.');
+    }
+
+    public function updateMenus(Request $request, User $user)
+    {
+        $input = $request->validate([
+            'menus' => 'nullable|array',
+            'menus.*' => 'exists:menus,id',
+        ]);
+
+        $user->menus()->sync($input['menus'] ?? []);
+        return redirect()->route('users.edit', $user->id)->with('status', 'Menus atualizados com sucesso!');
+    }
+
+    private function handleAvatarUpload(Request $request)
+    {
+        return $request->hasFile('avatar')
+            ? $request->file('avatar')->store('images/profiles', 'public')
+            : null;
     }
 }
