@@ -375,3 +375,52 @@ class UserController extends Controller
 }
     
 }
+
+
+
+
+INSERT INTO menu_user
+(user_id, menu_id)
+VALUES(1, 1);
+INSERT INTO menu_user
+(user_id, menu_id)
+VALUES(1, 2);
+INSERT INTO menu_user
+(user_id, menu_id)
+VALUES(1, 3);
+INSERT INTO menu_user
+(user_id, menu_id)
+VALUES(2, 3);
+
+
+INSERT INTO menus
+(id, name, created_at, updated_at)
+VALUES(1, 'tecnologia', '2025-05-06 22:14:05', '2025-05-06 22:14:05');
+INSERT INTO menus
+(id, name, created_at, updated_at)
+VALUES(2, 'qualidade', '2025-05-06 22:14:19', '2025-05-06 22:14:19');
+INSERT INTO menus
+(id, name, created_at, updated_at)
+VALUES(3, 'rh', '2025-05-06 22:14:19', '2025-05-06 22:14:19');
+
+
+INSERT INTO roles
+(id, name, created_at, updated_at)
+VALUES(1, 'admin', '2025-05-06 21:44:23', '2025-05-06 21:44:23');
+INSERT INTO roles
+(id, name, created_at, updated_at)
+VALUES(2, 'edit', '2025-05-06 21:44:32', '2025-05-06 21:44:32');
+INSERT INTO roles
+(id, name, created_at, updated_at)
+VALUES(3, 'view', '2025-05-06 21:44:53', '2025-05-06 21:44:53');
+
+INSERT INTO role_user
+(user_id, role_id)
+VALUES(1, 1);
+INSERT INTO role_user
+(user_id, role_id)
+VALUES(2, 3);
+
+INSERT INTO users
+(id, name, email, email_verified_at, password, two_factor_secret, two_factor_recovery_codes, two_factor_confirmed_at, remember_token, created_at, updated_at, avatar, status)
+VALUES(1, 'Wesley Fernando Cabrera', 'wesley.cabrera@hotmail.com', NULL, '$2y$12$R52FZDj9r9aLCnUFOisoGuwFlPf1PBUG4TV3x3imxL3xhn8OepElK', NULL, NULL, NULL, NULL, '2025-04-16 02:36:18', '2025-04-16 02:36:18', NULL, 1);
