@@ -159,7 +159,7 @@ VALUES (
  @endcan
 
 
-
+d
  <?php
 
 namespace App\Http\Controllers;
