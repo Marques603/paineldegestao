@@ -17,7 +17,8 @@ class SectorController extends Controller
     {
 
         if (!Gate::allows('view', Menu::find(2))) {
-            return redirect()->route('users.index')->with('status', 'Este menu não está liberado para o seu perfil.');
+            return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
+
         }
         
 

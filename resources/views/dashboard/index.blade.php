@@ -5,6 +5,13 @@
 
     <!-- Page Title Ends -->
 
+    @if(session('status'))
+  <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded shadow-lg z-50" role="alert">
+    <p>{{ session('status') }}</p>
+  </div>
+  @endif
+
+
     <div class="space-y-6">
         <!-- Overview Section Start -->
         <section class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
