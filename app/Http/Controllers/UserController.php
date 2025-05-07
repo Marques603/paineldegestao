@@ -15,12 +15,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        // Permitir acesso se o usuário tiver permissão para pelo menos um menu
-        if (! (
-            Gate::allows('view', Menu::find(1)) ||
-            Gate::allows('view', Menu::find(2)) ||
-            Gate::allows('view', Menu::find(3))
-        )) {
+        if (!Gate::allows('view', Menu::find(1))) {
             abort(403);
         }
 

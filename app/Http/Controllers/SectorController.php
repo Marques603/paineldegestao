@@ -3,14 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sector;
+use App\Models\Menu;
 use App\Models\User;
 use App\Models\CostCenter; 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
+ 
 
 class SectorController extends Controller
 {
     public function index(Request $request)
     {
+
+        if (!Gate::allows('view', Menu::find(2))) {
+            return redirect()->route('users.index')->with('status', 'Este menu não está liberado para o seu perfil.');
+        }
+        
+
         $sector = Sector::query();
     
         if ($request->has('search')) {
