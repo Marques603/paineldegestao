@@ -19,4 +19,8 @@ class Sector extends Model
     {
         return $this->belongsToMany(User::class);
     }
+    public function costCenters()
+    {
+        return $this->belongsToMany(CostCenter::class, 'cost_center_sector');
+    }
 }

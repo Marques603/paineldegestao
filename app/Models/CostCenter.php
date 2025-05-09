@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory; 
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CostCenter extends Model
 {
+    use HasFactory;
 
     protected $table = 'cost_center';
 
-    use HasFactory, SoftDeletes;
-
-    protected $fillable = ['name', 'code', 'status'];
-
+    // Relacionamento muitos-para-muitos com Sector
+    public function sectors()
+    {
+        return $this->belongsToMany(Sector::class, 'cost_center_sector');
+    }
 }

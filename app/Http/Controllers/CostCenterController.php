@@ -3,63 +3,75 @@
 namespace App\Http\Controllers;
 
 use App\Models\CostCenter;
+use App\Models\Sector;
 use Illuminate\Http\Request;
 
 class CostCenterController extends Controller
 {
     public function index()
     {
-        $cost_centers = CostCenter::orderBy('name')->paginate(10);
-
-        return view('cost_center.index', compact('cost_centers'));
+        // Lista todos os centros de custo com setores relacionados
+        $costCenters = CostCenter::with('sectors')->paginate(10);
+        return view('cost_center.index', compact('costCenters'));
     }
 
     public function create()
     {
-        return view('cost_center.create');
+        // Lista todos os setores
+        $sectors = Sector::all();
+        return view('cost_center.create', compact('sectors'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        // Valida os dados recebidos
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'nullable|string',
+            'sectors' => 'array|nullable',
         ]);
 
-        CostCenter::create($request->all());
+        // Cria o centro de custo
+        $costCenter = CostCenter::create($validated);
+
+        // Sincroniza os setores selecionados
+        $costCenter->sectors()->sync($request->sectors ?? []);
 
         return redirect()->route('cost_center.index')->with('success', 'Centro de Custo criado com sucesso.');
     }
 
-    public function edit(CostCenter $cost_center)
+    public function edit(CostCenter $costCenter)
     {
-        return view('cost_center.edit', compact('cost_center'));
+        // Lista todos os setores
+        $sectors = Sector::all();
+        $costCenter->load('sectors');
+        return view('cost_center.edit', compact('costCenter', 'sectors'));
     }
 
-    public function update(Request $request, CostCenter $cost_center)
+    public function update(Request $request, CostCenter $costCenter)
     {
-        $request->validate([
+        // Valida os dados recebidos
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'nullable|string',
+            'sectors' => 'array|nullable',
         ]);
 
-        $cost_center->update($request->all());
+        // Atualiza o centro de custo
+        $costCenter->update($validated);
+
+        // Sincroniza os setores selecionados
+        $costCenter->sectors()->sync($request->sectors ?? []);
 
         return redirect()->route('cost_center.index')->with('success', 'Centro de Custo atualizado com sucesso.');
     }
 
-    public function destroy(CostCenter $cost_center)
+    public function destroy(CostCenter $costCenter)
     {
-        $cost_center->delete();
+        // Remove a relação com os setores e exclui o centro de custo
+        $costCenter->sectors()->detach();
+        $costCenter->delete();
 
-        return redirect()->route('cost_center.index')->with('success', 'Centro de Custo removido com sucesso.');
-    }
-
-    public function updateStatus(CostCenter $cost_center)
-    {
-        $cost_center->status = !$cost_center->status;
-        $cost_center->save();
-
-        return redirect()->back()->with('success', 'Status atualizado.');
+        return redirect()->route('cost_center.index')->with('success', 'Centro de Custo excluído com sucesso.');
     }
 }

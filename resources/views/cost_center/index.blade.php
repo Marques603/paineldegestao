@@ -1,7 +1,5 @@
 <x-app-layout>
-    <!-- Page Title Starts -->
-    <x-page-title page="Lista de Centros de Custo" header="Lista de Centros de Custo" />
-    <!-- Page Title Ends -->
+    <x-page-title page="Lista de Centros de Custo" header="Centros de Custo" />
 
     @if(session('success'))
         <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded shadow-lg z-50" role="alert">
@@ -9,11 +7,10 @@
         </div>
     @endif
 
-    <!-- Cost Center List Starts -->
     <div class="space-y-4">
         <!-- Header Starts -->
         <div class="flex flex-col items-center justify-between gap-y-4 md:flex-row md:gap-y-0">
-            <!-- Search Starts -->
+            <!-- Search -->
             <form method="GET" action="{{ route('cost_center.index') }}" class="group flex h-10 w-full items-center rounded-primary border border-transparent bg-white shadow-sm focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-inset focus-within:ring-primary-500 dark:border-transparent dark:bg-slate-800 dark:focus-within:border-primary-500 md:w-72">
                 <div class="flex h-full items-center px-2">
                     <i class="h-4 text-slate-400 group-focus-within:text-primary-500" data-feather="search"></i>
@@ -26,9 +23,8 @@
                     placeholder="Buscar..."
                 />
             </form>
-            <!-- Search Ends -->
 
-            <!-- Actions Starts -->
+            <!-- Actions -->
             <div class="flex w-full items-center justify-between gap-x-4 md:w-auto">
                 <div class="flex items-center gap-x-4">
                     <!-- Filtros -->
@@ -53,18 +49,13 @@
                             </ul>
                         </div>
                     </div>
-                    <button class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
-                        <i class="h-4" data-feather="upload"></i>
-                        <span class="hidden sm:inline-block">Exportar</span>
-                    </button>
                 </div>
 
                 <a class="btn btn-primary" href="{{ route('cost_center.create') }}" role="button">
                     <i data-feather="plus" height="1rem" width="1rem"></i>
-                    <span class="hidden sm:inline-block">Criar</span>
+                    <span class="hidden sm:inline-block">Criar Centro de Custo</span>
                 </a>
             </div>
-            <!-- Actions Ends -->
         </div>
         <!-- Header Ends -->
 
@@ -77,21 +68,19 @@
                             <input class="checkbox" type="checkbox" data-check-all data-check-all-target=".cost-center-checkbox" />
                         </th>
                         <th class="w-[25%] uppercase">Nome</th>
-                        <th class="w-[45%] uppercase">Código</th>
-                        <th class="w-[15%] uppercase">Status</th>
-                        <th class="w-[15%] !text-right uppercase">Ações</th>
+                        <th class="w-[35%] uppercase">Descrição</th>
+                        <th class="w-[10%] uppercase">Status</th>
+                        <th class="w-[5%] !text-right uppercase">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($cost_centers as $center)
+                    @foreach($costCenters as $costCenter)
                         <tr>
+                            <td><input class="checkbox cost-center-checkbox" type="checkbox" /></td>
+                            <td>{{ $costCenter->name }}</td>
+                            <td>{{ $costCenter->description }}</td>
                             <td>
-                                <input class="checkbox cost-center-checkbox" type="checkbox" />
-                            </td>
-                            <td>{{ $center->name }}</td>
-                            <td>{{ $center->code ?? 'Sem descrição' }}</td>
-                            <td>
-                                @if($center->status)
+                                @if($costCenter->status)
                                     <div class="badge badge-soft-success">Ativo</div>
                                 @else
                                     <div class="badge badge-soft-danger">Inativo</div>
@@ -106,13 +95,13 @@
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list">
                                                 <li class="dropdown-list-item">
-                                                    <a href="{{ route('cost_center.edit', $center->id) }}" class="dropdown-link">
+                                                    <a href="{{ route('cost_center.edit', $costCenter->id) }}" class="dropdown-link">
                                                         <i class="h-5 text-slate-400" data-feather="edit"></i>
                                                         <span>Editar</span>
                                                     </a>
                                                 </li>
                                                 <li class="dropdown-list-item">
-                                                    <a href="javascript:void(0)" class="dropdown-link" data-toggle="modal" data-target="#deleteModal-{{ $center->id }}">
+                                                    <a href="javascript:void(0)" class="dropdown-link" data-toggle="modal" data-target="#deleteModal-{{ $costCenter->id }}">
                                                         <i class="h-5 text-slate-400" data-feather="trash"></i>
                                                         <span>Excluir</span>
                                                     </a>
@@ -123,7 +112,7 @@
                                 </div>
 
                                 <!-- Modal de Confirmação -->
-                                <div class="modal modal-centered" id="deleteModal-{{ $center->id }}">
+                                <div class="modal modal-centered" id="deleteModal-{{ $costCenter->id }}">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -136,11 +125,11 @@
                                             </div>
                                             <div class="modal-body">
                                                 <p class="text-sm text-slate-500 dark:text-slate-300">
-                                                    Tem certeza que deseja excluir <strong>{{ $center->name }}</strong>?
+                                                    Tem certeza que deseja excluir o centro de custo <strong>{{ $costCenter->name }}</strong>?
                                                 </p>
                                             </div>
                                             <div class="modal-footer flex justify-center">
-                                                <form method="POST" action="{{ route('cost_center.destroy', $center->id) }}">
+                                                <form method="POST" action="{{ route('cost_center.destroy', $costCenter->id) }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -150,7 +139,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Modal Fim -->
                             </td>
                         </tr>
                     @endforeach
@@ -159,14 +147,12 @@
         </div>
         <!-- Table Ends -->
 
-        <!-- Pagination Starts -->
+        <!-- Pagination -->
         <div class="flex flex-col items-center justify-between gap-y-4 md:flex-row">
             <p class="text-xs font-normal text-slate-400">
-                Mostrando {{ $cost_centers->firstItem() }} a {{ $cost_centers->lastItem() }} de {{ $cost_centers->total() }} resultados
+                Mostrando {{ $costCenters->firstItem() }} a {{ $costCenters->lastItem() }} de {{ $costCenters->total() }} resultados
             </p>
-            {{ $cost_centers->appends(request()->query())->links('vendor.pagination.custom') }}
+            {{ $costCenters->appends(request()->query())->links('vendor.pagination.custom') }}
         </div>
-        <!-- Pagination Ends -->
     </div>
-    <!-- Cost Center List Ends -->
 </x-app-layout>
