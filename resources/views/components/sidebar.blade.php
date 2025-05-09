@@ -44,51 +44,9 @@
                 </li>-->
             </ul>
         </li>
-
-
         <div class="sidebar-menu-header">Aplicação</div>
 
-       <!-- ecommnerce -->
-
-        <li>
-        @can('view', App\Models\Menu::find(2)) 
-            <a href="javascript:void(0);"
-                class="sidebar-menu {{ request()->routeIs(['documents.index', 'macro.index'])
-                    ? 'active'
-                    : '' }}">
-                <span class="sidebar-menu-icon">
-                    <i data-feather="archive"></i>
-                </span>
-                <span class="sidebar-menu-text">Gestão Documentos</span>
-                <span class="sidebar-menu-arrow">
-                    <i data-feather="chevron-right"></i>
-                </span>
-            </a>
-            <ul class="sidebar-submenu">
-
-                <li>
-                    <a href="{{ route('documents.index') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('documents.index') ? 'active' : '' }}">
-                        Documentos </a>
-                </li>
-
-
-                <li>
-                    <a href="{{ route('macro.index') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('macro.index') ? 'active' : '' }}">
-                        Macros</a>
-                </li>
-
-
-
-
-
-
-            </ul>
-            @endcan
-        </li>
-
-        <!-- Users -->
+        <!-- Menu Tecnologia -->
         
         <li>
         @can('view', App\Models\Menu::find(1)) 
@@ -104,13 +62,10 @@
                 </span>
             </a>
             <ul class="sidebar-submenu ">
-
                 <li>
-                    
                     <a href="{{ route('users.index') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
-                        Usuários</a>
-                        
+                        Usuários</a>            
                 </li>
                 <li>
                     <a href="{{ route('sector.index') }}"
@@ -130,7 +85,35 @@
             </ul>
             @endcan
         </li>
-       
+               <!-- Menu Qualidade -->
+        <li>
+        @can('view', App\Models\Menu::find(2)) 
+            <a href="javascript:void(0);"
+                class="sidebar-menu {{ request()->routeIs(['documents.index', 'macro.index'])
+                    ? 'active'
+                    : '' }}">
+                <span class="sidebar-menu-icon">
+                    <i data-feather="archive"></i>
+                </span>
+                <span class="sidebar-menu-text">Gestão Documentos</span>
+                <span class="sidebar-menu-arrow">
+                    <i data-feather="chevron-right"></i>
+                </span>
+            </a>
+            <ul class="sidebar-submenu">
+                <li>
+                    <a href="{{ route('documents.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('documents.index') ? 'active' : '' }}">
+                        Documentos </a>
+                </li>
+                <li>
+                    <a href="{{ route('macro.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('macro.index') ? 'active' : '' }}">
+                        Macros</a>
+                </li>
+            </ul>
+            @endcan
+        </li>
         <!-- Recursos -->
                  <li>
             @can('view', App\Models\Menu::find(3))    
