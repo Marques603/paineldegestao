@@ -128,44 +128,7 @@
                 </div>
             </div>
 
-            <!-- Vincular Setores -->
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Vincular Setores</h2>
-                    <p class="mb-4 text-sm font-normal text-slate-400">Selecione os setores ao qual o usuário pertence</p>
-
-                    <form method="POST" action="{{ route('users.update.sector', $user->id) }}">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            @foreach ($sector as $s)
-                                <div class="flex items-center gap-1.5">
-                                    <input id="checkbox-{{ $s->id }}" 
-                                           class="checkbox checkbox-primary" 
-                                           type="checkbox" 
-                                           name="sector[]" 
-                                           value="{{ $s->id }}"
-                                           {{ $user->sector->contains($s->id) ? 'checked' : '' }} />
-                                    <label for="checkbox-{{ $s->id }}" class="label">
-                                        {{ $s->name }}
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
-
-                        <div class="flex items-center justify-end gap-4 mt-4">
-                            <a href="{{ route('users.index') }}"
-                               class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
-                                Cancelar
-                            </a>
-                            <button type="submit" class="btn btn-primary">Atualizar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
+            <
 
 
             <!-- Vincular Permissões -->
