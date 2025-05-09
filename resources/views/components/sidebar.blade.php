@@ -28,7 +28,7 @@
                 <span class="sidebar-menu-icon">
                     <i data-feather="home"></i>
                 </span>
-                <span class="sidebar-menu-text">Dashboard</span>
+                <span class="sidebar-menu-text">Home</span>
                 <span class="sidebar-menu-arrow">
                     <i data-feather="chevron-right"></i>
                 </span>
@@ -36,12 +36,12 @@
             <ul class="sidebar-submenu">
                 <li>
                     <a href="#"
-                        class="sidebar-submenu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">Analytics</a>
+                        class="sidebar-submenu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
                 </li>
-                <li>
+               <!--  <li>
                     <a href="#  "
                         class="sidebar-submenu-item {{ request()->routeIs('#') ? 'active' : '' }}">Ecommerce</a>
-                </li>
+                </li>-->
             </ul>
         </li>
 
@@ -51,7 +51,7 @@
        <!-- ecommnerce -->
 
         <li>
-        @can('view', App\Models\Menu::find(3)) 
+        @can('view', App\Models\Menu::find(2)) 
             <a href="javascript:void(0);"
                 class="sidebar-menu {{ request()->routeIs(['documents.index', 'macro.index'])
                     ? 'active'
@@ -93,7 +93,7 @@
         <li>
         @can('view', App\Models\Menu::find(1)) 
             <a href="javascript:void(0);"
-                class="sidebar-menu {{ request()->routeIs(['users.index', 'sector.index','company.index','menus.index','submenus.index']) ? 'active' : '' }}">
+                class="sidebar-menu {{ request()->routeIs(['users.index', 'sector.index','company.index','menus.index','submenus.index','menus.index']) ? 'active' : '' }}">
 
                 <span class="sidebar-menu-icon">
                     <i data-feather="cpu"></i>
@@ -122,13 +122,18 @@
                         class="sidebar-submenu-item {{ request()->routeIs('company.index') ? 'active' : '' }}">
                         Empresa</a>
                 </li>
+                <li>
+                    <a href="{{ route('menus.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('menus.index') ? 'active' : '' }}">
+                        Menu</a>
+                </li>
             </ul>
             @endcan
         </li>
        
         <!-- Recursos -->
                  <li>
-            @can('view', App\Models\Menu::find(2))    
+            @can('view', App\Models\Menu::find(3))    
             <a href="javascript:void(0);"
                 class="sidebar-menu {{ request()->routeIs(['cost_center','position.index']) ? 'active' : '' }}">
 

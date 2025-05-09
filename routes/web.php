@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\SubmenuController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MacroController;
@@ -24,26 +24,19 @@ use App\Http\Controllers\CostCenterController;
 
 // Rotas protegidas: somente usuários autenticados podem acessar.
 
-Route::middleware(['auth'])->group(function () {
-
+   Route::middleware(['auth'])->group(function () {
    // Dashboard principal e demais views internas
    Route::view('/', 'dashboard.index')->name('dashboard'); 
    // Exibe o painel principal após o login (visão geral do sistema)
-
    // Rotas de usuários (CRUD)
-
    Route::get('/users', [UserController::class, 'index'])->name('users.index'); 
    // Lista todos os usuários cadastrados no sistema
-
    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');   
    // Exibe o formulário para cadastrar um novo usuário
-
    Route::post('/users/create', [UserController::class, 'store'])->name('users.store');   
    // Processa os dados enviados pelo formulário e salva o novo usuário
-
    Route::get('/users/{user}', [UserController::class, 'edit'])->name('users.edit');
    // Exibe o formulário de edição para um usuário específico
-
    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
    // Atualiza os dados de um usuário após edição
    Route::put('/users/{user}/update-profile', [UserController::class, 'updateProfile'])->name('users.update.profile');
@@ -64,8 +57,6 @@ Route::middleware(['auth'])->group(function () {
    // Rotas de cargos (CRUD)
    Route::resource('menus', MenuController::class);
    // Rotas de menus (CRUD)
-   Route::resource('submenus', SubmenuController::class);
-   // Rotas de submenus (CRUD)
    Route::resource('sector', SectorController::class);
    // Rotas de setores (CRUD)
    Route::put('/sector/{sector}/status', [SectorController::class, 'updateStatus'])->name('sector.update.status');
