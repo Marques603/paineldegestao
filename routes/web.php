@@ -9,6 +9,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\CostCenterController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\SectorController;
 
 
 /*
@@ -65,5 +66,7 @@ use App\Http\Controllers\CompanyController;
    // Atualiza o status de um centro de custo específico (ativo/inativo)
    Route::resource('company', CompanyController::class);
    // Rotas de empresas (CRUD)
+   Route::resource('sector', SectorController::class);
+
 
 });

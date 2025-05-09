@@ -114,30 +114,23 @@
                     <h6 class="whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-100">
                       {{ $user->name }}
                     </h6>
-                    @if($user->position)
+                    
                     <p class="truncate text-xs text-slate-500 dark:text-slate-400">
-                     {{ $user->position->name ?? 'Sem setor' }}
+                     #
                    </p>
-                    @else
+                    
                     <p class="truncate text-xs text-slate-500 dark:text-slate-400">
                      Sem cargo atribuído
                     </p>
-                    @endif
+                    
                   </div>
                 </div>
               </td>
               <td>{{ $user->email }}</td>
-              <td>{{ $user->sector->isEmpty() ? 'Nenhum setor vinculado' : $user->sector->pluck('name')->join(', ') }}</td>
-              <td>{{ $user->companies->isEmpty() ? 'Nenhuma empresa vinculada' : $user->companies->pluck('name')->join(', ') }}
-</td>
+              <<td>@if($user->sectors->isEmpty())Nenhum setor vinculado @else {{ $user->sectors->pluck('name')->join(', ') }} @endif </td>
+              <td>{{ $user->companies->isEmpty() ? 'Nenhuma empresa vinculada' : $user->companies->pluck('name')->join(', ') }}</td>
               <td>{{ $user->created_at }}</td>
-              <td>
-                                @if($user->status)
-                                    <div class="badge badge-soft-success">Ativo</div>
-                                @else
-                                    <div class="badge badge-soft-danger">Inativo</div>
-                                @endif
-                            </td>
+              <td>@if($user->status)<div class="badge badge-soft-success">Ativo</div> @else <div class="badge badge-soft-danger">Inativo</div> @endif </td>
               <td>
                 <div class="flex justify-end">
                   <div class="dropdown" data-placement="bottom-start">

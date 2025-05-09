@@ -18,6 +18,9 @@ return new class extends Migration
         $table->string('cnpj', 18)->unique();
         $table->boolean('status')->default(1); // 1 = ativa, 0 = inativa
         $table->timestamps();
+        $table->softDeletes(); 
+
+
     });
 
     Schema::create('company_user', function (Blueprint $table) {

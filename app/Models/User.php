@@ -73,6 +73,11 @@ class User extends Authenticatable
     {
     return $this->belongsToMany(Company::class, 'company_user');
     }
+    public function sectors()
+    {
+    return $this->belongsToMany(Sector::class);
+    }
+
 
 
 
