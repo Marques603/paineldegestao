@@ -30,13 +30,6 @@ class Document extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function sector()
-    {
-        return $this->belongsToMany(Sector::class, 'document_sector');
-    }
-
-
     public function triages()
     {
         return $this->hasMany(DocumentTriage::class);

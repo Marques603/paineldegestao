@@ -15,8 +15,4 @@ class CostCenter extends Model
 
     protected $fillable = ['name', 'code', 'status'];
 
-    public function sector()
-    {
-        return $this->hasMany(Sector::class);
-    }
 }

@@ -29,7 +29,6 @@ class PositionController extends Controller
 
     public function create()
     {
-        $sectors = Sector::all();
         $users = User::all();
         return view('position.create', compact('sectors', 'users'));
     }
@@ -50,7 +49,6 @@ class PositionController extends Controller
 
     public function edit(Position $position)
     {
-        $sectors = Sector::all();
         $users = User::all();
         return view('position.edit', compact('position', 'sectors', 'users'));
     }

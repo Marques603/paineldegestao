@@ -61,10 +61,6 @@ class User extends Authenticatable
     {
     return $this->hasMany(Document::class, 'user_upload_id');
     }
-    public function sector()
-    {
-    return $this->belongsToMany(Sector::class);
-    }
     public function position()
     {
     return $this->hasOne(Position::class);

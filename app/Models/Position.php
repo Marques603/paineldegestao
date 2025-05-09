@@ -17,10 +17,7 @@ class Position extends Model
     
     protected $table = 'position'; // força uso no singular
 
-    public function sector()
-    {
-        return $this->belongsTo(Sector::class);
-    }
+
     
     public function user()
     {
