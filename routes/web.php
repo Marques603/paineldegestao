@@ -9,6 +9,7 @@ use App\Http\Controllers\MacroController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\CostCenterController;
+use App\Http\Controllers\CompanyController;
 
 
 /*
@@ -68,6 +69,7 @@ use App\Http\Controllers\CostCenterController;
    // Rotas de centros de custo (CRUD)
    Route::put('/cost_center/{cost_center}/status', [CostCenterController::class, 'updateStatus'])->name('cost-center.update.status');
    // Atualiza o status de um centro de custo específico (ativo/inativo)
-
+   Route::resource('company', CompanyController::class);
+   // Rotas de empresas (CRUD)
 
 });
