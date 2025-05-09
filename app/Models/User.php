@@ -65,10 +65,6 @@ class User extends Authenticatable
     {
     return $this->belongsToMany(Sector::class);
     }
-    public function company()
-    {
-    return $this->belongsToMany(Company::class);
-    }
     public function position()
     {
     return $this->hasOne(Position::class);

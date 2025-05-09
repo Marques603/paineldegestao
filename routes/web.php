@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SectorController;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MacroController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PositionController;
@@ -46,8 +45,6 @@ use App\Http\Controllers\CostCenterController;
    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
    // Remove o usuário selecionado do banco de dados
    Route::put('/users/{user}/sector', [UserController::class, 'updatesector'])->name('users.update.sector');
-   // Atualiza os setores associados a um usuário específico
-   Route::put('/users/{user}/company', [UserController::class, 'updatecompany'])->name('users.update.company');
    // Atualiza as empresas associadas a um usuário específico
    Route::put('users/{id}/status', [UserController::class, 'updateStatus'])->name('users.update.status');
    // Atualiza o status de um usuário específico (ativo/inativo)
@@ -61,10 +58,6 @@ use App\Http\Controllers\CostCenterController;
    // Rotas de setores (CRUD)
    Route::put('/sector/{sector}/status', [SectorController::class, 'updateStatus'])->name('sector.update.status');
    // Atualiza o status de um setor específico (ativo/inativo)
-   Route::resource('company', CompanyController::class);
-   // Rotas de empresas (CRUD)
-   Route::put('/companies/{company}/status', [CompanyController::class, 'updateStatus'])->name('company.update.status');
-   // Atualiza o status de uma empresa específica (ativo/inativo)
    Route::resource('macro', MacroController::class);
    // Rotas de macro (CRUD)
    Route::put('/macros/{macro}/status', [MacroController::class, 'updateStatus'])->name('macro.update.status');

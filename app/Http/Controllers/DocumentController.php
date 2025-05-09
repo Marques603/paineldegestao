@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Document;
 use App\Models\Macro;
 use App\Models\Sector;
-use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +17,7 @@ class DocumentController extends Controller
 
     public function index(Request $request)
     {
-        $query = Document::with(['macro', 'user', 'sector', 'company']);
+        $query = Document::with(['macro', 'user', 'sector']);
     
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -41,7 +40,6 @@ class DocumentController extends Controller
         return view('documents.create', [
             'macro' => Macro::all(),
             'sector' => Sector::all(),
-            'company' => Company::all()
         ]);
     }
 
@@ -53,8 +51,6 @@ class DocumentController extends Controller
             'macro_id' => 'required|exists:macro,id',
             'sector' => 'nullable|array',
             'sector.*' => 'exists:sector,id',
-            'company' => 'nullable|array',
-            'company.*' => 'exists:company,id',
         ]);
 
         DB::beginTransaction();
@@ -74,7 +70,7 @@ class DocumentController extends Controller
             ]);
 
             $document->sector()->attach($validatedData['sector'] ?? []);
-            $document->company()->attach($validatedData['company'] ?? []);
+
 
             DB::commit();
             return redirect()->route('documents.index')->with('success', 'Documento enviado com sucesso!');
@@ -92,7 +88,7 @@ class DocumentController extends Controller
             'document' => $document,
             'macro' => Macro::all(),
             'sector' => Sector::all(),
-            'company' => Company::all()
+
         ]);
     }
 
@@ -104,8 +100,7 @@ class DocumentController extends Controller
             'macro_id' => 'required|exists:macro,id',
             'sector' => 'nullable|array',
             'sector.*' => 'exists:sector,id',
-            'company' => 'nullable|array',
-            'company.*' => 'exists:company,id',
+
         ]);
 
         DB::beginTransaction();
@@ -136,7 +131,7 @@ class DocumentController extends Controller
             $document->save();
 
             $document->sector()->sync($validatedData['sector'] ?? []);
-            $document->company()->sync($validatedData['company'] ?? []);
+ 
 
             DB::commit();
             return redirect()->route('documents.index')->with('success', 'Documento atualizado com sucesso! Nova versão salva.');
@@ -181,7 +176,7 @@ class DocumentController extends Controller
 
     public function trash()
     {
-        $documents = Document::onlyTrashed()->with(['macro', 'user', 'sector', 'company'])->paginate(10);
+        $documents = Document::onlyTrashed()->with(['macro', 'user', 'sector'])->paginate(10);
         return view('documents.trash', compact('documents'));
     }
 

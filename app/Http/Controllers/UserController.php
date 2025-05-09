@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Sector;
-use App\Models\Company;
 use App\Models\Menu;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -70,12 +69,11 @@ class UserController extends Controller
         Gate::authorize('edit', User::class);
 
         $user->load('menus', 'roles');
-        $company = Company::where('status', 1)->get();
         $sector = Sector::where('status', 1)->get();
         $menus = Menu::all();
         $roles = Role::all();
 
-        return view('users.edit', compact('user', 'sector', 'company', 'menus', 'roles'));
+        return view('users.edit', compact('user', 'sector',  'menus', 'roles'));
     }
 
     public function update(Request $request, User $user)
@@ -126,16 +124,6 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('status', 'Setores atualizados com sucesso.');
     }
 
-    public function updatecompany(Request $request, User $user)
-    {
-        $validated = $request->validate([
-            'company' => 'nullable|array',
-            'company.*' => 'exists:company,id',
-        ]);
-
-        $user->company()->sync($validated['company'] ?? []);
-        return redirect()->route('users.index')->with('status', 'Empresas atualizadas com sucesso!');
-    }
 
     public function updateStatus(Request $request, $id)
     {
