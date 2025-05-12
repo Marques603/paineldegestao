@@ -107,8 +107,7 @@
                                     type="checkbox"
                                     name="status"
                                     value="1"
-                                    {{ old('status', $user->status) == 1 ? 'checked' : '' }}
-                                >
+                                    {{ old('status', $user->status) == 1 ? 'checked' : '' }}>
                                 <div class="toggle-body"></div>
                             </div>
                         </label>
@@ -127,8 +126,6 @@
                     </form>
                 </div>
             </div>
-
-            <
 
 
             <!-- Vincular Permissões -->
