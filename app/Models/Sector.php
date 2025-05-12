@@ -21,6 +21,7 @@ class Sector extends Model
     }
     public function costCenters()
     {
-        return $this->belongsToMany(CostCenter::class, 'cost_center_sector');
+    return $this->belongsToMany(CostCenter::class, 'cost_center_sector');
     }
+
 }

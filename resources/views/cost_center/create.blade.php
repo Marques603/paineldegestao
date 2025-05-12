@@ -63,23 +63,23 @@
                         </div>
 
                         <!-- Setor Vinculado -->
-                        <div>
-                            <label class="label">
-                                <span class="block mb-1">Setor Vinculado</span>
-                                <select name="sector_id" class="input @error('sector_id') border-red-500 @enderror">
-                                    <option value="">Selecione um Setor</option>
-                                    @foreach($sectors as $sector)
-                                        <option value="{{ $sector->id }}"
-                                            {{ isset($cost_center) && $cost_center->sector_id == $sector->id ? 'selected' : '' }}>
-                                            {{ $sector->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('sector_id')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
-                        </div>
+<!-- Setores Vinculados -->
+<div>
+    <label class="label">
+        <span class="block mb-1">Setores Vinculados</span>
+        <select name="sectors[]" multiple class="input @error('sectors') border-red-500 @enderror">
+            @foreach($sectors as $sector)
+                <option value="{{ $sector->id }}"
+                    {{ isset($cost_center) && $cost_center->sectors->contains($sector->id) ? 'selected' : '' }}>
+                    {{ $sector->name }}
+                </option>
+            @endforeach
+        </select>
+        @error('sectors')
+            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+        @enderror
+    </label>
+</div>
 
                         <!-- Botões -->
                         <div class="flex items-center justify-end gap-4">

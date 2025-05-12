@@ -9,20 +9,21 @@ return new class extends Migration {
     {
         // Tabela principal de Cost Centers
         Schema::create('cost_center', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('code')->nullable();
-            $table->timestamps();
-            $table->softDeletes(); // Caso deseje restaurar depois
-        });
+    $table->id();
+    $table->string('name');
+    $table->string('code')->nullable();
+    $table->boolean('status')->default(1); // 1 = ativo, 0 = inativo
+    $table->timestamps();
+    $table->softDeletes();
+});
 
-        // Tabela pivô cost_center_sector
-        Schema::create('cost_center_sector', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('cost_center_id')->constrained('cost_center')->onDelete('cascade');
-            $table->foreignId('sector_id')->constrained('sector')->onDelete('cascade');
-            $table->timestamps();
-        });
+Schema::create('cost_center_sector', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('cost_center_id')->constrained('cost_center')->onDelete('cascade');
+    $table->foreignId('sector_id')->constrained('sector')->onDelete('cascade');
+    $table->timestamps();
+});
+
     }
 
     public function down(): void
