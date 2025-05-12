@@ -2,26 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Position extends Model
 {
+    use HasFactory, SoftDeletes;
 
-    use HasFactory;
+    protected $table = 'position'; // Nome da tabela no singular
 
-    // Adicione os campos que você quer permitir a atribuição em massa
-    protected $fillable = [
-        'name', 'code', 'status', 'user_id', 'sector_id'
-    ];
-    
-    protected $table = 'position'; // força uso no singular
+    protected $fillable = ['name', 'status'];
 
-
-    
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'position_user');
     }
-    
 }
