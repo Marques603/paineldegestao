@@ -72,11 +72,12 @@
                         <th class="w-[5%]">
                             <input class="checkbox" type="checkbox" data-check-all data-check-all-target=".sector-checkbox" />
                         </th>
-                        <th class="w-[25%] uppercase">Nome</th>
-                        <th class="w-[35%] uppercase">Descrição</th>
-                        <th class="w-[35%] uppercase">Funcionários</th>
-                        <th class="w-[35%] uppercase">Responsável</th>
-                        <th class="w-[10%] uppercase">Status</th>
+                        <th class="w-[20%] uppercase">Nome</th>
+                        <th class="w-[15%] uppercase">Descrição</th>
+                        <th class="w-[30%] uppercase">Funcionários</th>
+                        <th class="w-[20%] uppercase">Responsável</th>
+                        <th class="w-[10%] uppercase">CEntro</th>
+                        <th class="w-[5%] uppercase">Status</th>
                         <th class="w-[5%] !text-right uppercase">Ações</th>
                       
                     </tr>
@@ -105,6 +106,13 @@
                             {{ $sector->responsibleUsers->pluck('name')->join(', ') }}
                             @else
                             Não definido
+                            @endif
+                            </td>
+                            <td>
+                            @if($sector->costCenters->isNotEmpty())
+                            {{ $sector->costCenters->map(fn($cc) => $cc->name . ' (' . $cc->code . ')')->join(', ') }}
+                            @else
+                            <span class="text-slate-400 italic">Não definido</span>
                             @endif
                             </td>
                             <td>

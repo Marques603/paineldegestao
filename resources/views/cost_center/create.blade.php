@@ -39,7 +39,7 @@
 
                             <!-- Descrição do Centro de Custo -->
                             <label class="label">
-                                <span class="block mb-1">Descrição</span>
+                                <span class="block mb-1">Código do Centro de Custo</span>
                                 <input type="text" name="code" class="input @error('code') border-red-500 @enderror"
                                     value="{{ old('code', $cost_center->code ?? '') }}" />
                                 @error('code')
