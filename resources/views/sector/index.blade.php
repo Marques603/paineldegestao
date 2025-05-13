@@ -74,8 +74,11 @@
                         </th>
                         <th class="w-[25%] uppercase">Nome</th>
                         <th class="w-[35%] uppercase">Descrição</th>
+                        <th class="w-[35%] uppercase">Funcionários</th>
+                        <th class="w-[35%] uppercase">Responsável</th>
                         <th class="w-[10%] uppercase">Status</th>
                         <th class="w-[5%] !text-right uppercase">Ações</th>
+                      
                     </tr>
                 </thead>
                 <tbody>
@@ -84,6 +87,20 @@
                             <td><input class="checkbox sector-checkbox" type="checkbox" /></td>
                             <td>{{ $sector->name }}</td>
                             <td>{{ $sector->description }}</td>
+                            <td>
+                            @php
+                            $count = $sector->users->count();
+                            @endphp
+
+                            @if($count === 0)
+                            Não há funcionários
+                            @elseif($count === 1)
+                            1 Funcionário
+                            @else
+                            {{ $count }} funcionários
+                            @endif
+                            </td>
+                            <td>{{ $sector->responsible->name ?? 'Não definido' }}</td>
                             <td>
                                 @if($sector->status)
                                     <div class="badge badge-soft-success">Ativo</div>
