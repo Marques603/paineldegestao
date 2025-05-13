@@ -100,7 +100,13 @@
                             {{ $count }} funcionários
                             @endif
                             </td>
-                            <td>{{ $sector->responsible->name ?? 'Não definido' }}</td>
+                            <td>
+                            @if($sector->responsibleUsers->isNotEmpty())
+                            {{ $sector->responsibleUsers->pluck('name')->join(', ') }}
+                            @else
+                            Não definido
+                            @endif
+                            </td>
                             <td>
                                 @if($sector->status)
                                     <div class="badge badge-soft-success">Ativo</div>

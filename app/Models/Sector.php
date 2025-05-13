@@ -23,5 +23,10 @@ class Sector extends Model
     {
     return $this->belongsToMany(CostCenter::class, 'cost_center_sector');
     }
+    public function responsibleUsers()
+    {
+    return $this->belongsToMany(User::class, 'sector_responsible_user');
+    }
+
 
 }

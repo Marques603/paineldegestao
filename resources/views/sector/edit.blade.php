@@ -60,25 +60,39 @@
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>
-                        </div>
 
-                        <!-- Usuários Vinculados -->
-                        <div>
+                            <!-- Responsáveis -->
                             <label class="label">
-                                <span class="block mb-1">Usuários Vinculados</span>
-                                <select name="users[]" multiple class="input @error('users') border-red-500 @enderror">
-                                    @foreach($users as $user)
+                                <span class="block mb-1">Responsáveis</span>
+                                <select name="responsible_users[]" multiple class="input @error('responsible_users') border-red-500 @enderror">
+                                    @foreach ($users as $user)
                                         <option value="{{ $user->id }}"
-                                            {{ $sector->users->contains($user->id) ? 'selected' : '' }}>
+                                            {{ $sector->responsibleUsers->contains($user->id) ? 'selected' : '' }}>
                                             {{ $user->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('users')
+                                @error('responsible_users')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>
                         </div>
+
+                        <!-- Usuários Vinculados -->
+                        <label class="label">
+                            <span class="block mb-1">Usuários Vinculados</span>
+                            <select name="users[]" multiple class="input @error('users') border-red-500 @enderror">
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}"
+                                        {{ $sector->users->contains($user->id) ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('users')
+                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            @enderror
+                        </label>
 
                         <!-- Botões -->
                         <div class="flex items-center justify-end gap-4">

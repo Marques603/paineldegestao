@@ -10,7 +10,7 @@ class SectorController extends Controller
 {
     public function index()
     {
-        $sectors = Sector::with('users')->paginate(10);
+        $sectors = Sector::with(['users', 'responsibleUsers'])->paginate(10);
         return view('sector.index', compact('sectors'));
     }
 
@@ -27,10 +27,14 @@ class SectorController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|boolean',
             'users' => 'array|nullable',
+            'users.*' => 'exists:users,id',
+            'responsible_users' => 'array|nullable',
+            'responsible_users.*' => 'exists:users,id',
         ]);
 
         $sector = Sector::create($validated);
         $sector->users()->sync($request->users ?? []);
+        $sector->responsibleUsers()->sync($request->responsible_users ?? []);
 
         return redirect()->route('sector.index')->with('success', 'Setor criado com sucesso.');
     }
@@ -38,7 +42,7 @@ class SectorController extends Controller
     public function edit(Sector $sector)
     {
         $users = User::all();
-        $sector->load('users');
+        $sector->load(['users', 'responsibleUsers']);
         return view('sector.edit', compact('sector', 'users'));
     }
 
@@ -49,10 +53,14 @@ class SectorController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|boolean',
             'users' => 'array|nullable',
+            'users.*' => 'exists:users,id',
+            'responsible_users' => 'array|nullable',
+            'responsible_users.*' => 'exists:users,id',
         ]);
 
         $sector->update($validated);
         $sector->users()->sync($request->users ?? []);
+        $sector->responsibleUsers()->sync($request->responsible_users ?? []);
 
         return redirect()->route('sector.index')->with('success', 'Setor atualizado com sucesso.');
     }
@@ -60,6 +68,7 @@ class SectorController extends Controller
     public function destroy(Sector $sector)
     {
         $sector->users()->detach();
+        $sector->responsibleUsers()->detach();
         $sector->delete();
 
         return redirect()->route('sector.index')->with('success', 'Setor excluído com sucesso.');

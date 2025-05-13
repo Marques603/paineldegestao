@@ -77,6 +77,11 @@ class User extends Authenticatable
     {
     return $this->belongsToMany(Sector::class);
     }
+    public function responsibleSectors()
+    {
+    return $this->belongsToMany(Sector::class, 'sector_responsible_user');
+    }
+
 
 
 
