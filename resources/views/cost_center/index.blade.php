@@ -72,6 +72,7 @@
                         </th>
                         <th class="w-[25%] uppercase">Nome</th>
                         <th class="w-[35%] uppercase">Descrição</th>
+                        <th class="w-[30%] uppercase">Setor</th>
                         <th class="w-[10%] uppercase">Status</th>
                         <th class="w-[5%] !text-right uppercase">Ações</th>
                     </tr>
@@ -82,6 +83,15 @@
                             <td><input class="checkbox cost-center-checkbox" type="checkbox" /></td>
                             <td>{{ $costCenter->name }}</td>
                             <td>{{ $costCenter->code }}</td>
+                             <td>
+    @if($costCenter->sectors->isNotEmpty())
+        @foreach($costCenter->sectors as $sector)
+                     {{ $sector->name }}
+        @endforeach
+    @else
+        Sem setor
+    @endif
+</td>
                             <td>
                                 @if($costCenter->status)
                                     <div class="badge badge-soft-success">Ativo</div>
