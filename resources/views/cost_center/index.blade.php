@@ -50,10 +50,13 @@
                         </div>
                     </div>
                 </div>
-
+                <button class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
+              <i class="h-4" data-feather="upload"></i>
+              <span class="hidden sm:inline-block">Export</span>
+            </button>
                 <a class="btn btn-primary" href="{{ route('cost_center.create') }}" role="button">
                     <i data-feather="plus" height="1rem" width="1rem"></i>
-                    <span class="hidden sm:inline-block">Criar Centro de Custo</span>
+                    <span class="hidden sm:inline-block">Criar</span>
                 </a>
             </div>
         </div>

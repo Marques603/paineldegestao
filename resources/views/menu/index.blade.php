@@ -27,6 +27,29 @@
             <!-- Actions -->
             <div class="flex w-full items-center justify-between gap-x-4 md:w-auto">
                 <div class="flex items-center gap-x-4">
+                    <!-- Filtros -->
+                    <div class="dropdown" data-placement="bottom-end">
+                        <div class="dropdown-toggle">
+                            <button type="button" class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
+                                <i class="w-4" data-feather="filter"></i>
+                                <span class="hidden sm:inline-block">Filtros</span>
+                                <i class="w-4" data-feather="chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="dropdown-content w-72 !overflow-visible">
+                            <ul class="dropdown-list space-y-4 p-4">
+                                <li class="dropdown-list-item">
+                                    <h2 class="my-1 text-sm font-medium">Status</h2>
+                                    <select class="tom-select w-full" autocomplete="off" name="status" onchange="this.form.submit()">
+                                        <option value="">Selecione um status</option>
+                                        <option value="1" {{ request()->input('status') == '1' ? 'selected' : '' }}>Ativo</option>
+                                        <option value="0" {{ request()->input('status') == '0' ? 'selected' : '' }}>Inativo</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                
                     <!-- Botão exportar -->
                     <button class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
                         <i class="h-4" data-feather="upload"></i>
