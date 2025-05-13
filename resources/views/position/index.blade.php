@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-page-title page="Lista de Cargos" header="Cargos" />
+    <x-page-title page="Lista de Cargos" header="Lista de Cargos" />
 
     @if(session('success'))
         <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded shadow-lg z-50" role="alert">
@@ -72,6 +72,7 @@
                             <input class="checkbox" type="checkbox" data-check-all data-check-all-target=".position-checkbox" />
                         </th>
                         <th class="w-[40%] uppercase">Nome</th>
+                        <th class="w-[15%] uppercase">Status</th>
                         <th class="w-[15%] uppercase">Status</th>
                         <th class="w-[5%] !text-right uppercase">Ações</th>
                     </tr>

@@ -1,6 +1,6 @@
 <x-app-layout>
     <!-- Título da Página -->
-    <x-page-title page="{{ isset($position) ? 'Editar Cargo' : 'Criar Cargo' }}" pageUrl="{{ route('position.index') }}" header="{{ isset($position) ? 'Editar Cargo' : 'Criar Cargo' }}" />
+    <x-page-title page="{{ isset($position) ? 'Lista de Cargos' : 'Lista de Cargos' }}" pageUrl="{{ route('position.index') }}" header="{{ isset($position) ? 'Editar Cargo' : 'Criar Cargo' }}" />
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
         <!-- Preview fixo à esquerda -->

@@ -74,6 +74,7 @@
                         <th class="w-[20%] uppercase">Nome Fantasia</th>
                         <th class="w-[25%] uppercase">Razão Social</th>
                         <th class="w-[20%] uppercase">CNPJ</th>
+                        <th class="w-[20%] uppercase">Responsável</th>
                         <th class="w-[10%] uppercase">Status</th>
                         <th class="w-[5%] !text-right uppercase">Ações</th>
                     </tr>
@@ -85,6 +86,7 @@
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->corporate_name }}</td>
                             <td>{{ $company->cnpj }}</td>
+                            <td>{{ $company->name }}</td>
                             <td>
                                 @if($company->status)
                                     <div class="badge badge-soft-success">Ativa</div>
