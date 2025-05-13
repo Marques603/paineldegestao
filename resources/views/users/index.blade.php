@@ -115,13 +115,13 @@
                       {{ $user->name }}
                     </h6>
                     
-                    <p class="truncate text-xs text-slate-500 dark:text-slate-400">
-                     #
-                   </p>
-                    
-                    <p class="truncate text-xs text-slate-500 dark:text-slate-400">
-                     Sem cargo atribuído
-                    </p>
+                      @if($user->positions && $user->positions->isNotEmpty())
+    <p class="truncate text-xs text-slate-500 dark:text-slate-400">
+      {{ $user->positions->pluck('name')->join(', ') }}
+    </p>
+  @else
+    <p class="truncate text-xs text-slate-400 italic">Sem cargo atribuído</p>
+  @endif
                     
                   </div>
                 </div>

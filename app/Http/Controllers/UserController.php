@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Sector;
 use App\Models\Menu;
 use App\Models\Role;
+use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
@@ -13,24 +14,26 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function index(Request $request)
-    {
-        if (!Gate::allows('view', Menu::find(1))) {
-            return redirect()->route('sector.index')->with('status', 'Este menu não está liberado para o seu perfil.');
-        }
-
-        $users = User::query();
-
-        $users->when($request->input('search'), function ($query, $keyword) {
-            $query->where(function ($q) use ($keyword) {
-                $q->where('name', 'like', '%' . $keyword . '%')
-                    ->orWhere('email', 'like', '%' . $keyword . '%');
-            });
-        });
-
-        $users = $users->paginate(10);
-
-        return view('users.index', compact('users'));
+{
+    if (!Gate::allows('view', Menu::find(1))) {
+        return redirect()->route('sector.index')->with('status', 'Este menu não está liberado para o seu perfil.');
     }
+
+    $users = User::query();
+
+    $users->when($request->input('search'), function ($query, $keyword) {
+        $query->where(function ($q) use ($keyword) {
+            $q->where('name', 'like', '%' . $keyword . '%')
+                ->orWhere('email', 'like', '%' . $keyword . '%');
+        });
+    });
+
+    // Carregar cargos com os usuários
+    $users = $users->with('positions')->paginate(10);
+
+    return view('users.index', compact('users'));
+}
+
 
     public function create()
     {

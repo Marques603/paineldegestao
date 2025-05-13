@@ -81,6 +81,10 @@ class User extends Authenticatable
     {
     return $this->belongsToMany(Sector::class, 'sector_responsible_user');
     }
+    public function positions()
+    {
+    return $this->belongsToMany(Position::class, 'position_user');
+    }
 
 
 
