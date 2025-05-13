@@ -52,7 +52,7 @@
                 </div>
                 <button class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
               <i class="h-4" data-feather="upload"></i>
-              <span class="hidden sm:inline-block">Export</span>
+              <span class="hidden sm:inline-block">Exportar</span>
             </button>
                 <a class="btn btn-primary" href="{{ route('cost_center.create') }}" role="button">
                     <i data-feather="plus" height="1rem" width="1rem"></i>
@@ -81,7 +81,7 @@
                         <tr>
                             <td><input class="checkbox cost-center-checkbox" type="checkbox" /></td>
                             <td>{{ $costCenter->name }}</td>
-                            <td>{{ $costCenter->description }}</td>
+                            <td>{{ $costCenter->code }}</td>
                             <td>
                                 @if($costCenter->status)
                                     <div class="badge badge-soft-success">Ativo</div>

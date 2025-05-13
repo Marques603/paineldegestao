@@ -65,7 +65,7 @@
               </div>
               <button class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
                 <i class="h-4" data-feather="upload"></i>
-                <span class="hidden sm:inline-block">Export</span>
+                <span class="hidden sm:inline-block">Exportar</span>
               </button>
             </div>
 

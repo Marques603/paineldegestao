@@ -67,10 +67,21 @@
                 </ul>
               </div>
             </div>
-            <button class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
-              <i class="h-4" data-feather="upload"></i>
-              <span class="hidden sm:inline-block">Exportar</span>
-            </button>
+            <form action="#" method="POST">
+    @csrf
+    <button type="submit" class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
+        <i class="h-4" data-feather="upload"></i>
+        <span class="hidden sm:inline-block">Exportar Excel</span>
+    </button>
+</form>
+
+<form action="#" method="GET">
+    <button type="submit" class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
+        <i class="h-4" data-feather="upload"></i>
+        <span class="hidden sm:inline-block">Exportar PDF</span>
+    </button>
+</form>
+
           </div>
 
           <a class="btn btn-primary" href="{{ route('users.create') }}" role="button">
@@ -114,15 +125,13 @@
                     <h6 class="whitespace-nowrap text-sm font-medium text-slate-700 dark:text-slate-100">
                       {{ $user->name }}
                     </h6>
-                    
-                      @if($user->positions && $user->positions->isNotEmpty())
-    <p class="truncate text-xs text-slate-500 dark:text-slate-400">
-      {{ $user->positions->pluck('name')->join(', ') }}
-    </p>
-  @else
-    <p class="truncate text-xs text-slate-400 italic">Sem cargo atribuído</p>
-  @endif
-                    
+                    @if($user->positions && $user->positions->isNotEmpty())
+                      <p class="truncate text-xs text-slate-500 dark:text-slate-400">
+                     {{ $user->positions->pluck('name')->join(', ') }}
+                      </p>
+                     @else
+                    <p class="truncate text-xs text-slate-400 italic">Sem cargo atribuído</p>
+                    @endif
                   </div>
                 </div>
               </td>
