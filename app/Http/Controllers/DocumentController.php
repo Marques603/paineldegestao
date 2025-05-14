@@ -42,12 +42,12 @@ class DocumentController extends Controller
             'sectors' => 'required|array',
         ]);
 
-        $filePath = $request->file('file')->store('documents');
+        $filePath = $request->file('file')->store('documents', 'public');
 
         $document = Document::create([
             'code' => $request->code,
             'description' => $request->description,
-            'user_upload' => auth()->id(),
+            'user_upload_id' => auth()->id(),
             'revision' => $request->revision,
             'file_path' => $filePath,
             'file_type' => $request->file('file')->getClientOriginalExtension(),
@@ -93,7 +93,15 @@ class DocumentController extends Controller
         $document->macros()->sync($request->macros);
         $document->sectors()->sync($request->sectors);
 
-        return redirect()->route('document.index')->with('success', 'Documento atualizado com sucesso.');
+        return redirect()->route('documents.index')->with('success', 'Documento atualizado com sucesso.');
+    }
+
+    // Formulário para aprovar documento
+    public function showApproveForm($documentId)
+    {
+        $document = Document::with('approvals.user')->findOrFail($documentId);
+
+        return view('documents.approve', compact('document'));
     }
 
     // Aprovar documento
@@ -101,12 +109,17 @@ class DocumentController extends Controller
     {
         $document = Document::findOrFail($documentId);
 
+        // Impedir que o mesmo usuário aprove duas vezes
+        if ($document->approvals()->where('user_id', auth()->id())->exists()) {
+            return redirect()->route('documents.index')->with('info', 'Você já aprovou este documento.');
+        }
+
         DocumentApproval::create([
             'document_id' => $document->id,
             'user_id' => auth()->id(),
             'approved_at' => now(),
         ]);
 
-        return redirect()->route('document.index')->with('success', 'Documento aprovado com sucesso.');
+        return redirect()->route('documents.index')->with('success', 'Documento aprovado com sucesso.');
     }
 }

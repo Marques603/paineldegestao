@@ -62,8 +62,9 @@ use App\Http\Controllers\CostCenterController;
    // Restaura uma macro excluída (soft delete)
    Route::resource('documents', DocumentController::class);
    // Rotas de documentos (CRUD)   
-   Route::post('documents/{document}/approve', [DocumentController::class, 'approve'])->name('documents.approve');
-   // Aprova um documento específico
+   Route::get('/documents/{document}/approve', [DocumentController::class, 'showApproveForm'])->name('documents.approve.form');
+   Route::post('/documents/{document}/approve', [DocumentController::class, 'approve'])->name('documents.approve');
+
    Route::resource('company', CompanyController::class);
    // Rotas de empresas (CRUD)
    Route::resource('sector', SectorController::class);

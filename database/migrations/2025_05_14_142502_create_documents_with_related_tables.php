@@ -51,7 +51,11 @@ class CreateDocumentsWithRelatedTables extends Migration
             $table->id();
             $table->unsignedBigInteger('document_id'); // Referência para o documento
             $table->unsignedBigInteger('user_id'); // Referência para o usuário que aprovou
+            $table->tinyInteger('status')->default(0); // Status da aprovação (0: pendente, 1: aprovado, 2: reprovado)
+            $table->text('comments')->nullable(); // Comentários do aprovador
             $table->timestamp('approved_at'); // Data de aprovação
+            $table->string('approval_type')->nullable(); // Tipo de aprovação (ex: "Aprovação", "Revisão", etc.)
+            $table->string('approval_level')->nullable(); // Nível de aprovação (ex: "Gerente", "Diretor", etc.)          
             $table->timestamps();
 
             // Chaves estrangeiras
