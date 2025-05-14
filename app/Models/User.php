@@ -85,6 +85,11 @@ class User extends Authenticatable
     {
     return $this->belongsToMany(Position::class, 'position_user');
     }
+    public function responsibleMacros()
+    {
+    return $this->belongsToMany(\App\Models\Macro::class, 'macro_responsible_user');
+    }
+
 
 
 

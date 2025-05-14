@@ -1,7 +1,5 @@
 <x-app-layout>
-    <!-- Page Title Starts -->
     <x-page-title page="Lista de Macros" header="Lista de Macros" />
-    <!-- Page Title Ends -->
 
     @if(session('success'))
         <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded shadow-lg z-50" role="alert">
@@ -9,11 +7,8 @@
         </div>
     @endif
 
-    <!-- Macro List Starts -->
     <div class="space-y-4">
-        <!-- Header Starts -->
         <div class="flex flex-col items-center justify-between gap-y-4 md:flex-row md:gap-y-0">
-            <!-- Search Starts -->
             <form method="GET" action="{{ route('macro.index') }}" class="group flex h-10 w-full items-center rounded-primary border border-transparent bg-white shadow-sm focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-inset focus-within:ring-primary-500 dark:border-transparent dark:bg-slate-800 dark:focus-within:border-primary-500 md:w-72">
                 <div class="flex h-full items-center px-2">
                     <i class="h-4 text-slate-400 group-focus-within:text-primary-500" data-feather="search"></i>
@@ -26,59 +21,52 @@
                     placeholder="Buscar..."
                 />
             </form>
-            <!-- Search Ends -->
 
-            <!-- Actions Starts -->
-        <!-- User Action Starts -->
-        <div class="flex w-full items-center justify-between gap-x-4 md:w-auto">
-            <div class="flex items-center gap-x-4">
-              <div class="dropdown" data-placement="bottom-end">
-                <div class="dropdown-toggle">
-                  <button type="button" class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
-                    <i class="w-4" data-feather="filter"></i>
-                    <span class="hidden sm:inline-block">Filtros</span>
-                    <i class="w-4" data-feather="chevron-down"></i>
+            <div class="flex w-full items-center justify-between gap-x-4 md:w-auto">
+                <div class="flex items-center gap-x-4">
+                  <div class="dropdown" data-placement="bottom-end">
+                    <div class="dropdown-toggle">
+                      <button type="button" class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
+                        <i class="w-4" data-feather="filter"></i>
+                        <span class="hidden sm:inline-block">Filtros</span>
+                        <i class="w-4" data-feather="chevron-down"></i>
+                      </button>
+                    </div>
+                    <div class="dropdown-content w-72 !overflow-visible">
+                      <ul class="dropdown-list space-y-4 p-4">
+                        <li class="dropdown-list-item">
+                          <h2 class="my-1 text-sm font-medium">Setor</h2>
+                          <select class="tom-select w-full" autocomplete="off">
+                            <option value="">Selecione um setor</option>
+                            <option value="1">Tecnologia</option>
+                            <option value="2">Qualidade</option>
+                            <option value="3">Processos</option>
+                          </select>
+                        </li>
+                        <li class="dropdown-list-item">
+                          <h2 class="my-1 text-sm font-medium">Status</h2>
+                          <select class="tom-select w-full" autocomplete="off">
+                            <option value="">Selecione um status</option>
+                            <option value="1">Ativo</option>
+                            <option value="0">Inativo</option>
+                          </select>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <button class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
+                    <i class="h-4" data-feather="upload"></i>
+                    <span class="hidden sm:inline-block">Exportar</span>
                   </button>
                 </div>
-                <div class="dropdown-content w-72 !overflow-visible">
-                  <ul class="dropdown-list space-y-4 p-4">
-                    <li class="dropdown-list-item">
-                      <h2 class="my-1 text-sm font-medium">Setor</h2>
-                      <select class="tom-select w-full" autocomplete="off">
-                        <option value="">Selecione um setor</option>
-                        <option value="1">Tecnologia</option>
-                        <option value="2">Qualidade</option>
-                        <option value="3">Processos</option>
-                      </select>
-                    </li>
-  
-                    <li class="dropdown-list-item">
-                      <h2 class="my-1 text-sm font-medium">Status</h2>
-                      <select class="tom-select w-full" autocomplete="off">
-                        <option value="">Selecione um status</option>
-                        <option value="1">Ativo</option>
-                        <option value="2">Inativo</option>
-                      </select>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <button class="btn bg-white font-medium shadow-sm dark:bg-slate-800">
-                <i class="h-4" data-feather="upload"></i>
-                <span class="hidden sm:inline-block">Exportar</span>
-              </button>
-            </div>
 
                 <a class="btn btn-primary" href="{{ route('macro.create') }}" role="button">
                     <i data-feather="plus" height="1rem" width="1rem"></i>
                     <span class="hidden sm:inline-block">Criar</span>
                 </a>
             </div>
-            <!-- Actions Ends -->
         </div>
-        <!-- Header Ends -->
 
-        <!-- Table Starts -->
         <div class="table-responsive whitespace-nowrap rounded-primary">
             <table class="table">
                 <thead>
@@ -102,9 +90,11 @@
                             </td>
                             <td>{{ $macro->name }}</td>
                             <td>{{ $macro->description ?? 'Sem descrição' }}</td>
-                            <td>{{ $macro->responsible ?? '-' }}</td>
-                            <td>{{ $macro->document_count }}</td>
+                            <td>
+    {{ $macro->responsibleUsers->isNotEmpty() ? $macro->responsibleUsers->pluck('name')->join(', ') : '-' }}
+</td>
 
+                            <td>{{ $macro->documents_count ?? 0 }}</td>
                             <td>
                                 @if($macro->status)
                                     <div class="badge badge-soft-success">Ativo</div>
@@ -137,7 +127,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Modal de Confirmação -->
                                 <div class="modal modal-centered" id="deleteModal-{{ $macro->id }}">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -171,16 +160,12 @@
                 </tbody>
             </table>
         </div>
-        <!-- Table Ends -->
 
-        <!-- Pagination Starts -->
         <div class="flex flex-col items-center justify-between gap-y-4 md:flex-row">
             <p class="text-xs font-normal text-slate-400">
                 Mostrando {{ $macros->firstItem() }} a {{ $macros->lastItem() }} de {{ $macros->total() }} resultados
             </p>
             {{ $macros->appends(request()->query())->links('vendor.pagination.custom') }}
         </div>
-        <!-- Pagination Ends -->
     </div>
-    <!-- Macro List Ends -->
 </x-app-layout>

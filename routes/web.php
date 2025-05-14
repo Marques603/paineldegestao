@@ -58,6 +58,8 @@ use App\Http\Controllers\CostCenterController;
    // Rotas de macro (CRUD)
    Route::put('/macros/{macro}/status', [MacroController::class, 'updateStatus'])->name('macro.update.status');
    // Atualiza o status de uma macro específica (ativo/inativo)
+   Route::get('macro/{id}/restore', [MacroController::class, 'restore'])->name('macro.restore');
+   // Restaura uma macro excluída (soft delete)
    Route::resource('documents', DocumentController::class);
    // Rotas de documentos (CRUD)
    Route::resource('company', CompanyController::class);
