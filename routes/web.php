@@ -64,6 +64,10 @@ use App\Http\Controllers\CostCenterController;
    // Rotas de documentos (CRUD)   
    Route::get('/documents/{document}/approve', [DocumentController::class, 'showApproveForm'])->name('documents.approve.form');
    Route::post('/documents/{document}/approve', [DocumentController::class, 'approve'])->name('documents.approve');
+   Route::post('/documents/{documentId}/approve', [DocumentController::class, 'updateApprovalStatus'])->name('documents.updateApprovalStatus');
+Route::get('documents/{documentId}/approve', [DocumentController::class, 'showApproveForm'])->name('documents.approve');
+Route::post('documents/{documentId}/approve/status', [DocumentController::class, 'updateApprovalStatus'])->name('documents.updateApprovalStatus');
+
 
    Route::resource('company', CompanyController::class);
    // Rotas de empresas (CRUD)
