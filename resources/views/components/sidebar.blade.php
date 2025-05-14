@@ -111,6 +111,11 @@
                         class="sidebar-submenu-item {{ request()->routeIs('macro.index') ? 'active' : '' }}">
                         Macros</a>
                 </li>
+                <li>
+                    <a href="{{ route('macro.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('macro.index') ? 'active' : '' }}">
+                        RNC</a>
+                </li>
             </ul>
             @endcan
         </li>

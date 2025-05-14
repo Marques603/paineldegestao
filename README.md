@@ -424,3 +424,24 @@ VALUES(2, 3);
 INSERT INTO users
 (id, name, email, email_verified_at, password, two_factor_secret, two_factor_recovery_codes, two_factor_confirmed_at, remember_token, created_at, updated_at, avatar, status)
 VALUES(1, 'Wesley Fernando Cabrera', 'wesley.cabrera@hotmail.com', NULL, '$2y$12$R52FZDj9r9aLCnUFOisoGuwFlPf1PBUG4TV3x3imxL3xhn8OepElK', NULL, NULL, NULL, NULL, '2025-04-16 02:36:18', '2025-04-16 02:36:18', NULL, 1);
+
+
+
+
+-- Aprovadores de arquivos apenas o responsavel do setor envia para setor qualidade faz a triagem e devolve para conclusao  
+
+-- Ativo aparece sempre para qualidade / processos para os usuarios oculta inativo
+
+revisão segue automatico conforme as revisao
+
+RNC NOVO 
+formulario rnc com perguntas 
+as inspetoras ira fazer a inspeçao baseado na inspeçao se tiver uma nao conformidade , gerar ocorrencia com base nas macros 
+
+libera para todo mundo porem 
+
+marca da agua 
+
+marcar que a pessoa visualizou o arquivo 
+
+depois treinamento 

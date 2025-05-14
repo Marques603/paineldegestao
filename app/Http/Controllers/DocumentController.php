@@ -28,6 +28,7 @@ class DocumentController extends Controller
     {
         $macros = Macro::all();
         $sectors = Sector::all();
+
         return view('documents.create', compact('macros', 'sectors'));
     }
 
@@ -53,11 +54,46 @@ class DocumentController extends Controller
             'status' => 1,
         ]);
 
-        // Relacionamentos nas tabelas pivô
         $document->macros()->sync($request->macros);
         $document->sectors()->sync($request->sectors);
 
         return redirect()->route('documents.index')->with('success', 'Documento criado com sucesso.');
+    }
+
+    // Formulário de edição
+    public function edit(Document $document)
+    {
+        $macros = Macro::all();
+        $sectors = Sector::all();
+
+        return view('documents.edit', compact('document', 'macros', 'sectors'));
+    }
+
+    // Atualizar documento existente
+    public function update(Request $request, Document $document)
+    {
+        $request->validate([
+            'code' => 'required|string',
+            'file' => 'nullable|file',
+            'macros' => 'required|array',
+            'sectors' => 'required|array',
+        ]);
+
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('documents', 'public');
+            $document->file_path = $filePath;
+            $document->file_type = $request->file('file')->getClientOriginalExtension();
+        }
+
+        $document->code = $request->code;
+        $document->description = $request->description;
+        $document->revision = $request->revision;
+        $document->save();
+
+        $document->macros()->sync($request->macros);
+        $document->sectors()->sync($request->sectors);
+
+        return redirect()->route('document.index')->with('success', 'Documento atualizado com sucesso.');
     }
 
     // Aprovar documento
@@ -71,6 +107,6 @@ class DocumentController extends Controller
             'approved_at' => now(),
         ]);
 
-        return redirect()->route('documents.index')->with('success', 'Documento aprovado com sucesso.');
+        return redirect()->route('document.index')->with('success', 'Documento aprovado com sucesso.');
     }
 }
