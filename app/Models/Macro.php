@@ -18,7 +18,14 @@ class Macro extends Model
     ];
 
     public function responsibleUsers()
-{
+    {
     return $this->belongsToMany(User::class, 'macro_responsible_user', 'macro_id', 'user_id');
-}
+    }
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class, 'document_macro');
+    }
+
+
+
 }

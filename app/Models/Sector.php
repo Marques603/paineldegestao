@@ -27,6 +27,10 @@ class Sector extends Model
     {
     return $this->belongsToMany(User::class, 'sector_responsible_user');
     }
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class, 'document_sector');
+    }
 
 
 }

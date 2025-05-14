@@ -1,9 +1,8 @@
 <x-app-layout>
-    <!-- Título da Página -->
     <x-page-title page="Enviar Documento" pageUrl="{{ route('documents.index') }}" header="Enviar Documento" />
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
-        <!-- Preview fixo à esquerda -->
+        <!-- Preview -->
         <section class="col-span-1 flex h-min w-full flex-col gap-6 lg:sticky lg:top-20">
             <div class="card">
                 <div class="card-body flex flex-col items-center">
@@ -26,16 +25,14 @@
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <!-- Nome -->
                             <label class="label">
-                                <span class="block mb-1">Nome</span>
-                                <input type="text" name="name" class="input @error('name') border-red-500 @enderror" value="{{ old('name') }}" required />
-                                @error('name')
+                                <span class="block mb-1">Código</span>
+                                <input type="text" name="code" class="input @error('code') border-red-500 @enderror" value="{{ old('code') }}" required />
+                                @error('code')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>
 
-                            <!-- Arquivo -->
                             <label class="label">
                                 <span class="block mb-1">Arquivo</span>
                                 <input type="file" name="file" class="input @error('file') border-red-500 @enderror" required />
@@ -46,18 +43,41 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <!-- Macro -->
                             <label class="label">
-                                <span class="block mb-1">Macro</span>
-                                <select name="macro_id" class="input @error('macro_id') border-red-500 @enderror" required>
-                                    <option value="" disabled selected>Selecione uma Macro</option>
-                                    @foreach($macro as $macro)
+                                <span class="block mb-1">Macro(s)</span>
+                                <select name="macros[]" class="input @error('macros') border-red-500 @enderror" multiple required>
+                                    @foreach($macros as $macro)
                                         <option value="{{ $macro->id }}">{{ $macro->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('macro_id')
+                                @error('macros')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
+                            </label>
+
+                            <label class="label">
+                                <span class="block mb-1">Setor(es)</span>
+                                <select name="sectors[]" class="input @error('sectors') border-red-500 @enderror" multiple required>
+                                    @foreach($sectors as $sector)
+                                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('sectors')
+                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+
+                        <!-- Campos adicionais opcionais -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <label class="label">
+                                <span class="block mb-1">Descrição</span>
+                                <textarea name="description" class="input">{{ old('description') }}</textarea>
+                            </label>
+
+                            <label class="label">
+                                <span class="block mb-1">Revisão</span>
+                                <input type="text" name="revision" class="input" value="{{ old('revision') }}" />
                             </label>
                         </div>
 
