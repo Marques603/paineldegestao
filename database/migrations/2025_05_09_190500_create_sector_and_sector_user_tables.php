@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->foreignId('sector_id')->constrained('sector')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         // Tabela pivô sector_responsible_user
@@ -31,6 +32,7 @@ return new class extends Migration {
             $table->foreignId('sector_id')->constrained('sector')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

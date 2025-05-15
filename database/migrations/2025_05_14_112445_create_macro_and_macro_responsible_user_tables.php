@@ -27,6 +27,7 @@ return new class extends Migration
             $table->foreignId('macro_id')->constrained('macro')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes(); 
         });
     }
 

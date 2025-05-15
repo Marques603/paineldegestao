@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name'); // Ex: tecnologia, rh, etc.
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('menu_user', function (Blueprint $table) {

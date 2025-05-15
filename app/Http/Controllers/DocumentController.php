@@ -19,15 +19,23 @@ class DocumentController extends Controller
     // Listagem de documentos com busca
     public function index(Request $request)
     {
-        $documents = Document::query()
-            ->when($request->search, function ($query, $search) {
-                return $query->where('code', 'like', "%{$search}%");
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+    $user = auth()->user();
 
-        return view('documents.index', compact('documents'));
+    $sectorIds = $user->sectors->pluck('id');
+
+    $documents = Document::where('status', 1)
+        ->whereHas('sectors', function ($query) use ($sectorIds) {
+            $query->whereIn('sector_id', $sectorIds);
+        })
+        ->when($request->search, function ($query, $search) {
+            return $query->where('code', 'like', "%{$search}%");
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
+
+    return view('documents.index', compact('documents'));
     }
+
 
     // Formulário de criação
     public function create()

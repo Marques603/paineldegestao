@@ -61,11 +61,12 @@
                         <span class="hidden sm:inline-block">Exportar</span>
                     </button>
                 </div>
-
+                
                 <a href="{{ route('documents.create') }}" class="btn btn-primary flex items-center gap-2">
                     <i data-feather="plus" class="w-4 h-4"></i>
                     <span class="hidden sm:inline-block">Criar</span>
                 </a>
+             
             </div>
         </div>
 

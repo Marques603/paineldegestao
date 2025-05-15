@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+
 use App\Models\Menu;
+use App\Models\Document;
 use App\Policies\MenuPolicy;
+use App\Policies\DocumentPolicy;
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,14 +17,12 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array<class-string, class-string>
      */
-    
-     protected $policies = [
-        Menu::class => MenuPolicy::class,
+    protected $policies = [
+        \App\Models\Menu::class => \App\Policies\MenuPolicy::class,
+        \App\Models\Document::class => \App\Policies\DocumentPolicy::class,
+        // Adicione outras policies aqui se necessário
     ];
-    
 
-
-    
     /**
      * Register any authentication / authorization services.
      */

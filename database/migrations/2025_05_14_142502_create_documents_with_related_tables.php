@@ -18,8 +18,8 @@ class CreateDocumentsWithRelatedTables extends Migration
             $table->string('file_path');
             $table->string('file_type');
             $table->boolean('status')->default(1); // 1 para ativo, 0 para inativo
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_upload')->references('id')->on('users')->onDelete('cascade');
         });
@@ -30,6 +30,7 @@ class CreateDocumentsWithRelatedTables extends Migration
             $table->unsignedBigInteger('document_id');
             $table->unsignedBigInteger('macro_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('document_id')->references('id')->on('document')->onDelete('cascade');
             $table->foreign('macro_id')->references('id')->on('macro')->onDelete('cascade');
@@ -41,6 +42,7 @@ class CreateDocumentsWithRelatedTables extends Migration
             $table->unsignedBigInteger('document_id');
             $table->unsignedBigInteger('sector_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('document_id')->references('id')->on('document')->onDelete('cascade');
             $table->foreign('sector_id')->references('id')->on('sector')->onDelete('cascade');
@@ -57,6 +59,7 @@ class CreateDocumentsWithRelatedTables extends Migration
             $table->string('approval_type')->nullable(); // Tipo de aprovação (ex: "Aprovação", "Revisão", etc.)
             $table->string('approval_level')->nullable(); // Nível de aprovação (ex: "Gerente", "Diretor", etc.)          
             $table->timestamps();
+            $table->softDeletes();
 
             // Chaves estrangeiras
             $table->foreign('document_id')->references('id')->on('document')->onDelete('cascade');

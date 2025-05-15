@@ -22,6 +22,7 @@ Schema::create('cost_center_sector', function (Blueprint $table) {
     $table->foreignId('cost_center_id')->constrained('cost_center')->onDelete('cascade');
     $table->foreignId('sector_id')->constrained('sector')->onDelete('cascade');
     $table->timestamps();
+    $table->softDeletes();
 });
 
     }
