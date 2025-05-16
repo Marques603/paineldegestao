@@ -37,9 +37,12 @@ class CompanyController extends Controller
             'name' => 'required|string|max:255',
             'corporate_name' => 'required|string|max:255',
             'cnpj' => 'required|string|max:18|unique:company,cnpj',
-            'status' => 'required|boolean',
-            'users' => 'array|nullable',
+            //'status' => 'required|boolean',
+            //'users' => 'array|nullable',
         ]);
+ 
+          // Força status como 0 (inativo) sempre que criar um setor
+        $validated['status'] = 0;
 
         $company = Company::create($validated);
         if ($request->has('users')) {

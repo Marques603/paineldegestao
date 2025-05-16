@@ -21,23 +21,27 @@ class SectorController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|boolean',
-            'users' => 'array|nullable',
-            'users.*' => 'exists:users,id',
-            'responsible_users' => 'array|nullable',
-            'responsible_users.*' => 'exists:users,id',
-        ]);
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        // Remover 'status' da validação porque será sempre 0 ao criar
+        // 'users' => 'array|nullable',
+        // 'users.*' => 'exists:users,id',
+        // 'responsible_users' => 'array|nullable',
+        // 'responsible_users.*' => 'exists:users,id',
+    ]);
 
-        $sector = Sector::create($validated);
-        $sector->users()->sync($request->users ?? []);
-        $sector->responsibleUsers()->sync($request->responsible_users ?? []);
+    // Força status como 0 (inativo) sempre que criar um setor
+    $validated['status'] = 0;
 
-        return redirect()->route('sector.index')->with('success', 'Setor criado com sucesso.');
-    }
+    $sector = Sector::create($validated);
+    $sector->users()->sync($request->users ?? []);
+    $sector->responsibleUsers()->sync($request->responsible_users ?? []);
+
+    return redirect()->route('sector.index')->with('success', 'Setor criado com sucesso.');
+}
+
 
     public function edit(Sector $sector)
     {
@@ -73,4 +77,57 @@ class SectorController extends Controller
 
         return redirect()->route('sector.index')->with('success', 'Setor excluído com sucesso.');
     }
+    public function updateDetails(Request $request, Sector $sector)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+    ]);
+
+    $sector->update($validated);
+
+    return redirect()->back()->with('success', 'Detalhes do setor atualizados!');
+}
+
+public function updateStatus(Request $request, Sector $sector)
+{
+    $validated = $request->validate([
+        'status' => 'nullable|boolean',
+    ]);
+
+    // Checkbox envia valor só se marcado, então:
+    $sector->status = $request->has('status') ? 1 : 0;
+    $sector->save();
+
+    return redirect()->back()->with('success', 'Status atualizado!');
+}
+
+public function updateUsers(Request $request, Sector $sector)
+{
+    $validated = $request->validate([
+        'responsible_users' => 'nullable|array',
+        'responsible_users.*' => 'exists:users,id',
+        'users' => 'nullable|array',
+        'users.*' => 'exists:users,id',
+    ]);
+
+    // Sincroniza relacionamentos (ou desanexa se vazio)
+    $sector->responsibleUsers()->sync($validated['responsible_users'] ?? []);
+    $sector->users()->sync($validated['users'] ?? []);
+
+    return redirect()->back()->with('success', 'Usuários vinculados atualizados!');
+}
+public function updateResponsibles(Request $request, Sector $sector)
+{
+    $validated = $request->validate([
+        'responsible_users' => 'array|nullable',
+        'responsible_users.*' => 'exists:users,id',
+    ]);
+
+    $sector->responsibleUsers()->sync($validated['responsible_users'] ?? []);
+
+    return redirect()->back()->with('success', 'Responsáveis atualizados com sucesso.');
+}
+
+
 }

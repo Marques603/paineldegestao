@@ -8,10 +8,11 @@ const select = {
       const container = select.control.$dropdown_content;
       container.style.height = 'auto';
     }
+
     if (tomSelects.length) {
       [...tomSelects].forEach((select) => {
         new TomSelect(select, {
-          plugins: ['dropdown_input'],
+          plugins: ['dropdown_input', 'remove_button'], // <- importante aqui
           highlight: false,
         });
       });

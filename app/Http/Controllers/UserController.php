@@ -107,7 +107,7 @@ class UserController extends Controller
             $user->roles()->sync($request->roles);
         }
 
-        return redirect()->route('users.index')->with('status', 'Usuário atualizado com sucesso.');
+        return redirect()->route('users.edit', $user)->with('success', 'Usuário atualizado com sucesso.');
     }
 
     public function destroy(User $user)
@@ -124,7 +124,7 @@ class UserController extends Controller
         ]);
 
         $user->sector()->sync($validated['sector'] ?? []);
-        return redirect()->route('users.index')->with('status', 'Setores atualizados com sucesso.');
+        return redirect()->route('users.edit', $user)->with('success', 'Setores atualizados com sucesso.');
     }
 
 
@@ -139,7 +139,7 @@ class UserController extends Controller
         $user->status = (int) $request->status;
         $user->save();
 
-        return redirect()->route('users.index')->with('status', 'Status do usuário atualizado com sucesso!');
+        return redirect()->route('users.edit', $user)->with('success', 'Status do usuário atualizado com sucesso!');
     }
 
     public function updateProfile(Request $request, User $user)
@@ -163,7 +163,7 @@ class UserController extends Controller
 
         $user->update($input);
 
-        return redirect()->route('users.index')->with('status', 'Usuário atualizado com sucesso.');
+        return redirect()->route('users.edit', $user)->with('success', 'Usuário atualizado com sucesso.');
     }
 
     public function updateRoles(Request $request, User $user)
@@ -174,7 +174,7 @@ class UserController extends Controller
         ]);
 
         $user->roles()->sync($input['roles'] ?? []);
-        return redirect()->route('users.index')->with('status', 'Funções atualizadas com sucesso.');
+        return redirect()->route('users.edit', $user)->with('success', 'Funções atualizadas com sucesso.');
     }
 
     public function updateMenus(Request $request, User $user)
@@ -185,7 +185,7 @@ class UserController extends Controller
         ]);
 
         $user->menus()->sync($input['menus'] ?? []);
-        return redirect()->route('users.edit', $user->id)->with('status', 'Menus atualizados com sucesso!');
+        return redirect()->route('users.edit', $user->id)->with('success', 'Menus atualizados com sucesso!');
     }
 
     private function handleAvatarUpload(Request $request)

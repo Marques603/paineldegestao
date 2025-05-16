@@ -73,6 +73,15 @@ Route::post('documents/{documentId}/approve/status', [DocumentController::class,
    // Rotas de empresas (CRUD)
    Route::resource('sector', SectorController::class);
    // Rotas de setores (CRUD)
+   // Rotas para atualizar partes específicas
+   Route::put('sector/{sector}/update-details', [SectorController::class, 'updateDetails'])->name('sector.update.details');
+   // Atualiza os detalhes de um setor específico
+   Route::put('sector/{sector}/update-status', [SectorController::class, 'updateStatus'])->name('sector.update.status');
+   // Atualiza o status de um setor específico (ativo/inativo)
+   Route::put('sector/{sector}/update-users', [SectorController::class, 'updateUsers'])->name('sector.update.users');
+   // Atualiza os usuários associados a um setor específico
+   Route::put('/sector/{sector}/update-responsibles', [SectorController::class, 'updateResponsibles'])->name('sector.update.responsibles');
+   // Atualiza os responsáveis associados a um setor específico
    Route::resource('cost_center', CostCenterController::class);
    // Rotas de centros de custo (CRUD)
 

@@ -1,6 +1,11 @@
 <x-app-layout>
-    <!-- Título da Página -->
     <x-page-title page="Editar Setor" pageUrl="{{ route('sector.index') }}" header="Editar Setor" />
+
+    @if(session('success'))
+        <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded shadow-lg z-50" role="alert">
+            <p>{{ session('success') }}</p>
+        </div>
+    @endif
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
         <!-- Preview fixo à esquerda -->
@@ -15,14 +20,16 @@
             </div>
         </section>
 
-        <!-- Formulário -->
+        <!-- Formulários -->
         <section class="col-span-1 flex w-full flex-1 flex-col gap-6 lg:col-span-3 lg:w-auto">
+
+            <!-- Formulário 1: Detalhes do Setor -->
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Detalhes do Setor</h2>
                     <p class="mb-4 text-sm font-normal text-slate-400">Edite as informações do setor</p>
 
-                    <form method="POST" action="{{ route('sector.update', $sector) }}" class="flex flex-col gap-6">
+                    <form method="POST" action="{{ route('sector.update.details', $sector) }}" class="flex flex-col gap-6">
                         @csrf
                         @method('PUT')
 
@@ -48,65 +55,124 @@
                             </label>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <!-- Status -->
-                            <label class="label">
-                                <span class="block mb-1">Status</span>
-                                <select name="status" class="input @error('status') border-red-500 @enderror">
-                                    <option value="1" {{ old('status', $sector->status) == 1 ? 'selected' : '' }}>Ativo</option>
-                                    <option value="0" {{ old('status', $sector->status) == 0 ? 'selected' : '' }}>Inativo</option>
-                                </select>
-                                @error('status')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
-
-                            <!-- Responsáveis -->
-                            <label class="label">
-                                <span class="block mb-1">Responsáveis</span>
-                                <select name="responsible_users[]" multiple class="input @error('responsible_users') border-red-500 @enderror">
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}"
-                                            {{ $sector->responsibleUsers->contains($user->id) ? 'selected' : '' }}>
-                                            {{ $user->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('responsible_users')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
-                        </div>
-
-                        <!-- Usuários Vinculados -->
-                        <label class="label">
-                            <span class="block mb-1">Usuários Vinculados</span>
-                            <select name="users[]" multiple class="input @error('users') border-red-500 @enderror">
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}"
-                                        {{ $sector->users->contains($user->id) ? 'selected' : '' }}>
-                                        {{ $user->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('users')
-                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                            @enderror
-                        </label>
-
-                        <!-- Botões -->
                         <div class="flex items-center justify-end gap-4">
-                            <a href="{{ route('sector.index') }}"
-                                class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
-                                Cancelar
-                            </a>
                             <button type="submit" class="btn btn-primary">
-                                Atualizar Setor
+                                Atualizar Detalhes
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
+
+            <!-- Formulário 2: Status -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Status do Setor</h2>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Ative ou inative este setor</p>
+
+                    <form method="POST" action="{{ route('sector.update.status', $sector) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <label for="status" class="toggle my-2 flex items-center justify-between">
+                            <div class="label">
+                                <p class="text-sm font-normal text-slate-400">Ativar Setor</p>
+                            </div>
+                            <div class="relative">
+                                <input
+                                    class="toggle-input peer sr-only"
+                                    id="status"
+                                    type="checkbox"
+                                    name="status"
+                                    value="1"
+                                    {{ old('status', $sector->status) == 1 ? 'checked' : '' }}>
+                                <div class="toggle-body"></div>
+                            </div>
+                        </label>
+
+                        @error('status')
+                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                        @enderror
+
+                        <div class="flex items-center justify-end gap-4 mt-6">
+                            <button type="submit" class="btn btn-primary">Atualizar Status</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+<!-- Formulário 4: Responsáveis -->
+<div class="card">
+    <div class="card-body">
+        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Responsáveis do Setor</h2>
+        <p class="mb-4 text-sm font-normal text-slate-400">Defina os usuários responsáveis por este setor</p>
+
+        <form method="POST" action="{{ route('sector.update.responsibles', $sector) }}">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-4">
+                <span class="block mb-1 text-sm text-slate-600 dark:text-slate-300">Responsáveis</span>
+                <select name="responsible_users[]" multiple
+                    class="tom-select w-full min-h-[2.5rem] py-2 @error('responsible_users') border-red-500 @enderror"
+                    autocomplete="off">
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}"
+                            {{ $sector->responsibleUsers->contains($user->id) ? 'selected' : '' }}>
+                            {{ $user->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('responsible_users')
+                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="flex items-center justify-end gap-4 mt-4">
+                <button type="submit" class="btn btn-primary">Atualizar Responsáveis</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+          <!-- Formulário 3: Usuários Vinculados -->
+<div class="card">
+    <div class="card-body">
+        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Usuários Vinculados</h2>
+        <p class="mb-4 text-sm font-normal text-slate-400">Defina os usuários vinculados a este setor</p>
+
+        <form method="POST" action="{{ route('sector.update.users', $sector) }}">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-4">
+                <span class="block mb-1 text-sm text-slate-600 dark:text-slate-300">Usuários</span>
+                <select name="users[]" multiple
+                    class="tom-select w-full min-h-[2.5rem] py-2 @error('users') border-red-500 @enderror"
+                    autocomplete="off">
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}"
+                            {{ $sector->users->contains($user->id) ? 'selected' : '' }}>
+                            {{ $user->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('users')
+                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="flex items-center justify-end gap-4 mt-4">
+                <button type="submit" class="btn btn-primary">Atualizar Usuários</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+            
+
         </section>
     </div>
 </x-app-layout>

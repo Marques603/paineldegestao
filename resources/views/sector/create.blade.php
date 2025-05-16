@@ -48,38 +48,6 @@
                             </label>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <!-- Status -->
-                            <label class="label">
-                                <span class="block mb-1">Status</span>
-                                <select name="status" class="input @error('status') border-red-500 @enderror">
-                                    <option value="1" {{ old('status', $sector->status ?? '') == 1 ? 'selected' : '' }}>Ativo</option>
-                                    <option value="0" {{ old('status', $sector->status ?? '') == 0 ? 'selected' : '' }}>Inativo</option>
-                                </select>
-                                @error('status')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
-                        </div>
-
-                        <!-- Usuários Vinculados -->
-                        <div>
-                            <label class="label">
-                                <span class="block mb-1">Usuários Vinculados</span>
-                                <select name="users[]" multiple class="input @error('users') border-red-500 @enderror">
-                                    @foreach($users as $user)
-                                        <option value="{{ $user->id }}"
-                                            {{ isset($sector) && $sector->users->contains($user->id) ? 'selected' : '' }}>
-                                            {{ $user->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('users')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
-                        </div>
-
                         <!-- Botões -->
                         <div class="flex items-center justify-end gap-4">
                             <a href="{{ route('sector.index') }}"

@@ -1,6 +1,12 @@
 <x-app-layout>
     <x-page-title page="Lista de Usuários" pageUrl="{{ route('users.index') }}" header="Editar Usuário" />
 
+    @if(session('success'))
+        <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded shadow-lg z-50" role="alert">
+            <p>{{ session('success') }}</p>
+        </div>
+    @endif
+
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
         <!-- Coluna Esquerda - Avatar -->
         <section class="col-span-1 flex h-min w-full flex-col gap-6 lg:sticky lg:top-20">

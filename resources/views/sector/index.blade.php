@@ -76,7 +76,7 @@
                         <th class="w-[15%] uppercase">Descrição</th>
                         <th class="w-[30%] uppercase">Funcionários</th>
                         <th class="w-[20%] uppercase">Responsável</th>
-                        <th class="w-[10%] uppercase">CEntro</th>
+                        <th class="w-[10%] uppercase">Centro</th>
                         <th class="w-[5%] uppercase">Status</th>
                         <th class="w-[5%] !text-right uppercase">Ações</th>
                       
@@ -112,7 +112,7 @@
                             @if($sector->costCenters->isNotEmpty())
                             {{ $sector->costCenters->map(fn($cc) => $cc->name . ' (' . $cc->code . ')')->join(', ') }}
                             @else
-                            <span class="text-slate-400 italic">Não definido</span>
+                            Não definido
                             @endif
                             </td>
                             <td>
