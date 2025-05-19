@@ -445,3 +445,156 @@ marca da agua
 marcar que a pessoa visualizou o arquivo 
 
 depois treinamento 
+
+
+
+INSERT INTO appz.users
+	(
+	name
+	, email
+	, status
+	, avatar
+	, email_verified_at
+	, password
+	, two_factor_secret
+	, two_factor_recovery_codes
+	, two_factor_confirmed_at
+	, remember_token
+	, created_at
+	, updated_at
+	, deleted_at
+	)
+VALUES
+	(
+	'Wesley Fernando Cabrera'
+	, 'wesley.cabrera@hotmail.com'
+	, 1
+	, NULL
+	, NULL
+	, '$2y$12$HubdfryvjzcHyJhKZTUNye.sPtDAYM9WXRvF/ugbb0HPevDvaiSaC'
+	, NULL
+	, NULL
+	, NULL
+	, NULL
+	, '2025-05-19 20:14:24'
+	, '2025-05-19 20:14:24'
+	, NULL
+	);
+
+
+
+INSERT INTO appz.roles
+	(
+	name
+	, created_at
+	, updated_at
+	, deleted_at
+	)
+VALUES
+	(
+	'admin'
+	, '2025-05-19 20:14:50'
+	, '2025-05-19 20:14:50'
+	, NULL
+	);
+
+INSERT INTO appz.roles
+	(
+	name
+	, created_at
+	, updated_at
+	, deleted_at
+	)
+VALUES
+	(
+	'edit'
+	, '2025-05-19 20:14:50'
+	, '2025-05-19 20:14:50'
+	, NULL
+	);
+
+INSERT INTO appz.roles
+	(
+	name
+	, created_at
+	, updated_at
+	, deleted_at
+	)
+VALUES
+	(
+	'view'
+	, '2025-05-19 20:14:50'
+	, '2025-05-19 20:14:50'
+	, NULL
+	);
+
+
+
+INSERT INTO appz.role_user
+	(
+	user_id
+	, role_id
+	)
+VALUES
+	(
+	1
+	, 1
+	);
+
+
+INSERT INTO appz.menus
+	(
+	name
+	, created_at
+	, updated_at
+	, deleted_at
+	)
+VALUES
+	(
+	'Gestão de Tecnologia'
+	, '2025-05-19 20:15:48'
+	, '2025-05-19 20:15:48'
+	, NULL
+	);
+
+INSERT INTO appz.menus
+	(
+	name
+	, created_at
+	, updated_at
+	, deleted_at
+	)
+VALUES
+	(
+	'Gestão de Comercial'
+	, '2025-05-19 20:16:13'
+	, '2025-05-19 20:16:13'
+	, NULL
+	);
+
+INSERT INTO appz.menus
+	(
+	name
+	, created_at
+	, updated_at
+	, deleted_at
+	)
+VALUES
+	(
+	'Gestão de Recursos Humanos'
+	, '2025-05-19 20:16:35'
+	, '2025-05-19 20:16:35'
+	, NULL
+	);
+
+INSERT INTO appz.menu_user
+	(
+	user_id
+	, menu_id
+	)
+VALUES
+	(
+	1
+	, 1
+	);
+
