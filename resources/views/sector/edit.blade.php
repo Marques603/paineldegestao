@@ -56,8 +56,12 @@
                         </div>
 
                         <div class="flex items-center justify-end gap-4">
+                         <a href="{{ route('users.index') }}"
+                         class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                         Cancelar
+                        </a>
                             <button type="submit" class="btn btn-primary">
-                                Atualizar Detalhes
+                                Atualizar
                             </button>
                         </div>
                     </form>
@@ -95,7 +99,11 @@
                         @enderror
 
                         <div class="flex items-center justify-end gap-4 mt-6">
-                            <button type="submit" class="btn btn-primary">Atualizar Status</button>
+                         <a href="{{ route('users.index') }}"
+                         class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                         Cancelar
+                        </a>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
                         </div>
                     </form>
                 </div>
@@ -129,7 +137,11 @@
             </div>
 
             <div class="flex items-center justify-end gap-4 mt-4">
-                <button type="submit" class="btn btn-primary">Atualizar Responsáveis</button>
+                        <a href="{{ route('users.index') }}"
+                        class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                        Cancelar
+                        </a>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
             </div>
         </form>
     </div>
@@ -163,16 +175,16 @@
                 @enderror
             </div>
 
-            <div class="flex items-center justify-end gap-4 mt-4">
-                <button type="submit" class="btn btn-primary">Atualizar Usuários</button>
+                    <div class="flex items-center justify-end gap-4 mt-4">
+                         <a href="{{ route('users.index') }}"
+                         class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                         Cancelar
+                        </a>
+                    <button type="submit" class="btn btn-primary">Atualizar</button>
             </div>
-        </form>
-    </div>
-</div>
-
-
-            
-
+                        </form>
+                    </div>
+                </div>
         </section>
     </div>
 </x-app-layout>

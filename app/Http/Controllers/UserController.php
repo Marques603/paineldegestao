@@ -194,4 +194,5 @@ class UserController extends Controller
             ? $request->file('avatar')->store('images/profiles', 'public')
             : null;
     }
+    
 }
