@@ -88,15 +88,20 @@ class CompanyController extends Controller
 
         return redirect()->route('company.index')->with('success', 'Empresa excluída com sucesso.');
     }
-    public function updateBasic(Request $request, Company $company) {
-    $request->validate([
+    public function updateDetails(Request $request, Company $company) {
+    $validated = $request->validate([
         'name' => 'required|string|max:255',
-        'corporate_name' => 'required|string|max:255',
-        'cnpj' => 'required|string|max:18',
+        'description' => 'nullable|string|max:255',  // como você usa description no form, precisa validar também
+        'corporate_name' => 'nullable|string|max:255', // Se quiser incluir
+        'cnpj' => 'nullable|string|max:18',            // Se quiser incluir
     ]);
-    $company->update($request->only('name', 'corporate_name', 'cnpj'));
+
+    $company->update($validated);
+
     return back()->with('success', 'Informações atualizadas com sucesso.');
 }
+
+
 
 public function updateStatus(Request $request, Company $company) {
     $request->validate(['status' => 'required|in:0,1']);

@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MenuController;
@@ -11,84 +10,63 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\CostCenterController;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Aqui registramos as rotas da aplicação que serão carregadas pelo
-| RouteServiceProvider e ficam no grupo "web".
+| Rotas da aplicação protegidas por autenticação.
 |
 */
 
-// Rotas protegidas: somente usuários autenticados podem acessar.
+Route::middleware(['auth'])->group(function () {
 
-   Route::middleware(['auth'])->group(function () {
-   // Dashboard principal e demais views internas
-   Route::view('/', 'dashboard.index')->name('dashboard'); 
-   // Exibe o painel principal após o login (visão geral do sistema)
-   // Rotas de usuários (CRUD)
-   Route::get('/users', [UserController::class, 'index'])->name('users.index'); 
-   // Lista todos os usuários cadastrados no sistema
-   Route::get('/users/create', [UserController::class, 'create'])->name('users.create');   
-   // Exibe o formulário para cadastrar um novo usuário
-   Route::post('/users/create', [UserController::class, 'store'])->name('users.store');   
-   // Processa os dados enviados pelo formulário e salva o novo usuário
-   Route::get('/users/{user}', [UserController::class, 'edit'])->name('users.edit');
-   // Exibe o formulário de edição para um usuário específico
-   Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-   // Atualiza os dados de um usuário após edição
-   Route::put('/users/{user}/update-profile', [UserController::class, 'updateProfile'])->name('users.update.profile');
-   // Atualiza o perfil do usuário autenticado
-   Route::put('/users/{user}/roles', [UserController::class, 'updateRoles'])->name('users.update.roles');
-   // Atualiza os papéis associados a um usuário específico
-   Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-   // Remove o usuário selecionado do banco de dados
-   // Atualiza as empresas associadas a um usuário específico
-   Route::put('users/{id}/status', [UserController::class, 'updateStatus'])->name('users.update.status');
-   // Atualiza o status de um usuário específico (ativo/inativo)
-   Route::put('/users/{user}/menus', [UserController::class, 'updateMenus'])->name('users.update.menus');
-   // Atualiza os menus associados a um usuário específico
-   Route::resource('position', PositionController::class);
-   // Rotas de cargos (CRUD)
-   Route::resource('menus', MenuController::class);
-   // Rotas de menus (CRUD)
+    // Dashboard principal
+    Route::view('/', 'dashboard.index')->name('dashboard');
+
+    // Rotas de usuários (CRUD)
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users/create', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::put('/users/{user}/update-profile', [UserController::class, 'updateProfile'])->name('users.update.profile');
+    Route::put('/users/{user}/roles', [UserController::class, 'updateRoles'])->name('users.update.roles');
+    Route::put('/users/{user}/status', [UserController::class, 'updateStatus'])->name('users.update.status');
+    Route::put('/users/{user}/menus', [UserController::class, 'updateMenus'])->name('users.update.menus');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    // Rotas de cargos (CRUD)
+    Route::resource('position', PositionController::class);
+
+    // Rotas de menus (CRUD)
+    Route::resource('menus', MenuController::class);
+
+    // Rotas de macro (CRUD)
     Route::resource('macro', MacroController::class);
-   // Rotas de macro (CRUD)
-   Route::put('/macros/{macro}/status', [MacroController::class, 'updateStatus'])->name('macro.update.status');
-   // Atualiza o status de uma macro específica (ativo/inativo)
-   Route::get('macro/{id}/restore', [MacroController::class, 'restore'])->name('macro.restore');
-   // Restaura uma macro excluída (soft delete)
-   Route::resource('documents', DocumentController::class);
-   // Rotas de documentos (CRUD)   
-   Route::get('/documents/{document}/approve', [DocumentController::class, 'showApproveForm'])->name('documents.approve.form');
-   Route::post('/documents/{document}/approve', [DocumentController::class, 'approve'])->name('documents.approve');
-   Route::post('/documents/{documentId}/approve', [DocumentController::class, 'updateApprovalStatus'])->name('documents.updateApprovalStatus');
-Route::get('documents/{documentId}/approve', [DocumentController::class, 'showApproveForm'])->name('documents.approve');
-Route::post('documents/{documentId}/approve/status', [DocumentController::class, 'updateApprovalStatus'])->name('documents.updateApprovalStatus');
+    Route::put('/macro/{macro}/status', [MacroController::class, 'updateStatus'])->name('macro.update.status');
+    Route::get('/macro/{macro}/restore', [MacroController::class, 'restore'])->name('macro.restore');
 
+    // Rotas de documentos (CRUD)
+    Route::resource('documents', DocumentController::class);
+    Route::get('/documents/{document}/approve', [DocumentController::class, 'showApproveForm'])->name('documents.approve.form');
+    Route::post('/documents/{document}/approve', [DocumentController::class, 'approve'])->name('documents.approve');
+    Route::post('/documents/{document}/approve/status', [DocumentController::class, 'updateApprovalStatus'])->name('documents.updateApprovalStatus');
 
-   Route::resource('company', CompanyController::class);
-   // Rotas de empresas (CRUD)
-   Route::put('/company/{company}/update-basic', [CompanyController::class, 'updateBasic'])->name('company.update.basic');
-Route::put('/company/{company}/update-status', [CompanyController::class, 'updateStatus'])->name('company.update.status');
-Route::put('/company/{company}/update-users', [CompanyController::class, 'updateUsers'])->name('company.update.users');
+    // Rotas de empresas (CRUD)
+    Route::resource('company', CompanyController::class);
+    Route::put('/company/{company}/update-details', [CompanyController::class, 'updateDetails'])->name('company.update.details');
+    Route::put('/company/{company}/update-status', [CompanyController::class, 'updateStatus'])->name('company.update.status');
+    Route::put('/company/{company}/update-users', [CompanyController::class, 'updateUsers'])->name('company.update.users');
 
-   Route::resource('sector', SectorController::class);
-   // Rotas de setores (CRUD)
-   // Rotas para atualizar partes específicas
-   Route::put('sector/{sector}/update-details', [SectorController::class, 'updateDetails'])->name('sector.update.details');
-   // Atualiza os detalhes de um setor específico
-   Route::put('sector/{sector}/update-status', [SectorController::class, 'updateStatus'])->name('sector.update.status');
-   // Atualiza o status de um setor específico (ativo/inativo)
-   Route::put('sector/{sector}/update-users', [SectorController::class, 'updateUsers'])->name('sector.update.users');
-   // Atualiza os usuários associados a um setor específico
-   Route::put('/sector/{sector}/update-responsibles', [SectorController::class, 'updateResponsibles'])->name('sector.update.responsibles');
-   // Atualiza os responsáveis associados a um setor específico
-   Route::resource('cost_center', CostCenterController::class);
-   // Rotas de centros de custo (CRUD)
+    // Rotas de setores (CRUD)
+    Route::resource('sector', SectorController::class);
+    Route::put('/sector/{sector}/update-details', [SectorController::class, 'updateDetails'])->name('sector.update.details');
+    Route::put('/sector/{sector}/update-status', [SectorController::class, 'updateStatus'])->name('sector.update.status');
+    Route::put('/sector/{sector}/update-users', [SectorController::class, 'updateUsers'])->name('sector.update.users');
+    Route::put('/sector/{sector}/update-responsibles', [SectorController::class, 'updateResponsibles'])->name('sector.update.responsibles');
 
+    // Rotas de centros de custo (CRUD)
+    Route::resource('cost_center', CostCenterController::class);
 
 });
