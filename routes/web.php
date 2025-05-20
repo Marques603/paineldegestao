@@ -12,6 +12,7 @@ use App\Http\Controllers\SectorController;
 use App\Http\Controllers\CostCenterController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,6 +72,10 @@ Route::post('documents/{documentId}/approve/status', [DocumentController::class,
 
    Route::resource('company', CompanyController::class);
    // Rotas de empresas (CRUD)
+   Route::put('/company/{company}/update-basic', [CompanyController::class, 'updateBasic'])->name('company.update.basic');
+Route::put('/company/{company}/update-status', [CompanyController::class, 'updateStatus'])->name('company.update.status');
+Route::put('/company/{company}/update-users', [CompanyController::class, 'updateUsers'])->name('company.update.users');
+
    Route::resource('sector', SectorController::class);
    // Rotas de setores (CRUD)
    // Rotas para atualizar partes específicas

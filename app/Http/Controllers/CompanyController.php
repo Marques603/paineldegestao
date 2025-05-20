@@ -13,7 +13,7 @@ class CompanyController extends Controller
     public function index()
     {
 
-        if (!Gate::allows('view', Menu::find(2))) {
+        if (!Gate::allows('view', Menu::find(1))) {
             return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
 
         }
@@ -88,4 +88,26 @@ class CompanyController extends Controller
 
         return redirect()->route('company.index')->with('success', 'Empresa excluída com sucesso.');
     }
+    public function updateBasic(Request $request, Company $company) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'corporate_name' => 'required|string|max:255',
+        'cnpj' => 'required|string|max:18',
+    ]);
+    $company->update($request->only('name', 'corporate_name', 'cnpj'));
+    return back()->with('success', 'Informações atualizadas com sucesso.');
+}
+
+public function updateStatus(Request $request, Company $company) {
+    $request->validate(['status' => 'required|in:0,1']);
+    $company->update(['status' => $request->status]);
+    return back()->with('success', 'Status atualizado com sucesso.');
+}
+
+public function updateUsers(Request $request, Company $company) {
+    $request->validate(['users' => 'nullable|array']);
+    $company->users()->sync($request->users ?? []);
+    return back()->with('success', 'Usuários vinculados atualizados.');
+}
+
 }

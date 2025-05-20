@@ -55,11 +55,12 @@
               <i class="h-4" data-feather="upload"></i>
               <span class="hidden sm:inline-block">Exportar</span>
             </button>
-
+                @can('edit', App\Models\User::class)
                 <a class="btn btn-primary" href="{{ route('sector.create') }}" role="button">
                     <i data-feather="plus" height="1rem" width="1rem"></i>
                     <span class="hidden sm:inline-block">Criar</span>
                 </a>
+                @endcan
             </div>
         </div>
         <!-- Header Ends -->
