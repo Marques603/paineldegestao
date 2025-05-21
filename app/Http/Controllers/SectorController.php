@@ -11,17 +11,33 @@ use Illuminate\Support\Facades\Gate;
 
 class SectorController extends Controller
 {
-    public function index()
-    {
-
-         if (!Gate::allows('view', Menu::find(1))) {
-    return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
-
+    public function index(Request $request)
+{
+    if (!Gate::allows('view', Menu::find(1))) {
+        return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
     }
 
-        $sectors = Sector::with(['users', 'responsibleUsers'])->paginate(10);
-        return view('sector.index', compact('sectors'));
+    $query = Sector::with(['users', 'responsibleUsers', 'costCenters']);
+
+    // Filtro de busca
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('acronym', 'like', "%{$search}%");
+        });
     }
+
+    // Filtro por status
+    if ($request->filled('status')) {
+        $query->where('status', $request->input('status'));
+    }
+
+    $sectors = $query->paginate(10);
+
+    return view('sector.index', compact('sectors'));
+}
+
 
     public function create()
     {

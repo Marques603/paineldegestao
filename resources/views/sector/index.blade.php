@@ -88,7 +88,11 @@
                         <tr>
                             <td><input class="checkbox sector-checkbox" type="checkbox" /></td>
                             <td>{{ $sector->name }}</td>
-                            <td>{{ $sector->acronym }}</td>
+                            <td>
+    <span class="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-md">
+        {{ $sector->acronym }}
+    </span>
+</td>
                             <td>
                             @php
                             $count = $sector->users->count();
