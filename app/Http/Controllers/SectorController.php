@@ -33,7 +33,7 @@ class SectorController extends Controller
 {
     $validated = $request->validate([
         'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
+        'acronym' => 'nullable|string',
         // Remover 'status' da validação porque será sempre 0 ao criar
         // 'users' => 'array|nullable',
         // 'users.*' => 'exists:users,id',
@@ -63,7 +63,7 @@ class SectorController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'acronym' => 'nullable|string',
             'status' => 'required|boolean',
             'users' => 'array|nullable',
             'users.*' => 'exists:users,id',
@@ -90,7 +90,7 @@ class SectorController extends Controller
 {
     $validated = $request->validate([
         'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
+        'acronym' => 'nullable|string',
     ]);
 
     $sector->update($validated);

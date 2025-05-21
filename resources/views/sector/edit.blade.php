@@ -35,21 +35,24 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <!-- Nome do Setor -->
+                            
+
+                            <!-- Descrição do Setor -->
+                            <label class="label">
+                                <span class="block mb-1">Sigla</span>
+                                <input type="text" name="acronym" class="input @error('acronym') border-red-500 @enderror"
+                                    value="{{ old('acronym', $sector->acronym) }}" />
+                                @error('acronym')
+                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
+                            </label>
+
+
                             <label class="label">
                                 <span class="block mb-1">Nome do Setor</span>
                                 <input type="text" name="name" class="input @error('name') border-red-500 @enderror"
                                     value="{{ old('name', $sector->name) }}" />
                                 @error('name')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
-
-                            <!-- Descrição do Setor -->
-                            <label class="label">
-                                <span class="block mb-1">Descrição</span>
-                                <input type="text" name="description" class="input @error('description') border-red-500 @enderror"
-                                    value="{{ old('description', $sector->description) }}" />
-                                @error('description')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>

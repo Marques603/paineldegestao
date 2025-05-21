@@ -23,9 +23,9 @@
                         <i data-feather="box" class="text-3xl"></i>
                     </div>
                     <div class="flex flex-1 flex-col gap-1">
-                        <p class="text-sm tracking-wide text-slate-500">Product Views</p>
+                        <p class="text-sm tracking-wide text-slate-500">Arquivos</p>
                         <div class="flex flex-wrap items-baseline justify-between gap-2">
-                            <h4>$24,92</h4>
+                            <h4>144</h4>
                             <span class="flex items-center text-xs font-medium text-success-500"><i class="h-3 w-3"
                                     stroke-width="3px" data-feather="arrow-up-right"></i>2.2%</span>
                         </div>
@@ -40,7 +40,7 @@
                         <i class="bx bx-dollar-circle text-3xl"></i>
                     </div>
                     <div class="flex flex-1 flex-col gap-1">
-                        <p class="text-sm tracking-wide text-slate-500">Product Sold</p>
+                        <p class="text-sm tracking-wide text-slate-500">Arquivos</p>
                         <div class="flex flex-wrap items-baseline justify-between gap-2">
                             <h4>8,430</h4>
                             <span class="flex items-center text-xs font-medium text-danger-500">

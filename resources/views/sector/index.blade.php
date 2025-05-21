@@ -73,11 +73,11 @@
                         <th class="w-[5%]">
                             <input class="checkbox" type="checkbox" data-check-all data-check-all-target=".sector-checkbox" />
                         </th>
-                        <th class="w-[20%] uppercase">Nome</th>
-                        <th class="w-[15%] uppercase">Descrição</th>
-                        <th class="w-[30%] uppercase">Funcionários</th>
+                        <th class="w-[10%] uppercase">Nome</th>
+                        <th class="w-[15%] uppercase">Sigla</th>
+                        <th class="w-[20%] uppercase">Funcionários</th>
                         <th class="w-[20%] uppercase">Responsável</th>
-                        <th class="w-[10%] uppercase">Centro</th>
+                        <th class="w-[15%] uppercase">Centro</th>
                         <th class="w-[5%] uppercase">Status</th>
                         <th class="w-[5%] !text-right uppercase">Ações</th>
                       
@@ -88,7 +88,7 @@
                         <tr>
                             <td><input class="checkbox sector-checkbox" type="checkbox" /></td>
                             <td>{{ $sector->name }}</td>
-                            <td>{{ $sector->description }}</td>
+                            <td>{{ $sector->acronym }}</td>
                             <td>
                             @php
                             $count = $sector->users->count();

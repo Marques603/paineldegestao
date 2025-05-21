@@ -39,10 +39,10 @@
 
                             <!-- Descrição do Setor -->
                             <label class="label">
-                                <span class="block mb-1">Descrição</span>
-                                <input type="text" name="description" class="input @error('description') border-red-500 @enderror"
-                                    value="{{ old('description', $sector->description ?? '') }}" />
-                                @error('description')
+                                <span class="block mb-1">Sigla</span>
+                                <input type="text" name="acronym" class="input @error('acronym') border-red-500 @enderror"
+                                    value="{{ old('acronym', $sector->acronym ?? '') }}" />
+                                @error('acronym')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>

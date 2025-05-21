@@ -12,7 +12,7 @@ class Sector extends Model
     protected $table = 'sector';
 
     protected $fillable = [
-        'name', 'description', 'status',
+        'name', 'acronym', 'status',
     ];
 
     public function users()
