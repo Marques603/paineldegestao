@@ -77,11 +77,6 @@
                         class="sidebar-submenu-item {{ request()->routeIs('company.index') ? 'active' : '' }}">
                         Empresa</a>
                 </li>
-                <li>
-                    <a href="{{ route('menus.index') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('menus.index') ? 'active' : '' }}">
-                        Menu</a>
-                </li>
             </ul>
             @endcan
         </li>

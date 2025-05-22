@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="flex items-center justify-end gap-4">
-                         <a href="{{ route('users.index') }}"
+                         <a href="{{ route('sector.index') }}"
                          class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
                          Cancelar
                         </a>
@@ -102,7 +102,7 @@
                         @enderror
 
                         <div class="flex items-center justify-end gap-4 mt-6">
-                         <a href="{{ route('users.index') }}"
+                         <a href="{{ route('sector.index') }}"
                          class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
                          Cancelar
                         </a>
@@ -140,7 +140,7 @@
             </div>
 
             <div class="flex items-center justify-end gap-4 mt-4">
-                        <a href="{{ route('users.index') }}"
+                        <a href="{{ route('sector.index') }}"
                         class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
                         Cancelar
                         </a>
@@ -179,7 +179,7 @@
             </div>
 
                     <div class="flex items-center justify-end gap-4 mt-4">
-                         <a href="{{ route('users.index') }}"
+                         <a href="{{ route('sector.index') }}"
                          class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
                          Cancelar
                         </a>
