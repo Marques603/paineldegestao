@@ -28,8 +28,8 @@ class UserController extends Controller
         });
     });
 
-    // Carregar cargos com os usuários
-    $users = $users->with('positions')->paginate(10);
+    // Adiciona a ordenação alfabética por nome
+    $users = $users->with('positions')->orderBy('name', 'asc')->paginate(10);
 
     return view('users.index', compact('users'));
 }

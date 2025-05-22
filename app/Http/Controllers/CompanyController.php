@@ -11,18 +11,22 @@ use Illuminate\Http\Request;
 class CompanyController extends Controller
 {
     public function index()
-    {
-
-        if (!Gate::allows('view', Menu::find(1))) {
-            return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
-
-        }
-        
-        
-
-    $companies = Company::with('users')->paginate(10);
-    return view('company.index', compact('companies'));
+{
+    if (!Gate::allows('view', Menu::find(1))) {
+        return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
     }
+
+    $query = Company::with('users');
+
+    if (request('search')) {
+        $search = request('search');
+        $query->where('name', 'like', "%{$search}%");
+    }
+
+    $companies = $query->orderBy('name', 'asc')->paginate(10);
+
+    return view('company.index', compact('companies'));
+}
 
 
     public function create()

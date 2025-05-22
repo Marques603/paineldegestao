@@ -33,7 +33,8 @@ class SectorController extends Controller
         $query->where('status', $request->input('status'));
     }
 
-    $sectors = $query->paginate(10);
+    // Ordenação alfabética por nome
+    $sectors = $query->orderBy('name', 'asc')->paginate(10);
 
     return view('sector.index', compact('sectors'));
 }
