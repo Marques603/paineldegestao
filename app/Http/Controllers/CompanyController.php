@@ -114,5 +114,17 @@ public function updateUsers(Request $request, Company $company) {
     $company->users()->sync($request->users ?? []);
     return back()->with('success', 'Usuários vinculados atualizados.');
 }
+public function updateResponsibles(Request $request, Company $company)
+{
+    $validated = $request->validate([
+        'users' => 'nullable|array',
+        'users.*' => 'exists:users,id',
+    ]);
+
+    $company->responsibles()->sync($request->users ?? []);
+
+    return redirect()->route('company.edit', $company)->with('success', 'Responsáveis atualizados com sucesso.');
+}
+
 
 }

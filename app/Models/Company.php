@@ -23,5 +23,10 @@ class Company extends Model
     {
         return $this->belongsToMany(User::class, 'company_user');
     }
+    public function responsibles()
+{
+    return $this->belongsToMany(User::class, 'company_responsible_user');
+}
+
 }
 

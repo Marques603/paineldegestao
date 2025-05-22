@@ -30,6 +30,17 @@ return new class extends Migration
         $table->timestamps();
         $table->softDeletes(); 
     });
+
+    // Tabela pivô sector_responsible_user
+    Schema::create('company_responsible_user', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('company_id')->constrained('company')->onDelete('cascade');
+        $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+        $table->timestamps();
+        $table->softDeletes();
+        });
+
+
     }
 
     /**

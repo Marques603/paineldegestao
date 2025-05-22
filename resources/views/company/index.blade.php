@@ -86,7 +86,7 @@
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->corporate_name }}</td>
                             <td>{{ $company->cnpj }}</td>
-                            <td>{{ $company->users->first()?->name ?? '—' }}</td>
+                            <td>{{ $company->responsibles->first()?->name ?? '—' }}</td>
                             <td>
                                 @if($company->status)
                                     <div class="badge badge-soft-success">Ativa</div>

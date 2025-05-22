@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/company/{company}/update-details', [CompanyController::class, 'updateDetails'])->name('company.update.details');
     Route::put('/company/{company}/update-status', [CompanyController::class, 'updateStatus'])->name('company.update.status');
     Route::put('/company/{company}/update-users', [CompanyController::class, 'updateUsers'])->name('company.update.users');
+    Route::put('/company/{company}/update-responsibles', [CompanyController::class, 'updateResponsibles'])->name('company.update.responsibles');
+
 
     // Rotas de setores (CRUD)
     Route::resource('sector', SectorController::class);
