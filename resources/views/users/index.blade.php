@@ -83,10 +83,11 @@
 </form>
 
           </div>
-
+          @can('edit', App\Models\User::class)
           <a class="btn btn-primary" href="{{ route('users.create') }}" role="button">
             <i data-feather="plus" height="1rem" width="1rem"></i>
             <span class="hidden sm:inline-block">Criar</span>
+            @endcan
           </a>
         </div>
         <!-- User Action Ends -->
@@ -107,7 +108,9 @@
               <th class="w-[15%] uppercase">Empresa</td>
               <th class="w-[15%] uppercase">Data de Criação</th>
               <th class="w-[15%] uppercase">Status</th>
+              @can('edit', App\Models\User::class)
               <th class="w-[5%] !text-right uppercase">Acão</th>
+              @endcan
             </tr>
           </thead>
           <tbody>
@@ -140,12 +143,14 @@
               <td>{{ $user->companies->isEmpty() ? 'Nenhuma empresa vinculada' : $user->companies->pluck('name')->join(', ') }}</td>
               <td>{{ $user->created_at }}</td>
               <td>@if($user->status)<div class="badge badge-soft-success">Ativo</div> @else <div class="badge badge-soft-danger">Inativo</div> @endif </td>
+              @can('edit', App\Models\User::class)
               <td>
                 <div class="flex justify-end">
                   <div class="dropdown" data-placement="bottom-start">
                     <div class="dropdown-toggle">
                       <i class="w-6 text-slate-400" data-feather="more-horizontal"></i>
                     </div>
+                    @endcan
                     <div class="dropdown-content">
   <ul class="dropdown-list">
     <li class="dropdown-list-item">
@@ -156,6 +161,7 @@
         @endcan
       </a>
     </li>
+    @can('edit', App\Models\User::class)
     <li class="dropdown-list-item">
       <a href="javascript:void(0)"
          class="dropdown-link"
@@ -165,6 +171,7 @@
         <span>Excluir</span>
       </a>
     </li>
+    @endcan
   </ul>
 </div>
 

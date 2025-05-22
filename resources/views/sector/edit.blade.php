@@ -115,15 +115,15 @@
 <!-- Formulário 4: Responsáveis -->
 <div class="card">
     <div class="card-body">
-        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Responsáveis do Setor</h2>
-        <p class="mb-4 text-sm font-normal text-slate-400">Defina os usuários responsáveis por este setor</p>
+        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Responsável do Setor</h2>
+        <p class="mb-4 text-sm font-normal text-slate-400">Defina qual usuário responsável por setor</p>
 
         <form method="POST" action="{{ route('sector.update.responsibles', $sector) }}">
             @csrf
             @method('PUT')
 
             <div class="mb-4">
-                <span class="block mb-1 text-sm text-slate-600 dark:text-slate-300">Responsáveis</span>
+                <span class="block mb-1 text-sm text-slate-600 dark:text-slate-300">Responsável</span>
                 <select name="responsible_users[]" multiple
                     class="tom-select w-full min-h-[2.5rem] py-2 @error('responsible_users') border-red-500 @enderror"
                     autocomplete="off">

@@ -54,10 +54,12 @@
                         <span class="hidden sm:inline-block">Exportar</span>
                     </button>
                 </div>
-
+                <!-- Botão de Criar -->
+                @can('edit', App\Models\User::class)
                 <a class="btn btn-primary" href="{{ route('company.create') }}" role="button">
                     <i data-feather="plus" height="1rem" width="1rem"></i>
                     <span class="hidden sm:inline-block">Criar</span>
+                @endcan    
                 </a>
             </div>
         </div>
@@ -75,8 +77,10 @@
                         <th class="w-[25%] uppercase">Razão Social</th>
                         <th class="w-[20%] uppercase">CNPJ</th>
                         <th class="w-[20%] uppercase">Responsável</th>
-                        <th class="w-[10%] uppercase">Status</th>
+                        <th class="w-[5%] uppercase">Status</th>
+                        @can('edit', App\Models\User::class)
                         <th class="w-[5%] !text-right uppercase">Ações</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -94,6 +98,7 @@
                                     <div class="badge badge-soft-danger">Inativa</div>
                                 @endif
                             </td>
+                            @can('edit', App\Models\User::class)
                             <td class="text-right">
                                 <div class="flex justify-end">
                                     <div class="dropdown" data-placement="bottom-start">
@@ -113,6 +118,7 @@
                                                         <i class="h-5 text-slate-400" data-feather="trash"></i>
                                                         <span>Excluir</span>
                                                     </a>
+                                                    @endcan
                                                 </li>
                                             </ul>
                                         </div>

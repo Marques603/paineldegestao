@@ -79,8 +79,9 @@
                         <th class="w-[20%] uppercase">Responsável</th>
                         <th class="w-[15%] uppercase">Centro</th>
                         <th class="w-[5%] uppercase">Status</th>
+                        @can('edit', App\Models\User::class)
                         <th class="w-[5%] !text-right uppercase">Ações</th>
-                      
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -127,26 +128,36 @@
                                     <div class="badge badge-soft-danger">Inativo</div>
                                 @endif
                             </td>
+                            @can('edit', App\Models\User::class)
                             <td class="text-right">
                                 <div class="flex justify-end">
+                                    
                                     <div class="dropdown" data-placement="bottom-start">
                                         <div class="dropdown-toggle">
+                                            
                                             <i class="w-6 text-slate-400" data-feather="more-horizontal"></i>
+                                            @endcan
                                         </div>
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list">
                                                 <li class="dropdown-list-item">
+                                                    @can('edit', App\Models\User::class)
                                                     <a href="{{ route('sector.edit', $sector->id) }}" class="dropdown-link">
                                                         <i class="h-5 text-slate-400" data-feather="edit"></i>
                                                         <span>Editar</span>
                                                     </a>
+                                                    @endcan
                                                 </li>
+                                                @can('edit', App\Models\User::class)
                                                 <li class="dropdown-list-item">
+                                                    @can('edit', App\Models\User::class)
                                                     <a href="javascript:void(0)" class="dropdown-link" data-toggle="modal" data-target="#deleteModal-{{ $sector->id }}">
                                                         <i class="h-5 text-slate-400" data-feather="trash"></i>
                                                         <span>Excluir</span>
                                                     </a>
+                                                    @endcan
                                                 </li>
+                                                @endcan
                                             </ul>
                                         </div>
                                     </div>
