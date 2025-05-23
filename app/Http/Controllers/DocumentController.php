@@ -6,10 +6,14 @@ use App\Models\Document;
 use App\Models\Macro;
 use App\Models\Sector;
 use App\Models\DocumentApproval;
+use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class DocumentController extends Controller
 {
+
+    
     // Construtor para garantir que o usuário esteja autenticado
     public function __construct()
     {
@@ -19,6 +23,10 @@ class DocumentController extends Controller
     // Listagem de documentos com busca
     public function index(Request $request)
     {
+
+        if (!Gate::allows('view', Menu::find(2))) {
+            return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
+        }
     $user = auth()->user();
 
     $sectorIds = $user->sectors->pluck('id');

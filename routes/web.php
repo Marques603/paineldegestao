@@ -46,6 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('macro', MacroController::class);
     Route::put('/macro/{macro}/status', [MacroController::class, 'updateStatus'])->name('macro.update.status');
     Route::get('/macro/{macro}/restore', [MacroController::class, 'restore'])->name('macro.restore');
+    Route::put('/macro/{macro}/responsibles', [MacroController::class, 'updateResponsibles'])->name('macro.update.responsibles');
+
 
     // Rotas de documentos (CRUD)
     Route::resource('documents', DocumentController::class);

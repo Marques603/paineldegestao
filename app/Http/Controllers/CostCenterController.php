@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\CostCenter;
 use App\Models\Sector;
 use Illuminate\Http\Request;
+use App\Models\Menu;
+use Illuminate\Support\Facades\Gate;
 
 class CostCenterController extends Controller
 {
     public function index()
     {
+
+        if (!Gate::allows('view', Menu::find(3))) {
+            return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
+        }
+
         $costCenters = CostCenter::with('sectors')->paginate(10);
         return view('cost_center.index', compact('costCenters'));
     }

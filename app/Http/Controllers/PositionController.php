@@ -5,11 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Position;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Menu;
+use Illuminate\Support\Facades\Gate;
 
 class PositionController extends Controller
 {
+    
     public function index(Request $request)
     {
+
+    if (!Gate::allows('view', Menu::find(3))) {
+            return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
+        }
+
         $positions = Position::with('users')->paginate(10);
         return view('position.index', compact('positions'));
     }

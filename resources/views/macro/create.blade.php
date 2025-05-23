@@ -48,38 +48,6 @@
                             </label>
                         </div>
 
-                        <!-- Status -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <label class="label">
-                                <span class="block mb-1">Status</span>
-                                <select name="status" class="input @error('status') border-red-500 @enderror">
-                                    <option value="1" {{ old('status', $macro->status ?? '') == '1' ? 'selected' : '' }}>Ativo</option>
-                                    <option value="0" {{ old('status', $macro->status ?? '') == '0' ? 'selected' : '' }}>Inativo</option>
-                                </select>
-                                @error('status')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
-
-                            <!-- Usuários Responsáveis -->
-                            <label class="label">
-                                <span class="block mb-1">Responsáveis</span>
-                                <select name="responsible_users[]" class="input @error('responsible_users') border-red-500 @enderror" multiple>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}"
-                                            @if (
-                                                collect(old('responsible_users', isset($macro) ? $macro->responsibleUsers->pluck('id')->toArray() : []))->contains($user->id)
-                                            ) selected @endif>
-                                            {{ $user->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('responsible_users')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
-                        </div>
-
                         <!-- Botões -->
                         <div class="flex items-center justify-end gap-4">
                             <a href="{{ route('macro.index') }}"

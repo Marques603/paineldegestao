@@ -5,19 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Macro;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Menu;
+use Illuminate\Support\Facades\Gate;
 
 class MacroController extends Controller
 {
-    public function index(Request $request)
-    {
-
-        
-        $macros = Macro::withTrashed()
-            ->with('responsibleUsers')
-            ->paginate(10);
-
-        return view('macro.index', compact('macros'));
+   public function index(Request $request)
+{
+    if (!Gate::allows('view', Menu::find(2))) {
+        return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
     }
+
+    $macros = Macro::with('responsibleUsers') // carrega os responsáveis
+        ->paginate(10); // não inclui deletados
+
+    return view('macro.index', compact('macros'));
+}
+
 
     public function create()
     {
@@ -29,9 +33,10 @@ class MacroController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'status' => 'required|boolean',
-            'responsible_users' => 'array|nullable',
-            'responsible_users.*' => 'exists:users,id',
+            'description' => 'nullable|string',
+            //'status' => 'required|boolean',
+            //'responsible_users' => 'array|nullable',
+            //'responsible_users.*' => 'exists:users,id',
         ]);
 
         $macro = Macro::create($request->only(['name', 'description', 'status']));
@@ -55,7 +60,8 @@ class MacroController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'status' => 'required|boolean',
+            'description' => 'nullable|string',
+            //'status' => 'required|boolean',
             'responsible_users' => 'array|nullable',
             'responsible_users.*' => 'exists:users,id',
         ]);
@@ -81,4 +87,26 @@ class MacroController extends Controller
         $macro->restore();
         return redirect()->route('macro.index')->with('success', 'Macro restaurada.');
     }
+    public function updateStatus(Request $request, Macro $macro)
+    {
+    $request->validate(['status' => 'required|in:0,1']);
+    $macro->update(['status' => $request->status]);
+
+    return redirect()->route('macro.edit', $macro)->with('success', 'Status atualizado com sucesso.');
+    }
+
+    public function updateResponsibles(Request $request, Macro $macro)
+    {
+    $validated = $request->validate([
+        'responsible_users' => 'nullable|array',
+        'responsible_users.*' => 'exists:users,id',
+    ]);
+
+    $macro->responsibleUsers()->sync($validated['responsible_users'] ?? []);
+
+    return redirect()->route('macro.edit', $macro)->with('success', 'Responsáveis atualizados com sucesso.');
+    }
+
+
+
 }
