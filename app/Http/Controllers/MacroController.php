@@ -78,7 +78,7 @@ class MacroController extends Controller
     public function destroy(Macro $macro)
     {
         $macro->delete();
-        return redirect()->route('macro.index')->with('success', 'Macro removida (soft delete).');
+        return redirect()->route('macro.index')->with('success', 'Macro removida com sucesso.');
     }
 
     public function restore($id)
