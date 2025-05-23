@@ -20,7 +20,7 @@ class MenuSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'name' => 'Gestão de Comercial',
+                'name' => 'Gestão de Qualidade',
                 'created_at' => $now,
                 'updated_at' => $now,
                 'deleted_at' => null,
