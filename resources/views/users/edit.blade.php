@@ -63,22 +63,46 @@
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                             </label>
+
+                          <!-- Tipo -->
+                        <label class="label">
+                            <span class="my-1 block">Tipo</span>
+                            <input type="text" name="type" maxlength="1" class="input @error('type') border-red-500 @enderror"
+                                value="{{ old('type', $user->type) }}" />
+                            @error('type')
+                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            @enderror
+                        </label>
+
+                        <!-- Matrícula -->
+                        <label class="label">
+                            <span class="my-1 block">Matrícula</span>
+                            <input type="text" name="registration" class="input @error('registration') border-red-500 @enderror"
+                                value="{{ old('registration', $user->registration) }}" />
+                            @error('registration')
+                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            @enderror
+                        </label>
+                        
+                        <label class="label">
+    <span class="my-1 block">Admissão</span>
+    <input
+        id="admission"
+        type="date"
+        name="admission"
+        class="input input-date bg-white dark:bg-slate-800 @error('admission') border-red-500 @enderror"
+        value="{{ old('admission', $user->admission ? $user->admission->format('Y-m-d') : '') }}"
+    />
+</label>
+@error('admission')
+    <p class="text-sm text-red-500 mt-1 md:ml-1 md:pl-1">{{ $message }}</p>
+@enderror
+
+
+
                         </div>
 
-                        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-                            <label class="label">
-                                <span class="my-1 block">Senha</span>
-                                <input type="password" name="password" class="input @error('password') border-red-500 @enderror" />
-                                @error('password')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
 
-                            <label class="label">
-                                <span class="my-1 block">Confirmar Senha</span>
-                                <input type="password" name="password_confirmation" class="input" />
-                            </label>
-                        </div>
 
                         <div class="flex items-center justify-end gap-4 mt-4">
                             <a href="{{ route('users.index') }}"
@@ -90,6 +114,45 @@
                     </form>
                 </div>
             </div>
+
+<!-- Change Password -->
+<div class="card">
+    <div class="card-body">
+        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Alterar a senha</h2>
+        <p class="mb-4 text-sm font-normal text-slate-400">
+            Proteja sua conta com uma senha forte e segura
+        </p>
+        <form method="POST" action="{{ route('user.password.update', $user->id ?? null) }}" class="flex flex-col gap-5">
+            @csrf
+            @method('PUT')
+
+            <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                <label class="label" for="password">
+                    <span class="my-1 block">Senha</span>
+                    <input type="password" name="password" id="password" class="input @error('password') border-red-500 @enderror" />
+                    @error('password')
+                        <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                    @enderror
+                </label>
+
+                <label class="label" for="password_confirmation">
+                    <span class="my-1 block">Confirmar Senha</span>
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="input" />
+                </label>
+            </div>
+
+            <!-- Botões -->
+            <div class="flex items-center justify-end gap-4">
+                <a href="{{ url()->previous() }}"
+                    class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 
             <!-- Atualizar Status -->
             <div class="card">

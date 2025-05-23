@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/create', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{user}', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::put('/user/{user}/password', [UserController::class, 'updatePassword'])->name('user.password.update');
     Route::put('/users/{user}/update-profile', [UserController::class, 'updateProfile'])->name('users.update.profile');
     Route::put('/users/{user}/roles', [UserController::class, 'updateRoles'])->name('users.update.roles');
     Route::put('/users/{user}/status', [UserController::class, 'updateStatus'])->name('users.update.status');

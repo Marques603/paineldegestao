@@ -85,6 +85,9 @@ class UserController extends Controller
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8',
+            'type' => 'nullable|string|max:1',
+            'registration' => 'nullable|string|max:255',
+            'admission' => 'nullable|date',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'required|boolean',
             'roles' => 'nullable|array',
@@ -143,28 +146,33 @@ class UserController extends Controller
     }
 
     public function updateProfile(Request $request, User $user)
-    {
-        $input = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:8|confirmed',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+{
+    $input = $request->validate([
+        'name' => 'required|string',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'password' => 'nullable|min:8|confirmed',
+        'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'type' => 'nullable|string|max:1',
+        'registration' => 'nullable|string|max:255',
+        'admission' => 'nullable|date',
+    ]);
 
-        if ($request->filled('password')) {
-            $input['password'] = bcrypt($request->password);
-        } else {
-            unset($input['password']);
-        }
-
-        if ($avatarPath = $this->handleAvatarUpload($request)) {
-            $input['avatar'] = $avatarPath;
-        }
-
-        $user->update($input);
-
-        return redirect()->route('users.edit', $user)->with('success', 'Usuário atualizado com sucesso.');
+    if ($request->filled('password')) {
+        $input['password'] = bcrypt($request->password);
+    } else {
+        unset($input['password']);
     }
+
+    if ($avatarPath = $this->handleAvatarUpload($request)) {
+        $input['avatar'] = $avatarPath;
+    }
+
+    // Atualiza os campos no usuário
+    $user->update($input);
+
+    return redirect()->route('users.edit', $user)->with('success', 'Usuário atualizado com sucesso.');
+}
+
 
     public function updateRoles(Request $request, User $user)
     {
@@ -194,5 +202,17 @@ class UserController extends Controller
             ? $request->file('avatar')->store('images/profiles', 'public')
             : null;
     }
+    public function updatePassword(Request $request, User $user)
+{
+    $request->validate([
+        'password' => 'required|string|min:8|confirmed',
+    ]);
+
+    $user->password = Hash::make($request->password);
+    $user->save();
+
+    return redirect()->back()->with('success', 'Senha atualizada com sucesso!');
+}
+
     
 }

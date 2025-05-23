@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable,SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +20,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'status', 
+        'status',
+        'type', 
+        'registration',
+        'admission',
     ];
 
     /**
@@ -36,64 +39,66 @@ class User extends Authenticatable
     /**
      * The attributes that should be cast to native types.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'admission' => 'date',
+        'password' => 'hashed',
+    ];
+
     public function getAvatarUrlAttribute()
     {
         return $this->avatar ? asset('storage/' . $this->avatar) : asset('images/default-avatar.png');
     }
+
     public function menus()
     {
-    return $this->belongsToMany(Menu::class);
+        return $this->belongsToMany(Menu::class);
     }
+
     public function document()
     {
-    return $this->belongsToMany(Document::class);
+        return $this->belongsToMany(Document::class);
     }
 
     public function uploadeddocument()
     {
-    return $this->hasMany(Document::class, 'user_upload_id');
+        return $this->hasMany(Document::class, 'user_upload_id');
     }
+
     public function position()
     {
-    return $this->hasOne(Position::class);
+        return $this->hasOne(Position::class);
     }
+
     public function roles()
     {
-    return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class);
     }
+
     public function companies()
     {
-    return $this->belongsToMany(Company::class, 'company_user');
+        return $this->belongsToMany(Company::class, 'company_user');
     }
+
     public function sectors()
     {
-    return $this->belongsToMany(Sector::class);
+        return $this->belongsToMany(Sector::class);
     }
+
     public function responsibleSectors()
     {
-    return $this->belongsToMany(Sector::class, 'sector_responsible_user');
+        return $this->belongsToMany(Sector::class, 'sector_responsible_user');
     }
+
     public function positions()
     {
-    return $this->belongsToMany(Position::class, 'position_user');
+        return $this->belongsToMany(Position::class, 'position_user');
     }
+
     public function responsibleMacros()
     {
-    return $this->belongsToMany(\App\Models\Macro::class, 'macro_responsible_user');
+        return $this->belongsToMany(\App\Models\Macro::class, 'macro_responsible_user');
     }
-
-
-
-
-
-
 }
