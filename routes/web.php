@@ -73,5 +73,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Rotas de centros de custo (CRUD)
     Route::resource('cost_center', CostCenterController::class);
+    Route::put('/cost_center/{cost_center}/update-info', [CostCenterController::class, 'updateInfo'])->name('cost_center.update.info');
+Route::put('/cost_center/{cost_center}/update-status', [CostCenterController::class, 'updateStatus'])->name('cost_center.update.status');
+Route::put('/cost_center/{cost_center}/update-sectors', [CostCenterController::class, 'updateSectors'])->name('cost_center.update.sectors');
+
 
 });

@@ -32,9 +32,11 @@ class CostCenterController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'nullable|string|max:255',
-            'status' => 'required|boolean',
-            'sectors' => 'array|nullable',
+            
         ]);
+
+        // força status como 0 (inativo) caso não tenha sido enviado ou seja nulo
+    $validated['status'] = $validated['status'] ?? 0;
 
         $costCenter = CostCenter::create($validated);
         $costCenter->sectors()->sync($request->sectors ?? []);
@@ -70,5 +72,35 @@ class CostCenterController extends Controller
         $costCenter->delete();
 
         return redirect()->route('cost_center.index')->with('success', 'Centro de Custo excluído com sucesso.');
-    }
+    }public function updateInfo(Request $request, CostCenter $costCenter)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'code' => 'nullable|string|max:255',
+    ]);
+
+    $costCenter->update($validated);
+    return back()->with('success', 'Informações atualizadas com sucesso.');
+}
+
+public function updateStatus(Request $request, CostCenter $costCenter)
+{
+    $validated = $request->validate([
+        'status' => 'required|boolean',
+    ]);
+
+    $costCenter->update($validated);
+    return back()->with('success', 'Status atualizado com sucesso.');
+}
+
+public function updateSectors(Request $request, CostCenter $costCenter)
+{
+    $validated = $request->validate([
+        'sectors' => 'array|nullable',
+    ]);
+
+    $costCenter->sectors()->sync($request->sectors ?? []);
+    return back()->with('success', 'Setores vinculados atualizados com sucesso.');
+}
+
 }
