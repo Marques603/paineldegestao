@@ -84,26 +84,26 @@
                             @enderror
                         </label>
                         
+                        <!-- Admissão -->
                         <label class="label">
-    <span class="my-1 block">Admissão</span>
-    <input
-        id="admission"
-        type="date"
-        name="admission"
-        class="input input-date bg-white dark:bg-slate-800 @error('admission') border-red-500 @enderror"
-        value="{{ old('admission', $user->admission ? $user->admission->format('Y-m-d') : '') }}"
-    />
-</label>
-@error('admission')
-    <p class="text-sm text-red-500 mt-1 md:ml-1 md:pl-1">{{ $message }}</p>
-@enderror
+                            <span class="my-1 block">Admissão</span>
+                            <input
+  id="admission"
+  name="admission"
+  type="text"
+  placeholder="DD-MM-AAAA"
+  class="input input-date bg-white dark:bg-slate-800 @error('admission') border-red-500 @enderror"
+value="{{ old('admission', $user->admission ? $user->admission->format('d-m-Y') : '') }}"/>
 
 
-
+                            @error('admission')
+                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            @enderror
+                        </label>
                         </div>
+                        
 
-
-
+                        
                         <div class="flex items-center justify-end gap-4 mt-4">
                             <a href="{{ route('users.index') }}"
                                class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">

@@ -1,4 +1,7 @@
 import flatpickr from 'flatpickr';
+import { Portuguese } from 'flatpickr/dist/l10n/pt.js';
+
+flatpickr.setDefaults({ locale: Portuguese }); // <- idioma aqui
 
 const datepicker = {
   init() {
@@ -13,8 +16,13 @@ const datepicker = {
     const inputDateCustom = document.querySelectorAll('.input-date-custom');
 
     if (inputDate.length) {
-      [...inputDate].forEach((input) => flatpickr(input));
-    }
+  [...inputDate].forEach((input) =>
+    flatpickr(input, {
+      dateFormat: 'd-m-Y',
+    })
+  );
+}
+
 
     if (inputDatetime.length) {
       [...inputDatetime].forEach((input) =>
@@ -55,7 +63,7 @@ const datepicker = {
         flatpickr(input, {
           altInput: true,
           altFormat: 'F j, Y',
-          dateFormat: 'Y-m-d',
+          dateFormat: 'd-m-Y',
         })
       );
     }
@@ -74,10 +82,9 @@ const datepicker = {
 
       [...inputDateRangeDisabled].forEach((input) =>
         flatpickr(input, {
-          dateFormat: 'Y-m-d',
+          dateFormat: 'd-m-Y',
           disable: [
             {
-              // Disable from tomorrow to next 7 days
               from: fromDate.toISOString().split('T')[0],
               to: toDate.toISOString().split('T')[0],
             },

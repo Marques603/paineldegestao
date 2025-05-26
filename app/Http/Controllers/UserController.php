@@ -10,6 +10,7 @@ use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -79,39 +80,52 @@ class UserController extends Controller
         return view('users.edit', compact('user', 'sector',  'menus', 'roles'));
     }
 
-    public function update(Request $request, User $user)
-    {
-        $input = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:8',
-            'type' => 'nullable|string|max:1',
-            'registration' => 'nullable|string|max:255',
-            'admission' => 'nullable|date',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'status' => 'required|boolean',
-            'roles' => 'nullable|array',
-            'roles.*' => 'exists:roles,id',
-        ]);
+   
 
-        if ($request->filled('password')) {
-            $input['password'] = Hash::make($request->password);
-        } else {
-            unset($input['password']);
+public function update(Request $request, User $user)
+{
+    $input = $request->validate([
+        'name' => 'required|string',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'password' => 'nullable|min:8',
+        'type' => 'nullable|string|max:1',
+        'registration' => 'nullable|string|max:255',
+        'admission' => 'nullable|string', // Altere para string pois virá como "27-07-2025"
+        'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'status' => 'required|boolean',
+        'roles' => 'nullable|array',
+        'roles.*' => 'exists:roles,id',
+    ]);
+
+    // Converte a data para o formato aceito pelo banco (Y-m-d)
+    if (!empty($input['admission'])) {
+        try {
+            $input['admission'] = Carbon::createFromFormat('d-m-Y', $input['admission'])->format('Y-m-d');
+        } catch (\Exception $e) {
+            // Se der erro, você pode invalidar manualmente:
+            return back()->withErrors(['admission' => 'Data de admissão inválida.']);
         }
-
-        if ($avatarPath = $this->handleAvatarUpload($request)) {
-            $input['avatar'] = $avatarPath;
-        }
-
-        $user->update($input);
-
-        if ($request->has('roles')) {
-            $user->roles()->sync($request->roles);
-        }
-
-        return redirect()->route('users.edit', $user)->with('success', 'Usuário atualizado com sucesso.');
     }
+
+    if ($request->filled('password')) {
+        $input['password'] = Hash::make($request->password);
+    } else {
+        unset($input['password']);
+    }
+
+    if ($avatarPath = $this->handleAvatarUpload($request)) {
+        $input['avatar'] = $avatarPath;
+    }
+
+    $user->update($input);
+
+    if ($request->has('roles')) {
+        $user->roles()->sync($request->roles);
+    }
+
+    return redirect()->route('users.edit', $user)->with('success', 'Usuário atualizado com sucesso.');
+}
+
 
     public function destroy(User $user)
     {

@@ -122,12 +122,12 @@ const sidebar = {
       const activeMenu = this.content.querySelector('.sidebar-menu.active');
       const activeSubmenu = this.content.querySelector('.sidebar-submenu-item.active');
       window.addEventListener('load', () => {
-        if (activeSubmenu) {
-          activeSubmenu.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        } else {
-          activeMenu.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        }
-      });
+  if (activeSubmenu) {
+    activeSubmenu.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  } else if (activeMenu) {
+    activeMenu.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+    });
     }
   },
 };
