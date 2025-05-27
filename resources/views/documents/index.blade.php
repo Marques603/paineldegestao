@@ -77,11 +77,13 @@
                         <th class="w-[5%]">
                             <input class="checkbox" type="checkbox" data-check-all data-check-all-target=".document-checkbox" />
                         </th>
-                        <th class="w-[35%] uppercase">Código</th>
-                        <th class="w-[15%] uppercase">Revisão</th>
-                        <th class="w-[15%] uppercase">Descriçao</th>
-                        <th class="w-[15%] uppercase">Status</th>
-                        <th class="w-[15%] !text-right uppercase">Ações</th>
+                        <th class="w-[10%] uppercase">Código</th>
+                        <th class="w-[30%] uppercase">Descriçao</th>
+                        <th class="w-[5%] uppercase">Revisão</th>
+                        <th class="w-[5%] uppercase">Macros</th>
+                        <th class="w-[5%] uppercase">Setores</th>
+                        <th class="w-[5%] uppercase">Status</th>
+                        <th class="w-[5%] !text-right uppercase">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,8 +93,22 @@
                                 <input class="checkbox document-checkbox" type="checkbox" />
                             </td>
                             <td>{{ $document->code }}</td>
+                            <td>{{ $document->description }}</td>
                             <td>{{ $document->revision ?? '-' }}</td>
-                            <td>{{ $document->description ?? '-' }}</td>
+                            {{-- Macros --}}
+                    <td>
+                        @foreach($document->macros as $macro)
+                            <span class="badge badge-soft-primary">{{ $macro->name }}</span>
+                        @endforeach
+                    </td>
+
+                    {{-- Setores --}}
+                    <td>
+                        @foreach($document->sectors as $sector)
+                            <span class="badge badge-soft-secondary">{{ $sector->name }}</span>
+                        @endforeach
+                    </td>
+                            
                             <td>
                                 @if($document->status)
                                     <div class="badge badge-soft-success">Ativo</div>
@@ -163,7 +179,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center text-slate-500 py-4">Nenhum documento encontrado.</td>
+                            <td colspan="8" class="text-center ">Nenhum documento encontrado.</td>
                         </tr>
                     @endforelse
                 </tbody>
