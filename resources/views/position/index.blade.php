@@ -71,8 +71,9 @@
                         <th class="w-[5%]">
                             <input class="checkbox" type="checkbox" data-check-all data-check-all-target=".position-checkbox" />
                         </th>
-                        <th class="w-[40%] uppercase">Nome</th>
-                        <th class="w-[15%] uppercase">Colaboradores</th>
+                        <th class="w-[20%] uppercase">Nome</th>
+                        <th class="w-[25%] uppercase">Descrição</th>
+                        <th class="w-[30%] uppercase">Colaboradores</th>
                         <th class="w-[15%] uppercase">Status</th>
                         
                         <th class="w-[5%] !text-right uppercase">Ações</th>
@@ -83,6 +84,7 @@
                         <tr>
                             <td><input class="checkbox position-checkbox" type="checkbox" /></td>
                             <td>{{ $position->name }}</td>
+                            <td>{{ $position->description }}</td>
                             <td>
     @php
         $count = $position->users->count();

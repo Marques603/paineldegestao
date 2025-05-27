@@ -46,7 +46,7 @@
 
                             <!-- Descrição -->
                             <label class="label">
-                                <span class="block mb-1">Descrição</span>
+                                <span class="block mb-1">Descrição do Cargo</span>
                                 <input type="text" name="description" class="input @error('description') border-red-500 @enderror"
                                     value="{{ old('description', $position->description) }}" />
                                 @error('description')

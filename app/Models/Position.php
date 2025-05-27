@@ -12,7 +12,7 @@ class Position extends Model
 
     protected $table = 'position'; // Nome da tabela no singular
 
-    protected $fillable = ['name', 'status'];
+    protected $fillable = ['name','description','status'];
 
     public function users()
     {

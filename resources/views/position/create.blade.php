@@ -41,6 +41,16 @@
                                 @enderror
                             </label>
 
+                            <!-- Descrição -->
+                            <label class="label">
+                                <span class="block mb-1">Descrição do Cargo</span>
+                                <input type="text" name="description" class="input @error('description') border-red-500 @enderror"
+                                    value="{{ old('description') }}" />
+                                @error('description')
+                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
+                            </label>
+
 
                         </div>
 

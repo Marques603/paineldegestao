@@ -32,12 +32,15 @@ class PositionController extends Controller
     {
     $request->validate([
         'name' => 'required|string|max:255',
+        'description' => 'nullable|string|max:255',
     ]);
 
     $position = Position::create([
-        'name' => $request->input('name'),
-        'status' => 0, // Sempre inativo ao criar
-    ]);
+    'name' => $request->input('name'),
+    'description' => $request->input('description'),
+    'status' => 0, // Sempre inativo ao criar
+]);
+
 
     // Relacionar usuários (se houver)
     if ($request->has('users')) {
@@ -61,12 +64,13 @@ class PositionController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
             'status' => 'required|boolean',
             'users' => 'nullable|array',
             'users.*' => 'exists:users,id',
         ]);
 
-        $position->update($request->only(['name', 'status']));
+        $position->update($request->only(['name','description','status']));
 
         // Atualizar relacionamento com usuários
         $position->users()->sync($request->users ?? []);
@@ -101,7 +105,19 @@ class PositionController extends Controller
     $position->save();
 
     return redirect()->route('position.edit', $position)->with('success', 'Status atualizado com sucesso.');
+    }
+    public function updateDetails(Request $request, Position $position)
+    {
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string|max:255',
+    ]);
+
+    $position->update($validated);
+
+    return redirect()->route('position.edit', $position)->with('success', 'Detalhes atualizados com sucesso.');
 }
+
 
 
 
