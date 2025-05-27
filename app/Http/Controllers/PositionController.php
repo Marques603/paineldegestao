@@ -30,29 +30,32 @@ class PositionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'status' => 'required|boolean',
-            'users' => 'nullable|array',
-            'users.*' => 'exists:users,id',
-        ]);
+    $request->validate([
+        'name' => 'required|string|max:255',
+    ]);
 
-        $position = Position::create($request->only(['name', 'status']));
+    $position = Position::create([
+        'name' => $request->input('name'),
+        'status' => 0, // Sempre inativo ao criar
+    ]);
 
-        // Relacionar usuários (se houver)
-        if ($request->has('users')) {
-            $position->users()->sync($request->users);
-        }
-
-        return redirect()->route('position.index')->with('success', 'Cargo criado com sucesso!');
+    // Relacionar usuários (se houver)
+    if ($request->has('users')) {
+        $position->users()->sync($request->users);
     }
+
+    return redirect()->route('position.index')->with('success', 'Cargo criado com sucesso!');
+    }
+
 
     public function edit(Position $position)
     {
-        $users = User::all();
-        $position->load('users');
-        return view('position.create', compact('position', 'users'));
+    $users = User::all();
+    $position->load('users');
+    return view('position.edit', compact('position', 'users'));
     }
+
+
 
     public function update(Request $request, Position $position)
     {
@@ -77,4 +80,29 @@ class PositionController extends Controller
 
         return redirect()->route('position.index')->with('success', 'Cargo excluído com sucesso!');
     }
+    public function updateUsers(Request $request, Position $position)
+    {
+    $validated = $request->validate([
+        'users' => ['nullable', 'array'],
+        'users.*' => ['exists:users,id'],
+    ]);
+
+    // Se nenhum usuário for enviado, desvincula todos
+    $position->users()->sync($validated['users'] ?? []);
+
+    return redirect()->route('position.edit', $position)->with('success', 'Usuários vinculados com sucesso.');
+    }public function updateStatus(Request $request, Position $position)
+    {
+    $request->validate([
+        'status' => 'required|in:0,1',
+    ]);
+
+    $position->status = $request->input('status');
+    $position->save();
+
+    return redirect()->route('position.edit', $position)->with('success', 'Status atualizado com sucesso.');
+}
+
+
+
 }

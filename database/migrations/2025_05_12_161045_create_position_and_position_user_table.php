@@ -12,6 +12,7 @@ return new class extends Migration
         Schema::create('position', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Nome do cargo
+            $table->string('description'); // Decrição do cargo
             $table->boolean('status')->default(1); // Status (ativo/inativo)
             $table->timestamps();
             $table->softDeletes(); // Soft delete para o cargo

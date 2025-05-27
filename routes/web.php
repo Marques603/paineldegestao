@@ -39,6 +39,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Rotas de cargos (CRUD)
     Route::resource('position', PositionController::class);
+    Route::put('position/{position}/details', [PositionController::class, 'updateDetails'])->name('position.update.details');
+    Route::put('position/{position}/status', [PositionController::class, 'updateStatus'])->name('position.update.status');
+    Route::put('position/{position}/users', [PositionController::class, 'updateUsers'])->name('position.update.users');
+
 
     // Rotas de menus (CRUD)
     Route::resource('menus', MenuController::class);
@@ -74,8 +78,8 @@ Route::middleware(['auth'])->group(function () {
     // Rotas de centros de custo (CRUD)
     Route::resource('cost_center', CostCenterController::class);
     Route::put('/cost_center/{cost_center}/update-info', [CostCenterController::class, 'updateInfo'])->name('cost_center.update.info');
-Route::put('/cost_center/{cost_center}/update-status', [CostCenterController::class, 'updateStatus'])->name('cost_center.update.status');
-Route::put('/cost_center/{cost_center}/update-sectors', [CostCenterController::class, 'updateSectors'])->name('cost_center.update.sectors');
+    Route::put('/cost_center/{cost_center}/update-status', [CostCenterController::class, 'updateStatus'])->name('cost_center.update.status');
+    Route::put('/cost_center/{cost_center}/update-sectors', [CostCenterController::class, 'updateSectors'])->name('cost_center.update.sectors');
 
 
 });
