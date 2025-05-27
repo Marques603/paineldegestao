@@ -79,6 +79,7 @@
                         </th>
                         <th class="w-[35%] uppercase">Código</th>
                         <th class="w-[15%] uppercase">Revisão</th>
+                        <th class="w-[15%] uppercase">Descriçao</th>
                         <th class="w-[15%] uppercase">Status</th>
                         <th class="w-[15%] !text-right uppercase">Ações</th>
                     </tr>
@@ -91,6 +92,7 @@
                             </td>
                             <td>{{ $document->code }}</td>
                             <td>{{ $document->revision ?? '-' }}</td>
+                            <td>{{ $document->description ?? '-' }}</td>
                             <td>
                                 @if($document->status)
                                     <div class="badge badge-soft-success">Ativo</div>
