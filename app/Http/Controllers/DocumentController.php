@@ -19,26 +19,31 @@ class DocumentController extends Controller
 
     // Index e outros métodos (create, store, edit) podem ficar iguais
     public function index(Request $request)
-    {
-        if (!Gate::allows('view', Menu::find(2))) {
-            return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
-        }
-
-        $user = auth()->user();
-        $sectorIds = $user->sectors->pluck('id');
-
-        $documents = Document::where('status', 1)
-            ->whereHas('sectors', function ($query) use ($sectorIds) {
-                $query->whereIn('sector_id', $sectorIds);
-            })
-            ->when($request->search, function ($query, $search) {
-                return $query->where('code', 'like', "%{$search}%");
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-        return view('documents.index', compact('documents'));
+{
+    if (!Gate::allows('view', Menu::find(2))) {
+        return redirect()->route('dashboard')->with('status', 'Este menu não está liberado para o seu perfil.');
     }
+
+    $user = auth()->user();
+    $sectorIds = $user->sectors->pluck('id');
+    $isQuality = $sectorIds->contains(1); // Verifica se usuário pertence ao setor ID 1
+
+    $documents = Document::query()
+        ->when(!$isQuality, function ($query) use ($sectorIds) {
+            $query->where('status', 1)
+                  ->whereHas('sectors', function ($q) use ($sectorIds) {
+                      $q->whereIn('sector_id', $sectorIds);
+                  });
+        })
+        ->when($request->search, function ($query, $search) {
+            return $query->where('code', 'like', "%{$search}%");
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
+
+    return view('documents.index', compact('documents'));
+}
+
 
     public function create()
     {
@@ -186,4 +191,12 @@ class DocumentController extends Controller
 
         return redirect()->route('documents.index')->with('success', 'Status de aprovação atualizado com sucesso.');
     }
+    public function updateStatus(Request $request, Document $document)
+    {
+    $document->status = $request->input('status', 0);
+    $document->save();
+
+    return redirect()->back()->with('success', 'Status do documento atualizado com sucesso.');
+}
+
 }

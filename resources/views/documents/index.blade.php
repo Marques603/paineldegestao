@@ -105,7 +105,7 @@
                     {{-- Setores --}}
                     <td>
                         @foreach($document->sectors as $sector)
-                            <span class="badge badge-soft-secondary">{{ $sector->name }}</span>
+                            <span class="badge badge-soft-secondary">{{ $sector->acronym }}</span>
                         @endforeach
                     </td>
                             

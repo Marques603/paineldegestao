@@ -51,6 +51,7 @@
                     </form>
                 </div>
             </div>
+            
 
             <!-- Upload -->
             <div class="card">
@@ -72,6 +73,51 @@
                     </form>
                 </div>
             </div>
+
+
+<!-- Formulário 2: Status -->
+<div class="card">
+    <div class="card-body">
+        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Status do Documento</h2>
+        <p class="mb-4 text-sm font-normal text-slate-400">Ative ou inative este documento</p>
+
+        <form method="POST" action="{{ route('documents.update.status', $document->id) }}">
+            @csrf
+            @method('PUT')
+
+            <label for="status" class="toggle my-2 flex items-center justify-between">
+                <div class="label">
+                    <p class="text-sm font-normal text-slate-400">Ativar Documento</p>
+                </div>
+                <div class="relative">
+                    <input type="hidden" name="status" value="0">
+                    <input
+                        class="toggle-input peer sr-only"
+                        id="status"
+                        type="checkbox"
+                        name="status"
+                        value="1"
+                        {{ old('status', $document->status) == 1 ? 'checked' : '' }}>
+                    <div class="toggle-body"></div>
+                </div>
+            </label>
+
+            @error('status')
+                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+            @enderror
+
+            <div class="flex items-center justify-end gap-4 mt-6">
+                <a href="{{ route('documents.index') }}"
+                   class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                   Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
             <!-- Formulário 3: Setores Vinculados -->
             <div class="card">
                 <div class="card-body">
