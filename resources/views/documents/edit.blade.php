@@ -16,57 +16,27 @@
             </div>
         </section>
 
-        <!-- Formulário -->
+        <!-- Formulários separados -->
         <section class="col-span-1 flex w-full flex-1 flex-col gap-6 lg:col-span-3 lg:w-auto">
+            <!-- Código -->
             <div class="card">
                 <div class="card-body">
-                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Editar Documento</h2>
-                    <p class="mb-4 text-sm font-normal text-slate-400">Atualize os dados conforme necessário</p>
-
-                    <form method="POST" action="{{ route('documents.update', $document->id) }}" enctype="multipart/form-data" class="flex flex-col gap-6">
+                    <form method="POST" action="{{ route('documents.update.code', $document->id) }}">
                         @csrf
                         @method('PUT')
+                        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Código do Documento</h2>
+                        <p class="mb-4 text-sm text-slate-400">Altere o código identificador do documento.</p>
 
+                        
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
                             <label class="label">
                                 <span class="block mb-1">Código</span>
                                 <input type="text" name="code" class="input" value="{{ old('code', $document->code) }}" required />
                             </label>
-
-                            <label class="label">
-                                <span class="block mb-1">Novo Arquivo (opcional)</span>
-                                <input type="file" name="file" class="input" />
-                            </label>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <label class="label">
-                                <span class="block mb-1">Macro(s)</span>
-                                <select name="macros[]" class="input" multiple>
-                                    @foreach($macros as $macro)
-                                        <option value="{{ $macro->id }}" @selected(in_array($macro->id, $document->macros->pluck('id')->toArray()))>
-                                            {{ $macro->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </label>
-
-                            <label class="label">
-                                <span class="block mb-1">Setor(es)</span>
-                                <select name="sectors[]" class="input" multiple>
-                                    @foreach($sectors as $sector)
-                                        <option value="{{ $sector->id }}" @selected(in_array($sector->id, $document->sectors->pluck('id')->toArray()))>
-                                            {{ $sector->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </label>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <label class="label">
                                 <span class="block mb-1">Descrição</span>
-                                <textarea name="description" class="input">{{ old('description', $document->description) }}</textarea>
+                                <input type="text" name="description" class="input" value="{{ old('description', $document->description) }}" />    
                             </label>
 
                             <label class="label">
@@ -75,13 +45,106 @@
                             </label>
                         </div>
 
-                        <div class="flex items-center justify-end gap-4">
-                            <a href="{{ route('documents.index') }}" class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">Cancelar</a>
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Salvar Alterações</button>
+                        <div class="flex justify-end mt-4">
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Salvar Código</button>
                         </div>
                     </form>
                 </div>
             </div>
+
+            <!-- Upload -->
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('documents.update.file', $document->id) }}" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Upload de Arquivo</h2>
+                        <p class="mb-4 text-sm text-slate-400">Envie um novo arquivo para substituir o atual (opcional).</p>
+
+                        <label class="label">
+                            <span class="block mb-1">Novo Arquivo</span>
+                            <input type="file" name="file" class="input" />
+                        </label>
+
+                        <div class="flex justify-end mt-4">
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-upload"></i> Substituir Arquivo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Formulário 3: Setores Vinculados -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Setores Vinculados</h2>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Defina os setores vinculados a este centro de custo</p>
+
+                     <form method="POST" action="{{ route('documents.update.macros', $document->id) }}">
+                           @csrf
+                        @method('PUT')
+
+                        <div class="mb-4">
+                            <span class="block mb-1 text-sm text-slate-600 dark:text-slate-300">Setores</span>
+                            <select name="macros[]" multiple
+                                class="tom-select w-full min-h-[2.5rem] py-2 @error('macros') border-red-500 @enderror"
+                                autocomplete="off">
+                                     @foreach($macros as $macro)
+                                        <option value="{{ $macro->id }}" @selected(in_array($macro->id, $document->macros->pluck('id')->toArray()))>
+                                            {{ $macro->name }}
+                                        </option>
+                                    @endforeach
+                            </select>
+                            @error('sectors')
+                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="flex items-center justify-end gap-4 mt-4">
+                            <a href="{{ route('cost_center.index') }}"
+                               class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                               Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                        <!-- Formulário 3: Setores Vinculados -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Setores Vinculados</h2>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Defina os setores vinculados a este centro de custo</p>
+
+                    <form method="POST" action="{{ route('documents.update.sectors', $document->id) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-4">
+                            <span class="block mb-1 text-sm text-slate-600 dark:text-slate-300">Setores</span>
+                            <select name="sectors[]" multiple
+                                class="tom-select w-full min-h-[2.5rem] py-2 @error('sectors') border-red-500 @enderror"
+                                autocomplete="off">
+                                @foreach($sectors as $sector)
+                                        <option value="{{ $sector->id }}" @selected(in_array($sector->id, $document->sectors->pluck('id')->toArray()))>
+                                            {{ $sector->name }}
+                                        </option>
+                                    @endforeach
+                            </select>
+                            @error('sectors')
+                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="flex items-center justify-end gap-4 mt-4">
+                            <a href="{{ route('cost_center.index') }}"
+                               class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                               Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </section>
     </div>
 </x-app-layout>

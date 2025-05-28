@@ -59,6 +59,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/documents/{document}/approve', [DocumentController::class, 'showApproveForm'])->name('documents.approve.form');
     Route::post('/documents/{document}/approve', [DocumentController::class, 'approve'])->name('documents.approve');
     Route::post('/documents/{document}/approve/status', [DocumentController::class, 'updateApprovalStatus'])->name('documents.updateApprovalStatus');
+Route::put('documents/{document}/code', [DocumentController::class, 'updateCode'])->name('documents.update.code');
+Route::put('documents/{document}/file', [DocumentController::class, 'updateFile'])->name('documents.update.file');
+Route::put('documents/{document}/macros', [DocumentController::class, 'updateMacros'])->name('documents.update.macros');
+Route::put('documents/{document}/sectors', [DocumentController::class, 'updateSectors'])->name('documents.update.sectors');
+
+
 
     // Rotas de empresas (CRUD)
     Route::resource('company', CompanyController::class);
