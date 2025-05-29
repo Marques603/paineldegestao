@@ -42,42 +42,12 @@
                             </label>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <label class="label">
-                                <span class="block mb-1">Macro(s)</span>
-                                <select name="macros[]" class="input @error('macros') border-red-500 @enderror" multiple required>
-                                    @foreach($macros as $macro)
-                                        <option value="{{ $macro->id }}">{{ $macro->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('macros')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
-
-                            <label class="label">
-                                <span class="block mb-1">Setor(es)</span>
-                                <select name="sectors[]" class="input @error('sectors') border-red-500 @enderror" multiple required>
-                                    @foreach($sectors as $sector)
-                                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('sectors')
-                                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                                @enderror
-                            </label>
-                        </div>
 
                         <!-- Campos adicionais opcionais -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <label class="label">
                                 <span class="block mb-1">Descrição</span>
-                                <textarea name="description" class="input">{{ old('description') }}</textarea>
-                            </label>
-
-                            <label class="label">
-                                <span class="block mb-1">Revisão</span>
-                                <input type="text" name="revision" class="input" value="{{ old('revision') }}" />
+                                <input type="text" name="description" class="input" value="{{ old('description') }}" />
                             </label>
                         </div>
 

@@ -1,6 +1,12 @@
 <x-app-layout>
     <x-page-title page="Editar Documento" pageUrl="{{ route('documents.index') }}" header="Editar Documento" />
 
+       @if(session('success'))
+        <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded shadow-lg z-50" role="alert">
+            <p>{{ session('success') }}</p>
+        </div>
+    @endif
+
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
         <!-- Preview -->
         <section class="col-span-1 flex h-min w-full flex-col gap-6 lg:sticky lg:top-20">
@@ -45,9 +51,13 @@
                             </label>
                         </div>
 
-                        <div class="flex justify-end mt-4">
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Salvar Código</button>
-                        </div>
+                        <div class="flex items-center justify-end gap-4 mt-6">
+                <a href="{{ route('documents.index') }}"
+                   class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                   Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+                </div>
                     </form>
                 </div>
             </div>
@@ -67,9 +77,13 @@
                             <input type="file" name="file" class="input" />
                         </label>
 
-                        <div class="flex justify-end mt-4">
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-upload"></i> Substituir Arquivo</button>
-                        </div>
+                        <div class="flex items-center justify-end gap-4 mt-6">
+                <a href="{{ route('documents.index') }}"
+                   class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                   Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+            </div>
                     </form>
                 </div>
             </div>

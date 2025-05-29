@@ -71,10 +71,10 @@ class DocumentController extends Controller
         'code' => $request->code,
         'description' => $request->description,
         'user_upload' => $userId,
-        'revision' => $request->revision,
+        'revision' => $request->revision ?? 1,
         'file_path' => $filePath,
         'file_type' => $request->file('file')->getClientOriginalExtension(),
-        'status' => 1,
+        'status' => 0,
     ]);
 
     // Se vier vazio ou não vier, sincroniza com array vazio = desvincula tudo
