@@ -45,10 +45,6 @@
                                 <input type="text" name="description" class="input" value="{{ old('description', $document->description) }}" />    
                             </label>
 
-                            <label class="label">
-                                <span class="block mb-1">Revisão</span>
-                                <input type="text" name="revision" class="input" value="{{ old('revision', $document->revision) }}" />
-                            </label>
                         </div>
 
                         <div class="flex items-center justify-end gap-4 mt-6">

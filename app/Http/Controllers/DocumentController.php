@@ -110,19 +110,38 @@ class DocumentController extends Controller
     }
 
     // Atualiza apenas o arquivo
-    public function updateFile(Request $request, Document $document)
-    {
-        $request->validate([
-            'file' => 'required|file',
-        ]);
+public function updateFile(Request $request, Document $document)
+{
+    $request->validate([
+        'file' => 'required|file',
+    ]);
 
-        $filePath = $request->file('file')->store('documents', 'public');
-        $document->file_path = $filePath;
-        $document->file_type = $request->file('file')->getClientOriginalExtension();
-        $document->save();
+    // Soft delete do documento atual
+    $document->delete();
 
-        return redirect()->back()->with('success', 'Arquivo atualizado com sucesso.');
-    }
+    // Armazena novo arquivo
+    $filePath = $request->file('file')->store('documents', 'public');
+
+    // Cria novo documento com base no anterior
+    $newDocument = Document::create([
+        'code' => $document->code,
+        'description' => $document->description,
+        'user_upload' => auth()->id(),
+        'revision' => $document->revision + 1,
+        'file_path' => $filePath,
+        'file_type' => $request->file('file')->getClientOriginalExtension(),
+        'status' => 0, // Pode começar como inativo novamente
+    ]);
+
+    // Mantém os vínculos anteriores
+    $newDocument->macros()->sync($document->macros->pluck('id'));
+    $newDocument->sectors()->sync($document->sectors->pluck('id'));
+
+    return redirect()->route('documents.edit', $newDocument->id)
+                     ->with('success', 'Arquivo atualizado. Documento anterior arquivado e nova revisão criada.');
+}
+
+
 
     // Atualiza as macros vinculadas
     public function updateMacros(Request $request, Document $document)
