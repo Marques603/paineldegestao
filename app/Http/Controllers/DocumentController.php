@@ -26,7 +26,9 @@ class DocumentController extends Controller
 
     $user = auth()->user();
     $sectorIds = $user->sectors->pluck('id');
-    $isQuality = $sectorIds->contains(1); // Verifica se usuário pertence ao setor ID 1
+    $isQuality = $sectorIds->contains(function ($id) {
+    return in_array($id, [1, 16]);
+}); // Verifica se usuário pertence ao setor ID 1
 
     $documents = Document::query()
         ->when(!$isQuality, function ($query) use ($sectorIds) {
@@ -197,6 +199,12 @@ class DocumentController extends Controller
     $document->save();
 
     return redirect()->back()->with('success', 'Status do documento atualizado com sucesso.');
+}public function destroy(Document $document)
+{
+    $document->delete(); // ou $document->forceDelete() se quiser deletar permanentemente
+
+    return redirect()->route('documents.index')->with('success', 'Documento deletado com sucesso.');
 }
+
 
 }
