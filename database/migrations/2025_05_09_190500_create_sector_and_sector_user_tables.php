@@ -11,7 +11,7 @@ return new class extends Migration {
         Schema::create('sector', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('acronym')->nullable();
             $table->boolean('status')->default(1); // 1 = ativo, 0 = inativo
             $table->timestamps();
             $table->softDeletes(); // Caso deseje restaurar depois
