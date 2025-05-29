@@ -90,10 +90,7 @@
                             </td>
                             <td>{{ $macro->name }}</td>
                             <td>{{ $macro->description ?? 'Sem descrição' }}</td>
-                            <td>
-    {{ $macro->responsibleUsers->isNotEmpty() ? $macro->responsibleUsers->pluck('name')->join(', ') : '-' }}
-</td>
-
+                            <td>{{ $macro->responsibleUsers->isNotEmpty() ? $macro->responsibleUsers->pluck('name')->join(', ') : 'não há responsável vinculado' }}</td>
                             <td>{{ $macro->documents_count ?? 0 }}</td>
                             <td>
                                 @if($macro->status)

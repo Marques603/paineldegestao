@@ -90,7 +90,13 @@
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->corporate_name }}</td>
                             <td>{{ $company->cnpj }}</td>
-                            <td>{{ $company->responsibles->first()?->name ?? '—' }}</td>
+                            <td>
+                            @if($company->responsibles->isNotEmpty())
+                            {{ $company->responsibles->first()->name }}
+                            @else
+                            <span>não há responsável vinculado</span>
+                            @endif
+                            </td>
                             <td>
                                 @if($company->status)
                                     <div class="badge badge-soft-success">Ativa</div>
