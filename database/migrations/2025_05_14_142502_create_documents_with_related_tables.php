@@ -65,7 +65,22 @@ class CreateDocumentsWithRelatedTables extends Migration
             $table->foreign('document_id')->references('id')->on('document')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+        // Tabela de histórico de arquivos de documentos
+
+        Schema::create('document_file_history', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('document_id')->constrained('document')->onDelete('cascade');
+    $table->string('file_path');
+    $table->string('file_type')->nullable();
+    $table->foreignId('uploaded_by')->nullable()->constrained('users')->nullOnDelete();
+    $table->timestamps();
+});
+
+
+
     }
+
+
 
     public function down()
     {
