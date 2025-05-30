@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('registration', 10)->unique();
-            $table->unsignedTinyInteger('type');
+            $table->string('registration')->nullable();
+            $table->string('type')->nullable();
             $table->date('admission')->nullable();
             $table->boolean('status')->default(0);
             $table->string('avatar')->nullable();
