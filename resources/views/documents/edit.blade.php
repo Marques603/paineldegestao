@@ -131,15 +131,15 @@
             <!-- Formulário 3: Setores Vinculados -->
             <div class="card">
                 <div class="card-body">
-                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Setores Vinculados</h2>
-                    <p class="mb-4 text-sm font-normal text-slate-400">Defina os setores vinculados a este centro de custo</p>
+                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Macros Vinculados</h2>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Defina as macros vinculados a este documento</p>
 
                      <form method="POST" action="{{ route('documents.update.macros', $document->id) }}">
                            @csrf
                         @method('PUT')
 
                         <div class="mb-4">
-                            <span class="block mb-1 text-sm text-slate-600 dark:text-slate-300">Setores</span>
+                            <span class="block mb-1 text-sm text-slate-600 dark:text-slate-300">Macros</span>
                             <select name="macros[]" multiple
                                 class="tom-select w-full min-h-[2.5rem] py-2 @error('macros') border-red-500 @enderror"
                                 autocomplete="off">
