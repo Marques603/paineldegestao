@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Item;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MenuController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\CostCenterController;
+use App\Http\Controllers\CompraController;
+use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,8 +69,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/documents/{document}/status', [DocumentController::class, 'updateStatus'])->name('documents.update.status');
 
 
-
-
     // Rotas de empresas (CRUD)
     Route::resource('company', CompanyController::class);
     Route::put('/company/{company}/update-details', [CompanyController::class, 'updateDetails'])->name('company.update.details');
@@ -88,6 +89,26 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/cost_center/{cost_center}/update-info', [CostCenterController::class, 'updateInfo'])->name('cost_center.update.info');
     Route::put('/cost_center/{cost_center}/update-status', [CostCenterController::class, 'updateStatus'])->name('cost_center.update.status');
     Route::put('/cost_center/{cost_center}/update-sectors', [CostCenterController::class, 'updateSectors'])->name('cost_center.update.sectors');
+ 
+    // Rotas de requisições de compra (CRUD)
+    Route::resource('compras', CompraController::class);
+    Route::get('/compras', [CompraController::class, 'index'])->name('compras.index');
+Route::get('/compras/create', [CompraController::class, 'create'])->name('compras.create');
+Route::post('/compras', [CompraController::class, 'store'])->name('compras.store');
+Route::get('/compras/{compra}/edit', [CompraController::class, 'edit'])->name('compras.edit');
+Route::put('/compras/{compra}/update-all', [CompraController::class, 'updateAll'])->name('compras.update.all');
+Route::delete('/compras/{compra}', [CompraController::class, 'destroy'])->name('compras.destroy');
 
+
+    // Rotas de itens de compra (CRUD)
+    Route::resource('item', ItemController::class);
+    Route::get('/item', [ItemController::class, 'index'])->name('item.index');
+    Route::get('item/create', [ItemController::class, 'create'])->name('item.create');
+    Route::post('item', [ItemController::class, 'store'])->name('item.store');
+    Route::get('item/{item}', [ItemController::class, 'show'])->name('item.show');
+    Route::get('item/{item}/edit', [ItemController::class, 'edit'])->name('item.edit');
+    Route::put('item/{item}', [ItemController::class, 'update'])->name('item.update');
+    Route::delete('item/{item}', [ItemController::class, 'destroy'])->name('item.destroy');
+    
 
 });

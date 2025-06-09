@@ -101,4 +101,13 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(\App\Models\Macro::class, 'macro_responsible_user');
     }
+    public function userRequest()
+    {
+        return $this->hasMany(Document::class, 'user_request_id');
+    }
+    public function item()
+    {
+        return $this->belongsToMany(Item::class, 'item_user');
+    }
+
 }

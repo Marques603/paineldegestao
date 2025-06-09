@@ -142,4 +142,43 @@
            </ul>
               @endcan
         </li>
+        <li>
+            @can('view', App\Models\Menu::find(4))    
+            <a href="javascript:void(0);"
+                class="sidebar-menu {{ request()->routeIs(['compras.create','compras.index','item.create']) ? 'active' : '' }}">
+
+                <span class="sidebar-menu-icon">
+                    <i data-feather="shopping-cart"></i>
+                </span>
+                <span class="sidebar-menu-text">Gestão de Compras</span>
+                <span class="sidebar-menu-arrow">
+                    <i data-feather="chevron-right"></i>
+                </span>
+            </a>
+            <ul class="sidebar-submenu ">
+                <li>
+                    <a href="{{ route('compras.create') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('compras.create') ? 'active' : '' }}">
+                        Requsição</a>
+                </li>
+                <li>
+                    <a href="{{ route('compras.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('compras.index') ? 'active' : '' }}">
+                        Pedidos</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('item.create') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('item.create') ? 'active' : '' }}">
+                        Cadastro de Item</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('item.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('item.index') ? 'active' : '' }}">
+                        Itens</a>
+                </li>
+           </ul>
+              @endcan
+        </li>
 </aside>
