@@ -3,7 +3,7 @@
 
     <div class="max-w-5xl mx-auto p-4 space-y-6">
         {{-- Instruções de Preenchimento --}}
-        {{-- <section class="rounded-lg bg-white p-6 shadow-sm dark:bg-slate-800">
+        <section class="rounded-lg bg-white p-6 shadow-sm dark:bg-slate-800">
             <h3 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4">
                 Orientações de Preenchimento
             </h3>
@@ -50,7 +50,7 @@
                     <strong>OBS:</strong> CASO FALTE INFORMAÇÕES PARA A BOA CONDUÇÃO DOS ORÇAMENTOS, AVISAREMOS POR E-MAIL PARA QUE O SOLICITANTE REVISE SUA SOLICITAÇÃO OU REFAÇA A MESMA.
                 </p>
             </div>
-        </section> --}}
+        </section>
 
         {{-- Formulário de Requisição --}}
         <form action="{{ route('compras.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
