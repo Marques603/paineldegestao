@@ -145,7 +145,7 @@
         <li>
             @can('view', App\Models\Menu::find(4))    
             <a href="javascript:void(0);"
-                class="sidebar-menu {{ request()->routeIs(['compras.create','compras.index','item.create']) ? 'active' : '' }}">
+                class="sidebar-menu {{ request()->routeIs(['compras.create','compras.index','item.create','item.index']) ? 'active' : '' }}">
 
                 <span class="sidebar-menu-icon">
                     <i data-feather="shopping-cart"></i>

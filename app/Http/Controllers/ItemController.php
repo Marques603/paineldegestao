@@ -54,19 +54,19 @@ class ItemController extends Controller
 
     public function edit(Item $item)
     {
-        $users = User::all();
-        $item->load('users');
-        return view('item.edit', compact('item', 'users'));
+        return view('item.edit', compact('item'));
     }
 
     public function update(Request $request, Item $item)
     {
         $request->validate([
-            'tipo_material' => 'required|in:industrializacao,uso_consumo,imobilizado',
-            'tipo_utilizacao' => 'required|in:producao,apoio_adm,outros',
+            'tipo_material' => 'required|in:epi_epc,maquinario,material_escritorio,material_informatica,material_limpeza,material_eletrico,material_producao,outro,prestacao_servico',
+            'tipo_utilizacao' => 'required|in:industrializacao,uso_consumo,imobilizado',
             'descricao' => 'required|string|max:255',
-            'descricao_detalhada' => 'nullable|string|max:255',
+            'descricao_detalhada' => 'required|string|max:255',
             'marcas' => 'nullable|string|max:255',
+            'link_exemplo' => 'nullable|url',
+            'imagem' => 'nullable|image|max:2048',
         ]);
 
         $item->update($request->only([
@@ -77,8 +77,6 @@ class ItemController extends Controller
             'marcas'
         ]));
 
-        // Atualizar relacionamento com usuários
-        $item->users()->sync($request->users ?? []);
 
         return redirect()->route('item.index')->with('success', 'Item atualizado com sucesso!');
     }

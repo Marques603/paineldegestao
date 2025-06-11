@@ -107,6 +107,7 @@ Route::delete('/compras/{compra}', [CompraController::class, 'destroy'])->name('
     Route::post('item', [ItemController::class, 'store'])->name('item.store');
     Route::get('item/{item}', [ItemController::class, 'show'])->name('item.show');
     Route::get('item/{item}/edit', [ItemController::class, 'edit'])->name('item.edit');
+    Route::put('/item/{item}/update-all', [ItemController::class, 'updateAll'])->name('item.update.all');
     Route::put('item/{item}', [ItemController::class, 'update'])->name('item.update');
     Route::delete('item/{item}', [ItemController::class, 'destroy'])->name('item.destroy');
     
