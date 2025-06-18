@@ -12,6 +12,8 @@ use App\Http\Controllers\SectorController;
 use App\Http\Controllers\CostCenterController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\ConciergeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,13 +95,20 @@ Route::middleware(['auth'])->group(function () {
     // Rotas de requisições de compra (CRUD)
     Route::resource('compras', CompraController::class);
     Route::get('/compras', [CompraController::class, 'index'])->name('compras.index');
-Route::get('/compras/create', [CompraController::class, 'create'])->name('compras.create');
-Route::post('/compras', [CompraController::class, 'store'])->name('compras.store');
-Route::get('/compras/{compra}/edit', [CompraController::class, 'edit'])->name('compras.edit');
-Route::put('/compras/{compra}/update-all', [CompraController::class, 'updateAll'])->name('compras.update.all');
-Route::delete('/compras/{compra}', [CompraController::class, 'destroy'])->name('compras.destroy');
+    Route::get('/compras/create', [CompraController::class, 'create'])->name('compras.create');
+    Route::post('/compras', [CompraController::class, 'store'])->name('compras.store');
+    Route::get('/compras/{compra}/edit', [CompraController::class, 'edit'])->name('compras.edit');
+    Route::put('/compras/{compra}/compras-all', [CompraController::class, 'comprasAll'])->name('compras.update.all');
+    // Formulário unificado de criação de Compra + Item
+    Route::get('/compras/com-itens/criar', [CompraController::class, 'createComItem'])->name('compras.create.com.item');
+    Route::get('/compras/com-itens/{compra}', [CompraController::class, 'editComItem'])->name('compras.edit-com-item');
+    Route::post('/compras/com-itens', [CompraController::class, 'storeComItem'])->name('compras.store.com.item');
 
 
+    Route::delete('/compras/{compra}', [CompraController::class, 'destroy'])->name('compras.destroy');
+    Route::put('/compras/{compra}/update-items', [CompraController::class, 'updateItem'])->name('compras.update.items');
+    
+ 
     // Rotas de itens de compra (CRUD)
     Route::resource('item', ItemController::class);
     Route::get('/item', [ItemController::class, 'index'])->name('item.index');
@@ -110,6 +119,36 @@ Route::delete('/compras/{compra}', [CompraController::class, 'destroy'])->name('
     Route::put('/item/{item}/update-all', [ItemController::class, 'updateAll'])->name('item.update.all');
     Route::put('item/{item}', [ItemController::class, 'update'])->name('item.update');
     Route::delete('item/{item}', [ItemController::class, 'destroy'])->name('item.destroy');
+    
+    // Rotas de Veículos (CRUD)
+    Route::resource('vehicles', VehicleController::class);
+    Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
+    Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicles.create');
+    Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicles.store');
+    Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])->name('vehicles.edit');
+    Route::put('/vehicles/{vehicle}', [VehicleController::class, 'update'])->name('vehicles.update');
+
+
+
+    //  Rotas de Portária
+    Route::resource('concierge', ConciergeController::class);
+    Route::get('/concierge',[ConciergeController::class,'index'])->name('concierge.index');
+    Route::get('/concierge/create', [ConciergeController::class,'create'])->name('concierge.create');
+    Route::post('/concierge', [ConciergeController::class, 'store'])->name('concierge.store');
+    Route::get('/concierge/{concierge}/edit', [ConciergeController::class, 'edit'])->name('concierge.edit');
+
+    
+
+
+    
+
+    
+   
+
+   
+
+    
+
     
 
 });

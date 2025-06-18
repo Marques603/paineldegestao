@@ -21,6 +21,58 @@
             </div>
         </section>
 
+                                <!-- Formulário 3: Usuários Responsavel -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-[16px] font-semibold text-slate-700 dark:text-slate-300">Usuários Responsável</h2>
+                    <p class="mb-4 text-sm font-normal text-slate-400">Defina o usuários responsável por esta empresa</p>
+
+                    <form method="POST" action="{{ route('compras.update.items', $compra) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-4">
+                            <span class="block mb-1 text-sm text-slate-600 dark:text-slate-300">Usuários</span>
+                            <select name="items[]" multiple
+                                class="tom-select w-full min-h-[2.5rem] py-2 @error('items') border-red-500 @enderror"
+                                autocomplete="off">
+                                @foreach($items as $item)
+                                    <option value="{{ $item->id }}"
+                                        {{ $compra->items->contains($item->id) ? 'selected' : '' }}>
+                                        {{ $item->descricao }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('users')
+                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="flex items-center justify-end gap-4 mt-4">
+                            <a href="{{ route('compras.index') }}"
+                               class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                               Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+<div class="mb-3">
+<label for="sector_id" class="form-label">Selecione o setor</label>
+<select name="sector_id" id="sector_id" class="form-control" required>
+<option value="">-- Selecione --</option>
+@foreach ($items as $sector)
+<option value="{{ $item->id }}">{{ $compra->id }}</option>
+@endforeach
+</select>
+</div>
+
+
+
+            
         <!-- Formulários -->
         <section class="col-span-1 flex w-full flex-1 flex-col gap-6 lg:col-span-3 lg:w-auto">
             <!-- Detalhes da Requisição -->
@@ -56,6 +108,18 @@
                                     <option value="nao" @selected($compra->realizar_orcamento === 'nao')>Não</option>
                                 </select>
                             </label>
+
+                            
+<div class="mb-3">
+<label for="sector_id" class="form-label">Selecione o setor</label>
+<select name="sector_id" id="sector_id" class="form-control" required>
+<option value="">-- Selecione --</option>
+@foreach ($items as $item)
+<option value="{{ $item->id }}">{{ $compra->name }}</option>
+@endforeach
+</select>
+</div>
+
 
                             <label class="label md:col-span-2">
                                 <span class="block mb-1">Justificativa</span>

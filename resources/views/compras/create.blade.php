@@ -64,51 +64,7 @@
             <section class="rounded-lg bg-white p-6 shadow-sm dark:bg-slate-800 space-y-4">
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
-                        {{-- Tipo de Material --}}
-    <div class="flex flex-col">
-        <label class="label font-medium" for="tipo_material">* Tipo de Material</label>
-        <select name="tipo_material" id="tipo_material" class="select" required>
-            <option value="">Escolha uma opção</option>
-            <option value="industrializacao">Industrialização</option>
-            <option value="uso_consumo">Uso e Consumo</option>
-            <option value="imobilizado">Imobilizado</option>
-        </select>
-    </div>
-
-    {{-- Tipo de Utilização --}}
-    <div class="flex flex-col">
-        <label class="label font-medium" for="tipo_utilizacao">* Tipo de Utilização</label>
-        <select name="tipo_utilizacao" id="tipo_utilizacao" class="select" required>
-            <option value="">Escolha uma opção</option>
-            <option value="producao">Produção</option>
-            <option value="apoio_administrativo">Apoio Administrativo</option>
-            <option value="outros">Outros</option>
-        </select>
-    </div>
-
-    {{-- Descrição --}}
-    <div class="flex flex-col">
-        <label class="label font-medium" for="descricao">* Descrição do Item</label>
-        <input type="text" name="descricao" id="descricao" class="input" required>
-    </div>
-
-    {{-- Descrição Detalhada --}}
-    <div class="flex flex-col">
-        <label class="label font-medium" for="descricao_detalhada">Descrição Detalhada</label>
-        <textarea name="descricao_detalhada" id="descricao_detalhada" class="textarea" rows="3"></textarea>
-    </div>
-
-    {{-- Link de Exemplo --}}
-    <div class="flex flex-col">
-        <label class="label font-medium" for="link_exemplo">Link de Exemplo</label>
-        <input type="url" name="link_exemplo" id="link_exemplo" class="input">
-    </div>
-
-    {{-- Imagem do Item --}}
-    <div class="flex flex-col">
-        <label class="label font-medium" for="imagem">Imagem (opcional)</label>
-        <input type="file" name="imagem" id="imagem" class="input">
-    </div>
+     
 
                     {{-- Data de Necessidade --}}
                     <div class="flex flex-col">

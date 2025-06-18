@@ -143,9 +143,10 @@
               @endcan
         </li>
         <li>
+            
             @can('view', App\Models\Menu::find(4))    
             <a href="javascript:void(0);"
-                class="sidebar-menu {{ request()->routeIs(['compras.create','compras.index','item.create','item.index']) ? 'active' : '' }}">
+                class="sidebar-menu {{ request()->routeIs(['compras.create.com.item','compras.index','item.create','item.index']) ? 'active' : '' }}">
 
                 <span class="sidebar-menu-icon">
                     <i data-feather="shopping-cart"></i>
@@ -157,8 +158,8 @@
             </a>
             <ul class="sidebar-submenu ">
                 <li>
-                    <a href="{{ route('compras.create') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('compras.create') ? 'active' : '' }}">
+                    <a href="{{ route('compras.create.com.item') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('compras.create.com.item') ? 'active' : '' }}">
                         Requsição</a>
                 </li>
                 <li>
@@ -180,5 +181,60 @@
                 </li>
            </ul>
               @endcan
+               <li>
+            @can('view', App\Models\Menu::find(4))    
+            <a href="javascript:void(0);"
+                class="sidebar-menu {{ request()->routeIs(['vehicles.index', 'vehicles.create', 'vehicles.edit']) ? 'active' : '' }}">
+
+                <span class="sidebar-menu-icon">
+                    <i data-feather="clipboard"></i>
+                </span>
+                <span class="sidebar-menu-text">Veiculos</span>
+                <span class="sidebar-menu-arrow">
+                    <i data-feather="chevron-right"></i>
+                </span>
+            </a>
+            <ul class="sidebar-submenu ">
+                <li>
+                    <a href="{{ route('vehicles.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('vehicles.index') ? 'active' : '' }}">
+                        Veículos</a>
+                </li>
+                <li>
+                    <a href="{{ route('vehicles.create') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('vehicles.create') ? 'active' : '' }}">
+                        Adicionar Veículos</a>
+                </li>
+           </ul>
+              @endcan
+        </li>
+         <!-- Menu Qualidade -->
+        <li>
+        @can('view', App\Models\Menu::find(2)) 
+            <a href="javascript:void(0);"
+                class="sidebar-menu {{ request()->routeIs(['concierge.index', 'concierge.create'])
+                    ? 'active'
+                    : '' }}">
+                <span class="sidebar-menu-icon">
+                    <i data-feather="home"></i>
+                </span>
+                <span class="sidebar-menu-text">Gestão da Portaria</span>
+                <span class="sidebar-menu-arrow">
+                    <i data-feather="chevron-right"></i>
+                </span>
+            </a>
+            <ul class="sidebar-submenu">
+                <li>
+                    <a href="{{ route('concierge.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('concierge.index') ? 'active' : '' }}">
+                    Fluxo</a>
+                </li>
+                <li>
+                    <a href="{{ route('concierge.create') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('concierge.create') ? 'active' : '' }}">
+                    Controle do Fluxo</a>
+                </li>
+            </ul>
+            @endcan
         </li>
 </aside>

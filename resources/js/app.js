@@ -92,6 +92,25 @@ document.addEventListener('click', function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+    const selectItem = document.getElementById('item_id');
+    const newItemFields = document.getElementById('new-item-fields');
+
+    function toggleNewItemFields() {
+        if (selectItem.value === 'new') {
+            newItemFields.style.display = 'block';
+        } else {
+            newItemFields.style.display = 'none';
+        }
+    }
+
+    // Chama ao carregar para manter estado correto se houve erro na validação
+    toggleNewItemFields();
+
+    // Chama quando o usuário muda a seleção
+    selectItem.addEventListener('change', toggleNewItemFields);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
     // Remover toast automaticamente após 2 segundos
     const toast = document.getElementById('toast');
     if (toast) {

@@ -109,5 +109,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Item::class, 'item_user');
     }
+    public function concierge()
+    {
+        return $this->belongsToMany(Concierge::class, 'driver_vehicle');
+    }
 
 }

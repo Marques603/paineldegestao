@@ -29,9 +29,10 @@ class Item extends Model
     {
         return $this->belongsToMany(User::class, 'item_user');
     }
-         public function compras()
-    {
-         return $this->belongsToMany( Compra::class, 'item_compra');
-    }
+        public function compras()
+{
+    return $this->belongsToMany(Compra::class, 'item_compra', 'item_id', 'compras_id')->withTimestamps()->withTrashed();
+}
+
     
 }

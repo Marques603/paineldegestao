@@ -9,6 +9,7 @@ use App\Models\DocumentApproval;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 
 class DocumentController extends Controller
 {
@@ -59,7 +60,7 @@ class DocumentController extends Controller
     $request->validate([
         'code' => 'required|string',
         'file' => 'required|file',
-        'macros' => 'nullable|array',   // Agora pode ser nulo ou vazio
+        'macros' => 'nullable|array',   // Agora pode ser nulo ou vaz
         'sectors' => 'nullable|array',  // Agora pode ser nulo ou vazio
     ]);
 
