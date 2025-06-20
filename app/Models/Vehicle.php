@@ -23,7 +23,7 @@ class Vehicle extends Model
     }
     public function concierges()
 {
-    return $this->belongsToMany(Concierge::class, 'vehicle_concierge');
+    return $this->belongsToMany(Concierge::class, 'concierge_vehicle');
 }
 
 }
