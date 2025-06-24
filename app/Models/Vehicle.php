@@ -14,7 +14,6 @@ class Vehicle extends Model
         'brand',
         'kminit',
         'kmcurrent',
-        'kmend',
     ];
 
     public function company()
@@ -22,8 +21,12 @@ class Vehicle extends Model
         return $this->belongsTo(Company::class);
     }
     public function concierges()
-{
-    return $this->belongsToMany(Concierge::class, 'concierge_vehicle');
-}
+    {
+        return $this->belongsToMany(Concierge::class, 'concierge_vehicle');
+    }
+    public function mileages()
+    {
+        return $this->hasMany(MileagesCar::class);
+    }
 
-}
+    }

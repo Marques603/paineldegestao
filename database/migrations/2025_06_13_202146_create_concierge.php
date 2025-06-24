@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_upload'); // ID do usuário que fez o upload
             $table->date('date'); 
             $table->time('timeinit'); 
-            $table->time('timeend');
+            $table->time('timeend')->nullable(); // Hora de término, pode ser nula se não houver término
             $table->string('destination');
             $table->string('motive');
             $table->timestamps();

@@ -63,13 +63,13 @@
                         <input type="text" name="brand" id="brand" class="input" placeholder="Ex: Volkswagen" required>
                     </div>
 
-                    {{-- KM inicial --}}
+                    {{-- KM inicial 
                     <div class="flex flex-col">
                         <label class="label label-required font-medium" for="kminit">* KM inicial</label>
                         <input type="number" name="kminit" id="kminit" class="input" placeholder="Digite aqui..." required>
                     </div>
 
-                    {{-- KM atual --}}
+                   
                     <div class="flex flex-col">
                         <label class="label label-required font-medium" for="kmcurrent">* KM atual</label>
                         <input type="number" name="kmcurrent" id="kmcurrent" class="input" placeholder="Digite aqui..." required>

@@ -57,12 +57,6 @@
                         <label class="label label-required font-medium" for="timeinit">* Horário de Sáida</label>
                         <input type="time" name="timeinit" id="timeinit" class="input" placeholder="Digite aqui..." required>
                     </div>
-
-                    {{-- Horário de chegada --}}
-                    <div class="flex flex-col">
-                        <label class="label label-required font-medium" for="timeend">* Horário de Chegada</label>
-                        <input type="time" name="timeend" id="timeend" class="input" placeholder="Digite aqui..." required>
-                    </div>
                     
                     <div class="flex flex-col">
                         <label for="vehicle_id" class="label label-required font-medium">* Veículo</label>
@@ -87,14 +81,33 @@
                             @endforeach
                         </select>
                     </div>
-                    
+                    @foreach($mileage as $vehicleId => $km)
+    <input type="hidden" id="km-{{ $vehicleId }}" value="{{ $km }}">
+@endforeach
+                <!-- Quilometragem de Saída -->
+                    <div>
+                        <label for="kminit" class="label">Quilometragem de Saída</label>
+                        <input type="number" name="kminit" id="kminit"
+    class="input"
+    value="{{ old('kminit') }}"
+    required>
+                    </div>
                 </section>
-            
+            <script>
+    const selectVehicle = document.getElementById('vehicle_id');
+    const inputKm = document.getElementById('kminit');
 
-    
+    selectVehicle.addEventListener('change', function () {
+        const vehicleId = this.value;
+        const km = document.getElementById('km-' + vehicleId);
 
-
-
+        if (km) {
+            inputKm.value = km.value;
+        } else {
+            inputKm.value = '';
+        }
+    });
+</script>
 
             {{-- Botão de Submit alinhado à direita --}}
     

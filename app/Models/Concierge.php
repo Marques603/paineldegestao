@@ -30,7 +30,10 @@ public function users()
 {
     return $this->belongsToMany(User::class, 'driver_vehicle');
 }
-
+public function mileages()
+{
+    return $this->hasMany(MileagesCar::class);
+}
 
 }
 

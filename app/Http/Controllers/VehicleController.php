@@ -27,9 +27,6 @@ public function index()
         'model' => 'required|in:Hatch,Sedan,SUV,Picape,Caminhonete,Van,Utilitário,Caminhão',
         'plate' => 'required',
         'brand' => 'required',
-        'kminit' => 'nullable|numeric',
-        'kmcurrent' => 'nullable|numeric',
-        'kmend' => 'nullable|numeric',
     ]);
 
     // Criar e salvar o veículo
@@ -38,9 +35,6 @@ public function index()
         'model' => $request->model,
         'plate' => $request->plate,
         'brand' => $request->brand,
-        'kminit' => $request->kminit,
-        'kmcurrent' => $request->kmcurrent,
-        'kmend' => $request->kmend,
         'user_id' => Auth::id(), // se houver relacionamento com usuário
     ]);
 

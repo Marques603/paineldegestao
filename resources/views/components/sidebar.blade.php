@@ -229,11 +229,6 @@
                         class="sidebar-submenu-item {{ request()->routeIs('concierge.index') ? 'active' : '' }}">
                     Fluxo</a>
                 </li>
-                <li>
-                    <a href="{{ route('concierge.create') }}"
-                        class="sidebar-submenu-item {{ request()->routeIs('concierge.create') ? 'active' : '' }}">
-                    Controle do Fluxo</a>
-                </li>
             </ul>
             @endcan
         </li>

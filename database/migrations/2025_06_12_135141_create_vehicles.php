@@ -17,9 +17,9 @@ return new class extends Migration
             $table->enum('model', ['Hatch', 'Sedan', 'SUV', 'Picape', 'Caminhonete', 'Van', 'Utilitário', 'Caminhão']); // Modelo do veículo
             $table->string('plate')->unique(); // Placa do veículo
             $table->string('brand'); // Marca do veículo
-            $table->string('kminit')->nullable(); // Quilometragem inicial do veículo
-            $table->string('kmcurrent')->nullable(); // Quilometragem atual do veículo
-            $table->string('kmend')->nullable(); // Quilometragem final do veículo
+            // $table->string('kminit')->nullable(); // Quilometragem inicial do veículo
+            // $table->string('kmcurrent')->nullable(); // Quilometragem atual do veículo
+            // $table->string('kmend')->nullable(); // Quilometragem final do veículo
             $table->timestamps(); // Timestamps para created_at e updated_at
             $table->softDeletes(); // Soft delete para permitir exclusão lógica
             

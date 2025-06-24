@@ -14,6 +14,7 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ConciergeController;
+use App\Http\Controllers\MileagesCarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,19 +137,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/concierge/create', [ConciergeController::class,'create'])->name('concierge.create');
     Route::post('/concierge', [ConciergeController::class, 'store'])->name('concierge.store');
     Route::get('/concierge/{concierge}/edit', [ConciergeController::class, 'edit'])->name('concierge.edit');
+    Route::put('/concierge/{concierge}', [ConciergeController::class, 'update'])->name('concierge.update');
+    Route::delete('/concierge/{concierge}', [ConciergeController::class, 'destroy'])->name('concierge.destroy');
+    Route::get('/concierge/{concierge}/show', [ConciergeController::class, 'show'])->name('concierge.show');
+    Route::get('/concierge/{concierge}/restore', [ConciergeController::class, 'restore'])->name('concierge.restore');
+    Route::put('/concierge/{concierge}/update-vehicles', [ConciergeController::class, 'updateVehicles'])->name('concierge.update.vehicles');
 
-    
 
-
-    
-
-    
-   
-
-   
-
-    
-
-    
-
+    // Rotas de kilometragem de veículos
+    Route::resource('mileages', MileagesCarController::class);
+    Route::get('/mileages', [MileagesCarController::class, 'index'])->name('mileages.index');
+    Route::get('/mileages/create', [MileagesCarController::class, 'create'])->name('mileages.create');
+    Route::post('/mileages', [MileagesCarController::class, 'store'])->name('mileages.store');
+    Route::get('/mileages/{mileage}/edit', [MileagesCarController::class, 'edit'])->name('mileages.edit');
+    Route::put('/mileages/{mileage}', [MileagesCarController::class, 'update'])->name('mileages.update');
+    Route::delete('/mileages/{mileage}', [MileagesCarController::class, 'destroy'])->name('mileages.destroy');
+    Route::get('/mileages/{mileage}/show', [MileagesCarController::class, 'show'])->name('mileages.show');
+    Route::get('/mileages/{mileage}/restore', [MileagesCarController::class, 'restore'])->name('mileages.restore');
+    Route::put('/mileages/{mileage}/update-vehicles', [MileagesCarController::class, 'updateVehicles'])->name('mileages.update.vehicles');
 });
