@@ -18,12 +18,8 @@ class ConciergeController extends Controller
     $this->middleware('auth');
 }
 
-   public function index(Request $request)
+public function index(Request $request)
 {
-    
-    // Inicia a consulta no modelo Concierge
-    // Se houver um parâmetro de pesquisa, aplica o filtro
-    // para buscar por destino ou motivo
     $query = Concierge::query();
 
     if ($request->has('search')) {
@@ -34,8 +30,25 @@ class ConciergeController extends Controller
 
     $concierges = $query->paginate(10);
     $vehicles = Vehicle::all();
-    return view('concierge.index', compact('concierges', 'vehicles'));
+    $users = User::all();
+
+    // Pega a última quilometragem de cada veículo
+    $mileages = [];
+    foreach ($vehicles as $vehicle) {
+        $lastMileage = MileagesCar::where('vehicle_id', $vehicle->id)
+            ->orderByDesc('id')
+            ->first();
+
+        $mileages[$vehicle->id] = [
+            'kminit'    => $lastMileage->kminit ?? 'Sem registro',
+            'kmcurrent' => $lastMileage->kmcurrent ?? 'Sem registro'
+        ];
+    }
+
+    return view('concierge.index', compact('concierges', 'vehicles', 'users', 'mileages'));
 }
+
+
 
 public function create()
 {
@@ -60,10 +73,8 @@ public function store(Request $request)
 {
     $request->validate([
        
-        'date'        => 'required|date',
         'motive'      => 'required|string',
         'destination' => 'required|string',
-        'timeinit'    => 'required|date_format:H:i',
         'vehicle_id'  => 'required|exists:vehicles,id',
         'user_id'     => 'required|exists:vehicles,id',
         'kminit'      => 'required|integer|min:0',
@@ -75,18 +86,19 @@ public function store(Request $request)
     $concierge = Concierge::create([
 
         'user_upload' => auth()->id(),
-        'date'        => $request->date,
         'motive'      => $request->motive,
         'destination' => $request->destination,
-        'timeinit'    => $request->timeinit,
+        'status' => 1, // 1 para ativo, 0 para inativo
+
      ]);
+
     // Criar o registro de quilometragem inicial
     \App\Models\MileagesCar::create([
         'concierge_id' => $concierge->id,
         'vehicle_id'   => $request->vehicle_id,
         'kminit'       => $request->kminit,
-         
     ]);
+
 
     // Relacionamento com tabela pivot
     $concierge->vehicles()->sync([$request->vehicle_id]);
@@ -117,17 +129,17 @@ public function update(Request $request, $id)
 {
     $request->validate([
         'kmcurrent' => 'required|integer|min:0',
-        'timeend'   => 'required|date_format:H:i',
+
     ]);
 
+    $data = $request->all();
+$data['status'] = 0;
+
+// Agora sim pode atualizar o model
+$concierge = Concierge::findOrFail($id);
+$concierge->update($data); 
     $concierge = Concierge::findOrFail($id);
     
-    // Atualiza o horário de retorno na concierge
-    $concierge->update([
-        'timeend' => $request->timeend,
-    ]);
-
-
     // Atualiza quilometragem de retorno na tabela mileages_car
     $mileage = $concierge->mileages()->first();
     if ($mileage) {
@@ -147,5 +159,33 @@ public function update(Request $request, $id)
     return redirect()->back()->with("success","
     Registro salvo com sucesso!");
   }
-  
+ 
+
+public function index2(Request $request)
+{
+    $vehicleId = 2; // ID fixo do veículo que você quer acompanhar (ex: Gol)
+
+    // Lista os registros do concierge apenas para esse veículo
+    $concierges = Concierge::whereHas('vehicles', function ($query) use ($vehicleId) {
+        $query->where('vehicles.id', $vehicleId);
+    })
+    ->with(['vehicles', 'users'])
+    ->orderByDesc('id')
+    ->paginate(10);
+
+    // Último KM final registrado desse veículo
+    $ultimoKm = MileagesCar::where('vehicle_id', $vehicleId)
+        ->whereNotNull('kminit')
+        ->orderByDesc('id')
+        ->first();
+
+    return view('concierge.index2', compact('concierges', 'ultimoKm'));
+}
+
+
+
+
+
+
+
 }

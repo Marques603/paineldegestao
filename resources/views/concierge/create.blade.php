@@ -33,33 +33,9 @@
             <section class="rounded-lg bg-white p-6 shadow-sm dark:bg-slate-800 space-y-4">
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
-
-                    {{-- Data de saídas --}}
+                    {{-- Veiculo --}}
                     <div class="flex flex-col">
-                        <label class="label label-required font-medium" for="date">* Data<Data></Data></label>
-                        <input type="date" name="date" id="date" class="input" required>
-                    </div>
-
-                    {{-- Motivo --}}
-                    <div class="flex flex-col">
-                        <label class="label label-required font-medium" for="motive">* Motivo</label>
-                        <input type="text" name="motive" id="motive" class="input" placeholder="Digite aqui..." required>
-                    </div>
-
-                    {{-- Destino --}}
-                    <div class="flex flex-col">
-                        <label class="label label-required font-medium" for="destination">* Destino</label>
-                        <input type="text" name="destination" id="destination" class="input" placeholder="Digite aqui..." required>
-                    </div>
-           
-                    {{-- Horário de saída --}}
-                    <div class="flex flex-col">
-                        <label class="label label-required font-medium" for="timeinit">* Horário de Sáida</label>
-                        <input type="time" name="timeinit" id="timeinit" class="input" placeholder="Digite aqui..." required>
-                    </div>
-                    
-                    <div class="flex flex-col">
-                        <label for="vehicle_id" class="label label-required font-medium">* Veículo</label>
+                        <label for="vehicle_id" class="label label-required font-medium">Veículo</label>
                         <select name="vehicle_id" id="vehicle_id"
                             class="input"
                             required>
@@ -70,6 +46,19 @@
                         </select>
                     </div>
 
+                    {{-- Destino --}}
+                    <div class="flex flex-col">
+                        <label class="label label-required font-medium" for="destination">Destino</label>
+                        <input type="text" name="destination" id="destination" class="input" placeholder="Digite aqui..." required>
+                    </div>
+
+                    {{-- Motivo --}}
+                    <div class="flex flex-col">
+                        <label class="label label-required font-medium" for="motive">* Motivo</label>
+                        <input type="text" name="motive" id="motive" class="input" placeholder="Digite aqui..." required>
+                    </div>
+
+                    {{-- Motorista --}}
                         <div class="flex flex-col">
                         <label for="user_id" class="label label-required font-medium">* Motorista</label>
                         <select name="user_id" id="user_id"
@@ -81,37 +70,42 @@
                             @endforeach
                         </select>
                     </div>
+                   
                     @foreach($mileage as $vehicleId => $km)
-    <input type="hidden" id="km-{{ $vehicleId }}" value="{{ $km }}">
-@endforeach
+                    <input type="hidden" id="km-{{ $vehicleId }}" value="{{ $km }}">
+                    @endforeach
                 <!-- Quilometragem de Saída -->
                     <div>
-                        <label for="kminit" class="label">Quilometragem de Saída</label>
-                        <input type="number" name="kminit" id="kminit"
-    class="input"
-    value="{{ old('kminit') }}"
-    required>
-                    </div>
-                </section>
-            <script>
-    const selectVehicle = document.getElementById('vehicle_id');
-    const inputKm = document.getElementById('kminit');
+                    <label for="kminit" class="label">Quilometragem Atual</label>
+                    <input type="number" name="kminit" id="kminit"
+                    class="input"
+                    value="{{ old('kminit') }}"
+                    required>
+                                    </div>
+                                </section>
+                            <script>
+                    const selectVehicle = document.getElementById('vehicle_id');
+                    const inputKm = document.getElementById('kminit');
 
-    selectVehicle.addEventListener('change', function () {
-        const vehicleId = this.value;
-        const km = document.getElementById('km-' + vehicleId);
+                    selectVehicle.addEventListener('change', function () {
+                        const vehicleId = this.value;
+                        const km = document.getElementById('km-' + vehicleId);
 
-        if (km) {
-            inputKm.value = km.value;
-        } else {
-            inputKm.value = '';
-        }
-    });
-</script>
+                        if (km) {
+                            inputKm.value = km.value;
+                        } else {
+                            inputKm.value = '';
+                        }
+                    });
+                </script>
 
-            {{-- Botão de Submit alinhado à direita --}}
-    
-            <div class="flex justify-center">
+
+
+            <div class="flex justify-end gap-2">
+                <a href="{{ route('concierge.index') }}"
+                    class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                    Cancelar
+                </a>
                 <button type="submit" class="btn btn-primary">
                     Adicionar
                 </button>

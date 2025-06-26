@@ -26,4 +26,5 @@ class MileagesCar extends Model
     {
         return $this->belongsTo(Concierge::class);
     }
+    
 }

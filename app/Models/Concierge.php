@@ -10,11 +10,9 @@ class Concierge extends Model
 
     protected $fillable = [
     'user_upload',
-    'date',
     'motive',
     'destination',
-    'timeinit',
-    'timeend',
+    'status',
 ];
 
 
@@ -34,6 +32,12 @@ public function mileages()
 {
     return $this->hasMany(MileagesCar::class);
 }
+// App\Models\Concierge.php
+public function mileageCar()
+{
+    return $this->hasOne(MileagesCar::class, 'concierge_id');
+}
+
 
 }
 

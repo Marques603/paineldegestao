@@ -46,10 +46,12 @@
                         <th class="w-[5%]"><input class="checkbox" type="checkbox" /></th>
                         <th class="w-[10%] uppercase">ID</th>
                         <th class="w-[15%] uppercase">Data</th>
-                        <th class="w-[15%] uppercase">Horário Saída</th>
-                        <th class="w-[15%] uppercase">Horário Chegada</th>
+                        <th class="w-[15%] uppercase">Veículo</th>
+                        <th class="w-[15%] uppercase">Motorista</th>
                         <th class="w-[20%] uppercase">Destino</th>
-                        <th class="w-[20%] uppercase">Motivo</th>
+                        <th class="w-[20%] uppercase">Status</th>
+                        <th class="w-[20%] uppercase">KM</th>
+                        <th class="w-[20%] uppercase">KM</th>      
                         <th class="w-[10%] text-right uppercase">Ações</th>
                     </tr>
                 </thead>
@@ -59,10 +61,24 @@
                             <td><input class="checkbox" type="checkbox" /></td>
                             <td>{{ $concierge->id }}</td>
                             <td>{{ \Carbon\Carbon::parse($concierge->date)->format('d/m/Y') }}</td>
-                            <td>{{ $concierge->timeinit }}</td>
-                            <td>{{ $concierge->timeend ?? '---' }}</td>
+                            <td> @foreach($concierge->vehicles as $vehicle) {{ $vehicle->name }}<br>@endforeach </td>
+                            <td>@foreach($concierge->users as $user)
+                                        {{ $user->name }}<br>
+                                    @endforeach
+                                </td>
                             <td>{{ ucfirst($concierge->destination) }}</td>
-                            <td>{{ ucfirst($concierge->motive) }}</td>
+ <td>
+                                @if($concierge->status)
+                                    <div class="badge badge-soft-success">Na estrada</div>
+                                @else
+                                    <div class="badge badge-soft-danger">Na empresa</div>
+                                @endif
+
+<td>{{ $concierge->mileageCar->kminit ?? 'Sem registro' }}</td>
+<td>{{ $concierge->mileageCar->kmcurrent ?? 'Sem registro' }}</td>
+
+
+
                             <td class="text-right">
                                 <div class="flex justify-end">
                                     <div class="dropdown">
@@ -71,6 +87,12 @@
                                         </div>
                                         <div class="dropdown-content">
                                             <ul class="dropdown-list">
+                                                 <li class="dropdown-list-item">
+                                                    <a href="{{ route('concierge.show', $concierge->id) }}" class="dropdown-link">
+                                                        <i class="h-5 text-slate-400" data-feather="edit"></i>
+                                                        <span>Detalhes</span>
+                                                    </a>
+                                                </li>
                                                 <li class="dropdown-list-item">
                                                     <a href="{{ route('concierge.edit', $concierge->id) }}" class="dropdown-link">
                                                         <i class="h-5 text-slate-400" data-feather="edit"></i>

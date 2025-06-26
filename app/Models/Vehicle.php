@@ -14,6 +14,7 @@ class Vehicle extends Model
         'brand',
         'kminit',
         'kmcurrent',
+        'status',
     ];
 
     public function company()
@@ -28,5 +29,15 @@ class Vehicle extends Model
     {
         return $this->hasMany(MileagesCar::class);
     }
+    public function lastMileage()
+{
+    return $this->hasOne(MileagesCar::class);
+}public function mileageCars()
+{
+    return $this->hasMany(MileagesCar::class);
+}
+
+
+    
 
     }

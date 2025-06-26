@@ -140,6 +140,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/concierge/{concierge}', [ConciergeController::class, 'update'])->name('concierge.update');
     Route::delete('/concierge/{concierge}', [ConciergeController::class, 'destroy'])->name('concierge.destroy');
     Route::get('/concierge/{concierge}/show', [ConciergeController::class, 'show'])->name('concierge.show');
+    Route::get('/concierge2', [ConciergeController::class, 'index2'])->name('concierge2.index');
     Route::get('/concierge/{concierge}/restore', [ConciergeController::class, 'restore'])->name('concierge.restore');
     Route::put('/concierge/{concierge}/update-vehicles', [ConciergeController::class, 'updateVehicles'])->name('concierge.update.vehicles');
 
@@ -155,4 +156,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mileages/{mileage}/show', [MileagesCarController::class, 'show'])->name('mileages.show');
     Route::get('/mileages/{mileage}/restore', [MileagesCarController::class, 'restore'])->name('mileages.restore');
     Route::put('/mileages/{mileage}/update-vehicles', [MileagesCarController::class, 'updateVehicles'])->name('mileages.update.vehicles');
+
+    
 });

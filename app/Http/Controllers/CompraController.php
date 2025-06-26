@@ -26,53 +26,67 @@ class CompraController extends Controller
 
     // Armazenar compra + item
     public function storeComItem(Request $request)
-    {
-        // Validação da compra
-        $validatedCompra = $request->validate([
-            'data_necessidade' => 'required|date',
-            'realizar_orcamento' => 'required|in:sim,nao',
-            'valor_previsto' => 'required|numeric|min:0',
-            'quantidade' => 'required|integer|min:1',
-            'justificativa' => 'required|string',
-            'sugestao_fornecedor' => 'nullable|string|max:255',
-        ]);
+{
+    // 1. Validação dos dados da compra + usuário
+    $validatedCompra = $request->validate([
+        'data_necessidade'      => 'required|date',
+        'realizar_orcamento'    => 'required|in:sim,nao',
+        'valor_previsto'        => 'required|numeric|min:0',
+        'quantidade'            => 'required|integer|min:1',
+        'justificativa'         => 'required|string',
+        'sugestao_fornecedor'   => 'nullable|string|max:255',
+        'user_id'               => 'required|exists:users,id',
+    ]);
 
-        // Validação do item
+    // 2. Verifica se o item é novo ou existente
+    $item = null;
+
+    if ($request->filled('item_id') && $request->item_id !== 'new') {
+        // Item existente
+        $item = Item::findOrFail($request->item_id);
+    } else {
+        // 3. Validação dos dados do novo item
         $validatedItem = $request->validate([
-            'tipo_material' => 'required|in:epi_epc,maquinario,material_escritorio,material_informatica,material_limpeza,material_eletrico,material_producao,outro,prestacao_servico',
-            'tipo_utilizacao' => 'required|in:industrializacao,uso_consumo,imobilizado',
-            'descricao' => 'required|string|max:255',
-            'descricao_detalhada' => 'required|string|max:255',
-            'marcas' => 'nullable|string|max:255',
-            'link_exemplo' => 'nullable|url',
-            'imagem' => 'nullable|image|max:2048',
+            'tipo_material'        => 'required|in:epi_epc,maquinario,material_escritorio,material_informatica,material_limpeza,material_eletrico,material_producao,outro,prestacao_servico',
+            'tipo_utilizacao'      => 'required|in:industrializacao,uso_consumo,imobilizado',
+            'descricao'            => 'required|string|max:255',
+            'descricao_detalhada'  => 'required|string|max:255',
+            'marcas'               => 'nullable|string|max:255',
+            'link_exemplo'         => 'nullable|url',
+            'imagem'               => 'nullable|image|max:2048',
         ]);
 
-        // Criar Item
+        // 4. Criação do novo item
         $item = new Item();
-        $item->tipo_material = $validatedItem['tipo_material'];
-        $item->tipo_utilizacao = $validatedItem['tipo_utilizacao'];
-        $item->descricao = $validatedItem['descricao'];
-        $item->descricao_detalhada = $validatedItem['descricao_detalhada'];
-        $item->marcas = $validatedItem['marcas'] ?? null;
-        $item->link_exemplo = $validatedItem['link_exemplo'] ?? null;
+        $item->tipo_material        = $validatedItem['tipo_material'];
+        $item->tipo_utilizacao      = $validatedItem['tipo_utilizacao'];
+        $item->descricao            = $validatedItem['descricao'];
+        $item->descricao_detalhada  = $validatedItem['descricao_detalhada'];
+        $item->marcas               = $validatedItem['marcas'] ?? null;
+        $item->link_exemplo         = $validatedItem['link_exemplo'] ?? null;
 
         if ($request->hasFile('imagem')) {
             $item->imagem = $request->file('imagem')->store('compras/imagens', 'public');
         }
 
         $item->save();
-
-
-
-        // Criar Compra
-        $compra = Compra::create($validatedCompra);
-
-        // Associar item à compra
-        $compra->items()->attach($item->id);
-
-        return redirect()->route('compras.index')->with('success', 'Compra e item criados com sucesso!');
     }
+
+    // 5. Criação da compra
+    $compra = new Compra($validatedCompra);
+    $compra->save();
+
+    // 6. Associar compra com item
+    $compra->items()->attach($item->id, [
+        'quantidade' => $validatedCompra['quantidade'],
+    ]);
+
+    // 7. Associar compra com usuário responsável (se for relacionamento N:N)
+    $compra->users()->attach($validatedCompra['user_id']);
+
+    return redirect()->route('compras.index')->with('success', 'Compra e item criados com sucesso!');
+}
+
 
     // Formulário para editar compra + item
     public function editComItem(Compra $compra)

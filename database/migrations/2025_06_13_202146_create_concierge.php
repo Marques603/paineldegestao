@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('concierge', function (Blueprint $table) {
             $table->id(); 
             $table->unsignedBigInteger('user_upload'); // ID do usuário que fez o upload
-            $table->date('date'); 
-            $table->time('timeinit'); 
-            $table->time('timeend')->nullable(); // Hora de término, pode ser nula se não houver término
-            $table->string('destination');
-            $table->string('motive');
-            $table->timestamps();
+            // $table->foreignId('vehicle_id')->constrained('vehicles')->onDelete('cascade');
+            $table->string('destination'); // Destino da viagem
+            $table->string('motive'); // Motivo da viagem
+            $table->boolean('status')->default(1); // 1 para ativo, 0 para inativo
+            $table->timestamps(); // Timestamps para created_at e updated_at
+            $table->softDeletes(); // Adiciona a coluna deleted_at para soft deletes
         });
     }
 

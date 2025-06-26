@@ -10,8 +10,14 @@
                         <i data-feather="truck" class="w-10 h-10 text-slate-600 dark:text-slate-200"></i>
                     </div>
 <h2 class="mt-4 text-[16px] font-medium text-center text-slate-700 dark:text-slate-200">
-    Retorno do Veículo {{ $mileage->vehicle->name }} - {{ $mileage->vehicle->plate }}
+    Retorno do Veículo: {{ $mileage->vehicle->name }} 
+    Placa: {{ $mileage->vehicle->plate }}
 </h2>
+
+<p class="text-sm text-slate-500 dark:text-slate-400">
+    Saída: {{ $mileage->created_at->format('d/m/Y H:i') }}
+</p>
+
 
 
                 </div>
@@ -42,22 +48,23 @@
                                     <input type="number" name="kmcurrent" id="kmcurrent" class="input" placeholder="Digite a quilometragem ao retornar" value="{{ old('kmcurrent', $mileage->kmcurrent ?? '') }}" required>
                                 </div>
 
-                                <!-- Horário de Retorno (Liberado) -->
-                                <div class="flex flex-col">
-                                    <label class="label font-medium" for="timeend">Horário de Retorno</label>
-                                    <input type="time" name="timeend" id="timeend" class="input" value="{{ old('timeend', $concierge->timeend) }}" required>
-                                </div>
+        
                             </div>
                         </section>
 
-                        <div class="flex justify-center">
-                            <button type="submit" class="btn btn-primary">
-                                Registrar Retorno
-                            </button>
-                        </div>
+                        <div class="flex justify-end gap-2">
+                         <a href="{{ route('concierge.index') }}"
+                    class="btn border border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                    Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                    Registrar Retorno
+                    </button>
+                </div>
                     </form>
                 </div>
             </div>
         </section>
     </div>
 </x-app-layout>
+
