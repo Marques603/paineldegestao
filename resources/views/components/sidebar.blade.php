@@ -212,7 +212,7 @@
         <li>
         @can('view', App\Models\Menu::find(2)) 
             <a href="javascript:void(0);"
-                class="sidebar-menu {{ request()->routeIs(['concierge.index', 'concierge.create'])
+                class="sidebar-menu {{ request()->routeIs(['concierge.index', 'concierge.create', 'concierge.edit', 'visitors.index', 'visitors.create', 'visitors.edit'])
                     ? 'active'
                     : '' }}">
                 <span class="sidebar-menu-icon">
@@ -228,6 +228,11 @@
                     <a href="{{ route('concierge.index') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('concierge.index') ? 'active' : '' }}">
                     Fluxo</a>
+                </li>
+                  <li>
+                    <a href="{{ route('visitors.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('visitors.index') ? 'active' : '' }}">
+                    Fluxo de Visitantes</a>
                 </li>
             </ul>
             @endcan

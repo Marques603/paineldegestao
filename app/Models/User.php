@@ -113,5 +113,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Concierge::class, 'driver_vehicle');
     }
+    public function vehicleLogs()
+{
+    return $this->hasMany(VehicleLog::class);
+}
 
 }

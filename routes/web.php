@@ -14,7 +14,7 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ConciergeController;
-use App\Http\Controllers\MileagesCarController;
+use App\Http\Controllers\VisitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,18 +144,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/concierge/{concierge}/restore', [ConciergeController::class, 'restore'])->name('concierge.restore');
     Route::put('/concierge/{concierge}/update-vehicles', [ConciergeController::class, 'updateVehicles'])->name('concierge.update.vehicles');
 
+    Route::get('/vehicles/{id}/last-km', [VehicleController::class, 'getLastKm'])->name('vehicles.last-km');
 
-    // Rotas de kilometragem de veículos
-    Route::resource('mileages', MileagesCarController::class);
-    Route::get('/mileages', [MileagesCarController::class, 'index'])->name('mileages.index');
-    Route::get('/mileages/create', [MileagesCarController::class, 'create'])->name('mileages.create');
-    Route::post('/mileages', [MileagesCarController::class, 'store'])->name('mileages.store');
-    Route::get('/mileages/{mileage}/edit', [MileagesCarController::class, 'edit'])->name('mileages.edit');
-    Route::put('/mileages/{mileage}', [MileagesCarController::class, 'update'])->name('mileages.update');
-    Route::delete('/mileages/{mileage}', [MileagesCarController::class, 'destroy'])->name('mileages.destroy');
-    Route::get('/mileages/{mileage}/show', [MileagesCarController::class, 'show'])->name('mileages.show');
-    Route::get('/mileages/{mileage}/restore', [MileagesCarController::class, 'restore'])->name('mileages.restore');
-    Route::put('/mileages/{mileage}/update-vehicles', [MileagesCarController::class, 'updateVehicles'])->name('mileages.update.vehicles');
-
+    // Rotas de Visitantes
+    Route::resource('visitors', VisitorController::class);
+    Route::get('/visitors', [VisitorController::class, 'index'])->name('visitors.index');
+    Route::get('/visitors/create', [VisitorController::class, 'create'])->name('visitors.create');
+    Route::post('/visitors', [VisitorController::class, 'store'])->name('visitors.store');
+    Route::get('/visitors/{visitor}/edit', [VisitorController::class, 'edit'])->name('visitors.edit');
+    Route::put('/visitors/{visitor}', [VisitorController::class, 'update'])->name('visitors.update');
+    Route::delete('/visitors/{visitor}', [VisitorController::class, 'destroy'])->name('visitors.destroy');
+    Route::get('/visitors/{visitor}/show', [VisitorController::class, 'show'])->name('visitors.show');
+    Route::get('/visitors/{visitor}/restore', [VisitorController::class, 'restore'])->name('visitors.restore');
+    Route::put('/visitors/{visitor}/update-vehicles', [VisitorController::class, 'updateVehicles'])->name('visitors.update.vehicles');
     
 });

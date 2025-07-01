@@ -3,41 +3,48 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Concierge extends Model
 {
-    protected $table = 'concierge'; // redundante, mas explícito
+    use SoftDeletes;
+
+    protected $table = 'concierge';
 
     protected $fillable = [
-    'user_upload',
-    'motive',
-    'destination',
-    'status',
-];
+        'user_upload',
+        'vehicle_id',
+        'user_id',
+        'motive',
+        'destination',
+        'status',
+    ];
 
-
-    public function vehicles()
-{
-    return $this->belongsToMany(Vehicle::class, 'concierge_vehicle');
-}
-    public function user()
+    // Usuário que criou o registro
+    public function uploader()
     {
         return $this->belongsTo(User::class, 'user_upload');
     }
-public function users()
+
+    // Motorista da viagem
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Veículo usado na viagem
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id');
+    }
+
+    public function logs()
 {
-    return $this->belongsToMany(User::class, 'driver_vehicle');
+    return $this->hasMany(Vehiclelog::class);
 }
-public function mileages()
+public function log()
 {
-    return $this->hasMany(MileagesCar::class);
-}
-// App\Models\Concierge.php
-public function mileageCar()
-{
-    return $this->hasOne(MileagesCar::class, 'concierge_id');
+    return $this->hasOne(Vehiclelog::class, 'concierge_id');
 }
 
-
 }
-

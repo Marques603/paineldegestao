@@ -25,17 +25,17 @@ class Vehicle extends Model
     {
         return $this->belongsToMany(Concierge::class, 'concierge_vehicle');
     }
-    public function mileages()
+   
+        public function logs()
     {
-        return $this->hasMany(MileagesCar::class);
+        return $this->hasMany(Vehiclelog::class);
     }
-    public function lastMileage()
-{
-    return $this->hasOne(MileagesCar::class);
-}public function mileageCars()
-{
-    return $this->hasMany(MileagesCar::class);
-}
+    public function lastLog()
+    {
+        return $this->hasOne(Vehiclelog::class)->latestOfMany();
+    }
+
+
 
 
     

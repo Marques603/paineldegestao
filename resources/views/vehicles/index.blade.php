@@ -7,6 +7,8 @@
         </div>
     @endif
 
+       
+
     <div class="space-y-4">
         {{-- Barra de busca e botão de criar --}}
         <div class="flex flex-col items-center justify-between gap-y-4 md:flex-row md:gap-y-0">
@@ -52,12 +54,15 @@
                             <td>{{ ucfirst($vehicle->model) }}</td>
                             <td>{{ strtoupper($vehicle->plate) }}</td>
                             <td>
-    @if($vehicle->concierge && $vehicle->concierge->status == 1)
-        <div class="badge badge-soft-success">Na estrada</div>
-    @else
-        <div class="badge badge-soft-secondary">Na empresa</div>
-    @endif
-</td>
+                    @if($vehicle->lastLog?->status === 1)
+                        <div class="badge badge-soft-danger">Na estrada</div>
+                    @elseif($vehicle->lastLog?->status === 0)
+                        <div class="badge badge-soft-success">Na empresa</div>
+                    @else
+                        <div class="text-slate-400">Sem status</div>
+                    @endif
+
+                        </td>
 
                             <td class="text-right">
                                 <div class="flex justify-end">

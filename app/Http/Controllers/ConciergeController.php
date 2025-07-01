@@ -3,189 +3,196 @@
 namespace App\Http\Controllers;
 
 use App\Models\Concierge;
-use Illuminate\Http\Request;
 use App\Models\Vehicle;
-use App\Models\MileagesCar;
 use App\Models\User;
-
-
+use Illuminate\Http\Request;
+use App\Models\Vehiclelog;
 
 
 class ConciergeController extends Controller
 {
     public function __construct()
-{
-    $this->middleware('auth');
-}
-
-public function index(Request $request)
-{
-    $query = Concierge::query();
-
-    if ($request->has('search')) {
-        $search = $request->input('search');
-        $query->where('destination', 'like', "%$search%")
-              ->orWhere('motive', 'like', "%$search%");
+    {
+        $this->middleware('auth');
     }
+   public function index(Request $request)
+    {
+    $concierges = Concierge::with('log.vehicle', 'log.user')
+        ->where('status', 1)
+        ->when($request->filled('search'), function ($query) use ($request) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('destination', 'like', "%{$search}%")
+                ->orWhere('motive', 'like', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(10);
 
-    $concierges = $query->paginate(10);
-    $vehicles = Vehicle::all();
-    $users = User::all();
+        $vehicles = Vehicle::all();
+        $users = User::all();
 
-    // Pega a última quilometragem de cada veículo
-    $mileages = [];
-    foreach ($vehicles as $vehicle) {
-        $lastMileage = MileagesCar::where('vehicle_id', $vehicle->id)
-            ->orderByDesc('id')
-            ->first();
-
-        $mileages[$vehicle->id] = [
-            'kminit'    => $lastMileage->kminit ?? 'Sem registro',
-            'kmcurrent' => $lastMileage->kmcurrent ?? 'Sem registro'
-        ];
+        return view('concierge.index', compact('concierges', 'vehicles', 'users'));
     }
+    
 
-    return view('concierge.index', compact('concierges', 'vehicles', 'users', 'mileages'));
-}
+        public function create()
+        {
+            // Obtém os veículos que estão em uso
+        $vehiclesInUse = Vehiclelog::where('status', 1)->pluck('vehicle_id')->toArray();
+        $vehicles = Vehicle::when(!empty($vehiclesInUse), function ($query) use ($vehiclesInUse) {
+            $query->whereNotIn('id', $vehiclesInUse);
+        })->get();
 
+        $users = User::all();
 
+        // Passa um flag para a view se não houver veículos disponíveis
+        $noVehiclesAvailable = $vehicles->isEmpty();
 
-public function create()
-{
-    $vehicles = Vehicle::all();
-    $users = User::all();
+        // Pega IDs dos usuários que ainda estão com veículos na estrada
+        $usersInUse = VehicleLog::where('status', 1)->pluck('user_id');
 
-    // Buscar a última quilometragem de cada veículo
-    $mileage = [];
+        // Pega todos os usuários exceto os que estão com veículo na estrada
+        $users = User::whereNotIn('id', $usersInUse)->get();
 
-    foreach ($vehicles as $vehicle) {
-        $lastMileage = MileagesCar::where('vehicle_id', $vehicle->id)
-            ->orderByDesc('id')
-            ->first();
+        $vehiclesInUse = VehicleLog::where('status', 1)->pluck('vehicle_id');
+        $vehicles = Vehicle::whereNotIn('id', $vehiclesInUse)->get();
 
-        $mileage[$vehicle->id] = $lastMileage ? $lastMileage->kmcurrent : 0;
+  
+        return view('concierge.create', compact('vehicles', 'users', 'noVehiclesAvailable'));
     }
-
-    return view('concierge.create', compact('vehicles', 'users', 'mileage'));
-}
 
 public function store(Request $request)
 {
     $request->validate([
-       
-        'motive'      => 'required|string',
-        'destination' => 'required|string',
-        'vehicle_id'  => 'required|exists:vehicles,id',
-        'user_id'     => 'required|exists:vehicles,id',
-        'kminit'      => 'required|integer|min:0',
+        'vehicle_id' => 'required|exists:vehicles,id',
+        'user_id'    => 'required|exists:users,id',
+        'motive'     => 'required|string',
+        'destination'=> 'required|string',
+        'kminit'     => 'required|numeric',
     ]);
 
-    // $vehicle = Vehicle::find($request->vehicle_id);
-
-
+    // Cria o concierge
     $concierge = Concierge::create([
-
         'user_upload' => auth()->id(),
         'motive'      => $request->motive,
         'destination' => $request->destination,
-        'status' => 1, // 1 para ativo, 0 para inativo
+        'status'      => 1,
+    ]);
 
-     ]);
-
-    // Criar o registro de quilometragem inicial
-    \App\Models\MileagesCar::create([
+    // Cria o registro de log de veículo vinculado
+    VehicleLog::create([
         'concierge_id' => $concierge->id,
         'vehicle_id'   => $request->vehicle_id,
+        'user_id'      => $request->user_id,
         'kminit'       => $request->kminit,
+        'status'       => 1, // veículo em uso
     ]);
 
+    $vehicleId = $request->vehicle_id;
 
-    // Relacionamento com tabela pivot
-    $concierge->vehicles()->sync([$request->vehicle_id]);
-    $concierge->users()->sync([$request->user_id]);
-    // Se necessário, você pode adicionar mais lógica aqui, como enviar notificações ou registrar logs
-    // Redirecionar ou retornar uma resposta
-    // Exemplo de redirecionamento com mensagem de sucesso
-    return redirect()->route('concierge.index')->with('success', 'Registro salvo com sucesso!');
-    
+    // Último KM atual do veículo
+    $lastKm = VehicleLog::where('vehicle_id', $vehicleId)
+        ->orderByDesc('id')
+        ->value('kmcurrent') ?? 0;
+
+    // Validação
+    $request->validate([
+        'kminit' => ['required', 'numeric', 'gte:' . $lastKm], // gte = greater than or equal
+        // outros campos...
+    ], [
+        'kminit.gte' => 'A quilometragem não pode ser menor que a última registrada (' . $lastKm . ' km).'
+    ]);
+
+// Impede que o mesmo usuário saia com outro veículo sem ter retornado
+$userHasVehicleOut = VehicleLog::where('user_id', $request->user_id)
+    ->where('status', 1)
+    ->exists();
+
+if ($userHasVehicleOut) {
+    return redirect()->back()
+        ->withErrors(['user_id' => 'Este motorista já está em viagem com outro veículo.'])
+        ->withInput();
 }
+
+
+
+    return redirect()->route('concierge.index')->with('success', 'Concierge criado com sucesso.');
+}
+
+
+
+
     public function show($id)
     {
-    }   
-    public function edit($id)
+        $concierge = Concierge::with(['vehicle', 'user'])->findOrFail($id);
+        return view('concierge.show', compact('concierge'));
+    }
+
+public function edit($id)
 {
-    $concierge = Concierge::with('mileages.vehicle')->findOrFail($id);
+    $concierge = Concierge::with('vehicle')->findOrFail($id);
 
-    // Pegando o primeiro mileage (registro de quilometragem)
-    $mileage = $concierge->mileages->first();
+    $vehiclelog = Vehiclelog::where('concierge_id', $concierge->id)->with('vehicle')->first();
 
-    return view('concierge.edit', [
-        'concierge' => $concierge,
-        'mileage'   => $mileage, // ← Aqui você envia para a view
-    ]);
+    return view('concierge.edit', compact('concierge', 'vehiclelog'));
 }
+
 
 public function update(Request $request, $id)
 {
     $request->validate([
         'kmcurrent' => 'required|integer|min:0',
-
     ]);
 
-    $data = $request->all();
-$data['status'] = 0;
-
-// Agora sim pode atualizar o model
-$concierge = Concierge::findOrFail($id);
-$concierge->update($data); 
     $concierge = Concierge::findOrFail($id);
-    
-    // Atualiza quilometragem de retorno na tabela mileages_car
-    $mileage = $concierge->mileages()->first();
-    if ($mileage) {
-        $mileage->update([
-            'kmcurrent' => $request->kmcurrent,
-        ]);
+    $vehicle = $concierge->vehicle;
+
+    // Obtém o log da viagem atual
+    $log = Vehiclelog::where('concierge_id', $concierge->id)->first();
+
+    // Verifica se o km atual é menor que o km inicial
+    if ($log && $request->kmcurrent < $log->kminit) {
+        return redirect()->route('concierge.index')->with('error', 'O KM não pode ser menor que (' . $log->kminit . ' km).');
     }
+
+    if ($log) {
+        $log->kmcurrent = $request->kmcurrent;
+        $log->status = 0; // marca como encerrado
+        $log->save();
+    }
+
+    $concierge->update(['status' => 0]);
 
     return redirect()->route('concierge.index')->with('success', 'Retorno registrado com sucesso!');
 }
 
 
-  public function destroy($id)
-  { 
-    $concierge = Concierge::find($id);
-    $concierge->delete();
-    return redirect()->back()->with("success","
-    Registro salvo com sucesso!");
-  }
- 
 
-public function index2(Request $request)
-{
-    $vehicleId = 2; // ID fixo do veículo que você quer acompanhar (ex: Gol)
+    public function destroy($id)
+    {
+        $concierge = Concierge::findOrFail($id);
+        $concierge->delete();
 
-    // Lista os registros do concierge apenas para esse veículo
-    $concierges = Concierge::whereHas('vehicles', function ($query) use ($vehicleId) {
-        $query->where('vehicles.id', $vehicleId);
-    })
-    ->with(['vehicles', 'users'])
-    ->orderByDesc('id')
-    ->paginate(10);
+        return redirect()->back()->with('success', 'Registro excluído com sucesso!');
+    }
 
-    // Último KM final registrado desse veículo
-    $ultimoKm = MileagesCar::where('vehicle_id', $vehicleId)
-        ->whereNotNull('kminit')
-        ->orderByDesc('id')
-        ->first();
+    public function index2(Request $request)
+    {
 
-    return view('concierge.index2', compact('concierges', 'ultimoKm'));
-}
+        $query = Concierge::with(['vehicle', 'user']);
+        
 
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('destination', 'like', "%$search%")
+                  ->orWhere('motive', 'like', "%$search%");
+        }
 
+        $concierges = $query->orderByDesc('id')->paginate(10);
+        $vehicles = Vehicle::all();
+        $users = User::all();
 
-
-
-
-
+        return view('concierge.index2', compact('concierges', 'vehicles', 'users'));
+    } 
 }

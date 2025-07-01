@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
-public function index()
-{
-    
-    $vehicles = Vehicle::paginate(10); // importante
-    return view('vehicles.index', compact('vehicles'));
-}
+    public function index()
+    {
+         $vehicles = Vehicle::with('lastLog')->get();
+        $vehicles = Vehicle::paginate(10); // importante
+        return view('vehicles.index', compact('vehicles'));
+    }
 
     public function create()
     {
@@ -75,4 +75,16 @@ try {
         Vehicle::findOrFail($id)->delete();
         return redirect()->route('vehicles.index')->with('success','Veículos deletado com sucesso!');
 }
+
+public function getLastKm($vehicleId)
+{
+    $lastLog = \App\Models\Vehiclelog::where('vehicle_id', $vehicleId)
+        ->orderByDesc('id')
+        ->first();
+
+    return response()->json([
+        'kminit' => $lastLog?->kmcurrent ?? 0
+    ]);
 }
+}
+

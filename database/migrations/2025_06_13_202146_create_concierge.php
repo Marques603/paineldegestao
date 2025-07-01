@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('concierge', function (Blueprint $table) {
             $table->id(); 
             $table->unsignedBigInteger('user_upload'); // ID do usuário que fez o upload
-            // $table->foreignId('vehicle_id')->constrained('vehicles')->onDelete('cascade');
             $table->string('destination'); // Destino da viagem
             $table->string('motive'); // Motivo da viagem
             $table->boolean('status')->default(1); // 1 para ativo, 0 para inativo
