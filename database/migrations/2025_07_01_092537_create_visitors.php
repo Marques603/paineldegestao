@@ -10,9 +10,10 @@ return new class extends Migration
     {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
+            $table->string('created_by')->nullable(); // Usuário que criou o visitante
             // Identificação do visitante
             $table->string('name');
-            $table->string('document')->unique(); // CPF ou CNPJ
+            $table->string('document');// CPF ou CNPJ
             $table->enum('typevisitor', [
             'CANDIDATO',
             'CLIENTE',
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->string('company')->nullable();
             $table->string('service')->nullable();
             $table->enum('parking', ['Sim', 'Não'])->nullable();
+            $table->boolean('status')->default('1'); // Status do visitante, por padrão 'Pendente'
             $table->string('vehicle_plate')->nullable(); // Placa do veículo
             $table->string('vehicle_model')->nullable(); // Modelo do veículo
             $table->timestamps(); // created_at, updated_at

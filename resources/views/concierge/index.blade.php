@@ -36,7 +36,7 @@
                     type="text"
                     value="{{ request()->input('search') }}"
                     class="w-full border-transparent bg-transparent px-0 text-sm placeholder-slate-400 focus:ring-0"
-                    placeholder="Buscar destino ou motivo..."
+                    placeholder="Buscar..."
                 />
             </form>
 
@@ -52,12 +52,11 @@
                 <thead>
                     <tr>
                         <th class="w-[5%]"><input class="checkbox" type="checkbox" /></th>
-                        <th>ID</th>
-                        <th>Data</th>
-                        <th>Veículo</th>
-                        <th>Motorista</th>
-                        <th>Destino</th>
-                        <th>Status</th>
+                        <th class="w-[20%] uppercase">Data</th>
+                        <th class="w-[20%] uppercase">Veículo</th>
+                        <th class="w-[20%] uppercase">Motorista</th>
+                        <th class="w-[20%] uppercase">Destino</th>
+                        <th class="w-[20%] uppercase">Status</th>
                         <th>KM Saída</th>
                         <th>KM Chegada</th>
                         <th class="text-right">Informar chegada</th>
@@ -67,16 +66,16 @@
     @forelse($concierges as $concierge)
         <tr>
             <td><input class="checkbox" type="checkbox" /></td>
-            <td>{{ $concierge->id }}</td>
+
             <td>{{ $concierge->created_at->format('d/m/Y') }}</td>
             <td>{{ $concierge->log->vehicle->name ?? 'Sem veículo' }}</td>
             <td>{{ $concierge->log->user->name ?? 'Sem motorista' }}</td>
             <td>{{ ucfirst($concierge->destination) }}</td>
             <td>
                 @if($concierge->status)
-                    <div class="badge badge-outline-danger">Na estrada</div>
+                    <div class="badge badge-danger badge-rounded">Na estrada</div>
                 @else
-                    <div class="badge badge-outline-success">Na empresa</div>
+                    <div class="badge badge-success badge-rounded">Na empresa</div>
                 @endif
             </td>
             <td>{{ $concierge->log->kminit ?? 'Sem registro' }}</td>

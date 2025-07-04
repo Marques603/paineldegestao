@@ -210,9 +210,9 @@
         </li>
          <!-- Menu Qualidade -->
         <li>
-        @can('view', App\Models\Menu::find(2)) 
+        @can('view', App\Models\Menu::find(6)) 
             <a href="javascript:void(0);"
-                class="sidebar-menu {{ request()->routeIs(['concierge.index', 'concierge.create', 'concierge.edit', 'visitors.index', 'visitors.create', 'visitors.edit'])
+                class="sidebar-menu {{ request()->routeIs(['visitors2.index', 'concierge2.index', 'concierge.index', 'concierge.create', 'concierge.edit', 'visitors.index', 'visitors.create', 'visitors.edit'])
                     ? 'active'
                     : '' }}">
                 <span class="sidebar-menu-icon">
@@ -227,12 +227,25 @@
                 <li>
                     <a href="{{ route('concierge.index') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('concierge.index') ? 'active' : '' }}">
-                    Fluxo</a>
+                    Veiculos da Empresa</a>
                 </li>
+
                   <li>
                     <a href="{{ route('visitors.index') }}"
                         class="sidebar-submenu-item {{ request()->routeIs('visitors.index') ? 'active' : '' }}">
                     Fluxo de Visitantes</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('concierge2.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('concierge2.index') ? 'active' : '' }}">
+                    Tabela de Veiculos</a>
+                </li>
+                
+                <li>
+                    <a href="{{ route('visitors2.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('visitors2.index') ? 'active' : '' }}">
+                    Tabela de Visitantes</a>
                 </li>
             </ul>
             @endcan

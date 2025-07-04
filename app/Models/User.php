@@ -117,5 +117,8 @@ class User extends Authenticatable
 {
     return $this->hasMany(VehicleLog::class);
 }
-
+    public function visitor()
+    {
+        return $this->hasMany(Visitor::class, 'created_by');
+    }
 }

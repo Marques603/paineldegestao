@@ -155,7 +155,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/visitors/{visitor}', [VisitorController::class, 'update'])->name('visitors.update');
     Route::delete('/visitors/{visitor}', [VisitorController::class, 'destroy'])->name('visitors.destroy');
     Route::get('/visitors/{visitor}/show', [VisitorController::class, 'show'])->name('visitors.show');
+    Route::get('/visitors2', [VisitorController::class, 'index2'])->name('visitors2.index');
     Route::get('/visitors/{visitor}/restore', [VisitorController::class, 'restore'])->name('visitors.restore');
     Route::put('/visitors/{visitor}/update-vehicles', [VisitorController::class, 'updateVehicles'])->name('visitors.update.vehicles');
+    Route::put('/visitors/{visitor}/registrar-saida', [VisitorController::class, 'updatesaidastatus'])->name('visitors.updatesaidastatus');
+
     
 });

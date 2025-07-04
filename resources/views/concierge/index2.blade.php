@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-page-title page="Fluxo da Portária" header="Fluxo da Portária" />
+    <x-page-title page="Tabela da Portária" header="Tabela da Portária" />
 
     {{-- Toast de sucesso --}}
     @if(session('success'))
@@ -39,7 +39,7 @@
                     type="text"
                     value="{{ request()->input('search') }}"
                     class="w-full border-transparent bg-transparent px-0 text-sm placeholder-slate-400 focus:ring-0"
-                    placeholder="Buscar destino ou motivo..."
+                    placeholder="Buscar..."
                 />
             </form>
         </div>
@@ -50,15 +50,15 @@
                 <thead>
                     <tr>
                         <th class="w-[5%]"><input class="checkbox" type="checkbox" /></th>
-                        <th>ID</th>
-                        <th>Data</th>
-                        <th>Veículo</th>
-                        <th>Motorista</th>
-                        <th>Destino</th>
-                        <th>Status</th>
-                        <th>KM Inicial</th>
-                        <th>KM Atual</th>
-                        <th class="text-right">Ações</th>
+                        <th class="w-[20%] uppercase">ID</th>
+                        <th class="w-[20%] uppercase">Data</th>
+                        <th class="w-[20%] uppercase">Veículo</th>
+                        <th class="w-[20%] uppercase">Motorista</th>
+                        <th class="w-[20%] uppercase">Destino</th>
+                        <th class="w-[20%] uppercase">Status</th>
+                        <th class="w-[20%] uppercase">KM Inicial</th>
+                        <th class="w-[20%] uppercase">KM Atual</th>
+                        <th class="text-right"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,9 +72,9 @@
                             <td>{{ ucfirst($concierge->destination) }}</td>
                             <td>
                             @if($concierge->status)
-                                <div class="badge badge-outline-danger">Na estrada</div>
+                                <div class="badge badge-danger badge-rounded">Na estrada</div>
                             @else
-                                <div class="badge badge-outline-success">Na empresa</div>
+                                <div class="badge badge-success badge-rounded">Na empresa</div>
                             @endif
                             </td>
                             <td>{{ $concierge->log->kminit ?? 'Sem registro' }}</td>
@@ -82,19 +82,9 @@
                             <td class="text-right">
                                 <div class="flex justify-end gap-2">
 
-                                    {{-- Editar --}}
-                                    <a href="{{ route('concierge.edit', $concierge->id) }}" class="text-write-600 hover:text-blue-800">
-                                        <i class="h-5 w-5" data-feather="edit"></i>
-                                    </a>
+                                     
 
-                                    {{-- Excluir --}}
-                                    <form method="POST" action="{{ route('concierge.destroy', $concierge->id) }}" onsubmit="return confirm('Tem certeza que deseja excluir este registro?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-write-600 hover:text-red-800">
-                                            <i class="h-5 w-5" data-feather="trash"></i>
-                                        </button>
-                                    </form>
+                                    {{-- Registrar chegada --}}
                                 </div>
                             </td>
                         </tr>
