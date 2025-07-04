@@ -1,17 +1,12 @@
 <x-app-layout>
     <x-page-title page="Controle da Portária" header="Controle da Portária" />
 
-    @if(session('success'))
-        <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded shadow-lg z-50" role="alert">
-            <p>{{ session('success') }}</p>
-        </div>
-        <script>
-            setTimeout(() => {
-                const toast = document.getElementById('toast');
-                if (toast) toast.remove();
-            }, 3000);
-        </script>
-    @endif
+        <!-- Toast de sucesso -->
+        @if(session('success'))
+            <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-green-500 text-white rounded shadow-lg z-50" role="alert">
+                <p>{{ session('success') }}</p>
+            </div>
+        @endif
 
     @if(session('error'))
     <div id="toast" class="fixed top-0 right-0 m-4 p-4 bg-danger-500 text-white rounded shadow-lg z-50" role="alert">

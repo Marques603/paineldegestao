@@ -10,7 +10,7 @@
             </div>
         @endif
 
-        <!-- Alerta se não há veículos disponíveis -->
+        {{-- <!-- Alerta se não há veículos disponíveis -->
         @if ($noVehiclesAvailable)
             <div class="fixed top-4 right-4 z-50">
                 <div class="flex items-center bg-yellow-200 border border-yellow-400 text-yellow-800 px-3 py-1.5 rounded text-sm max-w-xs shadow-lg" role="alert">
@@ -20,7 +20,7 @@
                     <strong>Atenção!</strong> Não há veículos disponíveis.
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         <!-- Preview fixo à esquerda -->
         <section class="col-span-1 flex h-min w-full flex-col gap-6 lg:sticky lg:top-20">

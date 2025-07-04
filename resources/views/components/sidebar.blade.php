@@ -250,4 +250,37 @@
             </ul>
             @endcan
         </li>
+
+         <!-- Menu Qualidade -->
+        <li>
+        @can('view', App\Models\Menu::find(7)) 
+            <a href="javascript:void(0);"
+                class="sidebar-menu {{ request()->routeIs(['visitors2.index', 'concierge2.index', 'concierge.index', 'concierge.create', 'concierge.edit', 'visitors.index', 'visitors.create', 'visitors.edit'])
+                    ? 'active'
+                    : '' }}">
+                <span class="sidebar-menu-icon">
+                    <i data-feather="file-text"></i>
+
+                </span>
+                <span class="sidebar-menu-text">Lançamento de Notas</span>
+                <span class="sidebar-menu-arrow">
+                    <i data-feather="chevron-right"></i>
+                </span>
+            </a>
+            <ul class="sidebar-submenu">
+                <li>
+                    <a href="{{ route('concierge.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('concierge.index') ? 'active' : '' }}">
+                    Notas para Aprovação</a>
+                </li>
+
+                  <li>
+                    <a href="{{ route('visitors.index') }}"
+                        class="sidebar-submenu-item {{ request()->routeIs('visitors.index') ? 'active' : '' }}">
+                    Notas Aprovadas</a>
+                </li>
+
+            </ul>
+            @endcan
+        </li>
 </aside>

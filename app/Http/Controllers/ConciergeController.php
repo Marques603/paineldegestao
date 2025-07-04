@@ -34,7 +34,7 @@ class ConciergeController extends Controller
 
         return view('concierge.index', compact('concierges', 'vehicles', 'users'));
     }
-    
+
 
         public function create()
         {
@@ -46,8 +46,8 @@ class ConciergeController extends Controller
 
         $users = User::all();
 
-        // Passa um flag para a view se não houver veículos disponíveis
-        $noVehiclesAvailable = $vehicles->isEmpty();
+        // // Passa um flag para a view se não houver veículos disponíveis
+        // $noVehiclesAvailable = $vehicles->isEmpty();
 
         // Pega IDs dos usuários que ainda estão com veículos na estrada
         $usersInUse = VehicleLog::where('status', 1)->pluck('user_id');
@@ -58,8 +58,9 @@ class ConciergeController extends Controller
         $vehiclesInUse = VehicleLog::where('status', 1)->pluck('vehicle_id');
         $vehicles = Vehicle::whereNotIn('id', $vehiclesInUse)->get();
 
-  
-        return view('concierge.create', compact('vehicles', 'users', 'noVehiclesAvailable'));
+
+        return view('concierge.create', compact('vehicles', 'users'));
+        
     }
 
 public function store(Request $request)
@@ -89,6 +90,8 @@ public function store(Request $request)
         'status'       => 1, // veículo em uso
     ]);
 
+
+
     $vehicleId = $request->vehicle_id;
 
     // Último KM atual do veículo
@@ -109,15 +112,10 @@ $userHasVehicleOut = VehicleLog::where('user_id', $request->user_id)
     ->where('status', 1)
     ->exists();
 
-if ($userHasVehicleOut) {
-    return redirect()->back()
-        ->withErrors(['user_id' => 'Este motorista já está em viagem com outro veículo.'])
-        ->withInput();
-}
 
 
+     return redirect()->route('concierge.index')->with('success', 'Saída de Veículo registrada com sucesso.');
 
-    return redirect()->route('concierge.index')->with('success', 'Concierge criado com sucesso.');
 }
 
 
@@ -181,7 +179,7 @@ public function update(Request $request, $id)
     {
 
         $query = Concierge::with(['vehicle', 'user']);
-        
+
 
         if ($request->has('search')) {
             $search = $request->input('search');
@@ -194,5 +192,5 @@ public function update(Request $request, $id)
         $users = User::all();
 
         return view('concierge.index2', compact('concierges', 'vehicles', 'users'));
-    } 
+    }
 }

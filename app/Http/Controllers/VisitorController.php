@@ -80,7 +80,7 @@ public function index()
     $validated['status'] = 0;
 
     $visitor->update($validated);
-    return redirect()->route('visitors.index')->with('success', 'Status de saída registrado com sucesso.');
+    return redirect()->route('visitors.index')->with('success', 'Saída registrada com sucesso.');
 }
 public function index2()
 {
